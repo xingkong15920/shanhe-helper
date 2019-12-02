@@ -1,0 +1,7 @@
+{
+	"component": true,
+	"navigationBarTitleText": "服务商管理",
+	"navigationBarBackgroundColor": "#ededed",
+	"navigationBarTextStyle": "black",
+	"usingComponents": {}
+}

@@ -1,0 +1,10 @@
+<view class="infoBox">
+	<view class='info-item' wx:for="{{saleList}}">
+		<view class='info-item-left'>{{item.name}}</view>
+		<view class='info-item-right'>
+			<input type="{{item.type}}" data-type="{{item.key}}" class='info-item-input' placeholder='{{item.pla}}' value="{{item.value}}" placeholder-class='placlass' bindinput='inputChage'></input>
+			<view bindtap="clickH" data-id="{{item.key}}" class="{{item.class}}"></view>
+		</view>
+	</view>
+</view>
+<view class='info-sub-ok' bindtap="sub">保存提交</view>

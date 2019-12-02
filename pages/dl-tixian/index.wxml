@@ -1,0 +1,42 @@
+<view class='top'>
+	<view class='title1'>账户余额</view>
+	<view class='title2'>￥{{keyitixian}}</view>
+	<view class='remark'>注:单笔提现金额1-50000.00</view>
+	<view class='sub' bindtap="must">立即提现</view>
+</view>
+<view class='census-title' bindtap="checkAll">
+			<text class='census-title-left'></text>
+			<text class='census-title-right'>提现记录</text>
+			<text class='census-title-check'>查看更多</text>
+			<image src="../img/you.png" class='youimg'></image>
+</view>
+<scroll-view class='dataBox' scroll-y  bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" >
+	<view class='dataList'>
+			<view class='dataList-item' wx:for="{{tixianList}}" >
+				<view class='dataList-item-left'>
+					<view class='dataList-item-left-money'>{{item.date}}</view>
+					<view class='dataList-item-left-date'>{{item.time}}</view>
+				</view>
+				<view class='dataList-item-mid'>￥{{item.invoiceAmount}}</view>
+				<view class='dataList-item-right'>
+					<view class='dataList-item-right-name'>{{item.type1}}</view>
+				</view>
+			</view>
+	</view>
+</scroll-view>
+<view class='mask' wx:if="{{tixian==true}}"  data-hide="no"  catchtap="hide">
+	<view class='changeRate' data-hide="yes" >
+		<view class='change-title'>提现金额</view>
+		<view class='input-rate'>
+			<text class='input-icon'>￥</text>
+			<input class='input-tixian' placeholder='请输入提现金额' bindinput="tixianInfo" value="{{tixianInput}}"></input>
+			<!-- <text class='all' bindtap="all">全部</text> -->
+		</view>
+		<view class='input-tag' style="margin-bottom:5rpx" wx:if="{{fapiao != ''}}">发票金额 ￥{{fapiao}}</view>
+		<view class='input-tag' style="margin-top:10rpx;">可提现金额 ￥{{keyitixian}}</view>
+		<view class='input-tag1' style="margin-bottom:0">注:单体提现金额100-50000.00</view>
+		<view class='input-tag1' style="width:100%;">注:发票金额等于打款金额加6%发票税点</view>
+		<view class="{{tixianInput==''?'input-sub':'input-sub-ok'}}" bindtap="tixianGo">确认提现</view>
+	</view>
+	
+</view>

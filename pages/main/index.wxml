@@ -1,0 +1,80 @@
+<view class='top'>
+	<view class='name'>{{name}}</view>
+	<view class='tel'>{{tel}}</view>
+	<view class='level'>{{level}}</view>
+	<view class='moneyBox'>
+		<view class='money-left'>
+			<view class='money-item'>账户余额(元)</view>
+			<view class='money-item'>￥{{yue}}</view>
+		</view>
+		<view class='shuxian'></view>
+		<view class='money-right'>
+			<view class='money-item'>已提现金额(元)</view>
+			<view  class='money-item'>￥{{yitixian}}</view>
+		</view>
+	</view>
+</view>
+<!-- <view class='rate' bindtap="rate">
+	<image src="../img/rate.png" class='rate-left'></image>
+	<view class='rate-mid'>修改费率</view>
+	<image src="../img/you.png" class='rate-right'></image>
+</view> -->
+<view class='rate' bindtap="pass">
+	<image src="../img/pass.png" class='rate-left'></image>
+	<view class='rate-mid'>修改密码</view>
+	<image src="../img/you.png" class='rate-right'></image>
+</view>
+<view class='rate' bindtap="qiehuan">
+	<image src="../img/qiehuan.png" class='rate-left'></image>
+	<view class='rate-mid'>切换身份</view>
+	<image src="../img/you.png" class='rate-right'></image>
+</view>
+<view class='tianchong'></view>
+<view class='rate' bindtap="tuichu">
+	<image src="../img/tuichu.png" class='rate-left'></image>
+	<view class='rate-mid'>退出</view>
+	<image src="../img/you.png" class='rate-right'></image>
+</view>
+<view class='mask' wx:if="{{changeRate==true}}"  data-hide="no"  catchtap="hide">
+	<view class='changeType' data-hide="yes" >
+		<view class="type-name">切换身份</view>
+		<view class="type-content">
+			<view class="type-content-left">
+				<view class="type-content-left-top">
+					<image src="../img/dl-1.png" class="type-content-left-img" ></image>
+				</view>
+				<view class="type-content-left-mid">服务商</view>
+				<view  class="type-content-left-bottom">
+				<view class="lvbiao"></view>
+				当前身份
+				
+				</view>
+			</view>
+			<view class="changeTag">
+				<image src="../img/changeType.png" class="change-type"></image>
+			</view>
+			<view class="type-content-left">
+				<view class="type-content-left-top type-content-left-top1">
+					<image src="../img/xiaoshou.png" class="type-content-left-img" ></image>
+				</view>
+				<view class="type-content-left-mid">销售</view>
+				<view  class="type-content-left-bottom">
+				切换身份
+				
+				</view>
+			</view>
+		</view>
+		<view class="type-btn" bindtap="changeType">切换</view>
+	</view>
+	
+</view>
+<view class='mask' wx:if="{{changePass==true}}" data-hide="no"  catchtap="hide">
+	<view class='changeRate' data-hide="yes">
+		<view class='change-title'>修改密码</view>
+		<input class='input-rate' type="password" placeholder='新密码' bindinput="pass1"></input>
+		<input class='input-rate' type="password" placeholder='确认密码' bindinput="repass"></input>
+		<view class='input-tag'>注：不修改密码请留空</view>
+		<view class='input-sub-ok' bindtap="changePass">确认修改</view>
+	</view>
+	
+</view>

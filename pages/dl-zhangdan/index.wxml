@@ -1,0 +1,30 @@
+<view class="nav">
+	<view class="{{type==0?'nav-item-active':'nav-item'}}" data-type="0" bindtap="checkType">日账单</view>
+	<view class="{{type==1?'nav-item-active':'nav-item'}}" data-type="1" bindtap="checkType">周账单</view>
+	<view class="{{type==2?'nav-item-active':'nav-item'}}"  data-type="2" bindtap="checkType">月账单</view>
+	<view class="{{type==3?'nav-item-active':'nav-item'}}" data-type="3" bindtap="checkType">自定义</view>
+</view>
+<view class='timeBox' wx:if="{{type==3}}" bindtap="chooseTime">
+	<view class='chooseTime'>
+		<view class='time'>{{startTime}}/{{endTime}}</view>
+		<image src="../img/date.png" class='dateImg'></image>
+	</view>
+</view>
+<view class='head'>
+
+	<view class='head-time'>时间</view>
+	<view class='head-change'>变动金额</view>
+	<view class='head-now'>变动后金额</view>
+</view>
+<scroll-view class='dataBox' scroll-y  bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" >
+	<view class='dataList'>
+			<view class='dataList-item' wx:for="{{saleList}}">
+				<view class='dataList-item-left'>
+					<view class='dataList-item-left-date'>{{item.date}}</view>
+					<view  class='dataList-item-left-time'>{{item.time}}</view>
+				</view>
+				<view class='dataList-item-mid'>{{item.importExportAmount}}</view>
+				<view class='dataList-item-right'>{{item.endTermBalance}}</view>
+			</view>
+	</view>
+</scroll-view>

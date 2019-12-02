@@ -1,0 +1,7 @@
+{
+	"component": true,
+	"navigationBarTitleText": "提现记录",
+	"navigationBarBackgroundColor": "#ededed",
+	"navigationBarTextStyle": "black",
+	"usingComponents": {}
+}

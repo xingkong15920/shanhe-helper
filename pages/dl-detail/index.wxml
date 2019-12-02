@@ -1,0 +1,46 @@
+<!--pages/dl-detail/index.wxml-->
+<view class='census-title'>
+			<text class='census-title-left'></text>
+			<text class='census-title-right'>基本信息</text>
+</view>
+<view class='infoBox'>
+	<view class='info-item' wx:for="{{infoList}}">
+		<view class='info-item-left'>{{item.key}}</view>
+		<view class='info-item-right'>{{item.value}}</view>
+	</view>
+</view>
+<view class='census-title'>
+			<text class='census-title-left'></text>
+			<text class='census-title-right'>功能应用</text>
+</view>
+<view class='rate' bindtap="rateC">
+	<image src="../img/rate.png" class='rate-left'></image>
+	<view class='rate-mid'>修改费率</view>
+	<image src="../img/you.png" class='rate-right'></image>
+</view>
+<view class='rate' bindtap="pass">
+	<image src="../img/pass.png" class='rate-left'></image>
+	<view class='rate-mid'>修改密码</view>
+	<image src="../img/you.png" class='rate-right'></image>
+</view>
+<view class='mask' wx:if="{{changeRate==true}}"  data-hide="no"  catchtap="hide">
+	<view class='changeRate' data-hide="yes" >
+		<view class='change-title'>修改费率</view>
+		<view class='change-now'>当前费率为0.25%</view>
+		<input class='input-rate' placeholder='请填写费率'></input>
+		<view class='input-tag'>费率单位为百分比，示例：0.38%</view>
+		<view class='input-sub-ok'>确认修改</view>
+	</view>
+	
+</view>
+<view class='mask' wx:if="{{changePass==true}}" data-hide="no"  catchtap="hide">
+	<view class='changeRate' data-hide="yes">
+		<view class='change-title'>修改密码</view>
+		<input class='input-rate' type="password" placeholder='新密码' bindinput="pass1"></input>
+		<input class='input-rate' type="password" placeholder='确认密码' bindinput="repass"></input>
+		<view class='input-tag'>注：不修改密码请留空</view>
+		<view class='input-sub-ok' bindtap="changePass">确认修改</view>
+	</view>
+	
+</view>
+

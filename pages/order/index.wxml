@@ -1,0 +1,56 @@
+<view class='top'>
+	<view class='searchBox'>
+		<view class='seach'>
+				<view class='iconfont icon-xiazai5 sousuoIcon fdj'></view>
+				<input class='seachInput' placeholder='商户名称/订单编号' placeholder-class='plc' bindinput='wxSearchinput' bindconfirm="sub" value="{{searchInput}}"></input>
+		</view>
+		<image src='../img/saoma.png' bindtap="scanCode" class='saoma'></image>
+		<image src='../img/riqi.png' bindtap="chooseTime" class='date'></image>
+	</view>
+	<view class='top-data'>
+		<view class='top-data-left'>
+			<view class='top-data-left-name'>交易总金额(元)</view>
+			<view class='top-data-left-data'>{{transactionAmount}}</view>
+		</view>
+		<view class='top-data-right'>
+			<view class='top-data-left-name'>交易总笔数</view>
+			<view class='top-data-left-data'>{{count}}</view>
+		</view>
+	</view>
+	<view class='top-data'>
+		<view class='top-data-left'>
+			<view class='top-data-left-name'>手续费(元)</view>
+			<view class='top-data-left-data'>{{shopPoundage}}</view>
+		</view>
+		<view class='top-data-right'>
+			<view class='top-data-left-name'>退款金额(元)</view>
+			<view class='top-data-left-data'>{{refundAmount}}</view>
+		</view>
+	</view>
+</view>
+<view class='census-title' bindtap="checkAll">
+			<text class='census-title-left'></text>
+			<text class='census-title-right'>订单汇总</text>
+			<text class='census-title-check'>查看更多</text>
+			<image src="../img/you.png" class='youimg'></image>
+</view>
+<scroll-view class='dataBox' scroll-y  bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" >
+	<view class='dataList'>
+			<view class='dataList-item'  wx:for="{{orderData}}"  wx:key="{{index}}" bindtap="check" data-id="{{index}}">
+				<image src="../img/wechat.png" class='wechat' wx:if="{{item.onePaymentTypeName==1}}"></image>
+				<image src="../img/zhifubao.png" class='wechat' wx:if="{{item.onePaymentTypeName==0}}"></image>
+				<view class='dataList-item-box'>
+						<view class='dataList-item-box-top'>
+							<view class='dataList-item-box-top-name'>{{item.merchantName}}</view>
+							<view class='dataList-item-box-top-tag' wx:if="{{item.orderState==1}}">交易成功</view>
+							<view class='dataList-item-box-top-tag1' wx:if="{{item.orderState==5}}">部分退款</view>
+							<view class='dataList-item-box-top-tag2' wx:if="{{item.orderState==4}}">全部退款</view>
+						</view>
+						<view class='dataList-item-box-time'>{{item.orderTime}}</view>
+				</view>
+				<view class='dataList-item-money' wx:if="{{item.orderState !=4}}">+￥{{item.transactionAmount}}</view>
+				<view class='dataList-item-money1'wx:if="{{item.orderState ==4}}">-￥{{item.refundAmount}}</view>
+				<image src="../img/you.png" class='youimg1'></image>
+			</view>
+	</view>
+</scroll-view>

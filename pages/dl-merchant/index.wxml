@@ -1,0 +1,20 @@
+<view class='nav'>
+	<view class="{{merType==''?'nav-item-active':'nav-item'}}" data-type='' bindtap="choose">全部</view>
+	<view  class="{{merType=='个人'?'nav-item-active':'nav-item'}}"  data-type='个人' bindtap="choose">个人</view>
+	<view  class="{{merType=='个体'?'nav-item-active':'nav-item'}}"   data-type='个体' bindtap="choose">个体</view>
+	<view  class="{{merType=='企业'?'nav-item-active':'nav-item'}}"  data-type='企业' bindtap="choose">企业</view>
+	<image src="../img/search.png" class='search' bindtap="search"></image>
+</view>
+<scroll-view class='dataBox' scroll-y  bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" >
+	<view class='dataList'>
+			<view class='dataList-item' wx:for="{{merchantList}}">
+				<view class='dataList-item-top'>
+					<view class='dataList-item-top-name'>{{item.merchantName}}</view>
+					<view class='dataList-item-top-type'>{{item.merchantType}}</view>
+				</view>
+				<view class='dataList-item-bottom'>
+					{{item.insertTime}}
+				</view>
+			</view>
+	</view>
+</scroll-view>

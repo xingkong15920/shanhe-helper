@@ -1,0 +1,14 @@
+<view class='top'>
+	<image src='../img/wechat.png' wx:if="{{orderType == '1'}}" class='wexin'></image>
+	<image src='../img/zhifubao.png'  wx:if="{{orderType == '0'}}" class='wexin'></image>
+	<view class='money'>￥{{money}}</view>
+	<view class='state'>{{orderName}}</view>
+</view>
+<view class='infoBox'>
+	<view class='info-item' wx:for="{{infoList}}">
+		<view class='info-item-left'>{{item.key}}</view>
+		<view class='info-item-right'>{{item.value}}</view>
+	</view>
+</view>
+
+

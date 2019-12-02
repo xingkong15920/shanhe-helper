@@ -1,0 +1,7 @@
+{
+	"component": true,
+	"navigationBarTitleText": "提现管理",
+	"navigationBarBackgroundColor": "#00b366",
+	"navigationBarTextStyle": "white",
+	"usingComponents": {}
+}

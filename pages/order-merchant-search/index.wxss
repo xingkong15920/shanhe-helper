@@ -1,0 +1,162 @@
+/* pages/dl-searchMerchant/index.wxss */
+page{background-color:#fff;}
+.searchBox{
+	width:100%;
+	border-top:2px solid rgba(205,205,205,1);
+	height:140rpx;
+	background:white;
+	border-bottom:20rpx solid rgba(245,245,245,1);
+}
+.seach{
+	width:600rpx;
+	height:84rpx;
+	background:rgba(229,229,229,1);
+	border-radius:8rpx;
+	margin-left:30rpx;
+	margin-top:28rpx;
+	display:inline-block;
+	position:relative;
+	left:0;
+	top:0;
+}
+.fdj{
+	width:40rpx;
+	height:40rpx;
+	margin-left:30rpx;
+	margin-top:22rpx;
+	font-size:40rpx;
+	line-height:40rpx;
+}
+.sea{
+	vertical-align: top;
+	margin-left:14rpx;
+	margin-top:46rpx;
+	display:inline-block;
+	width:72rpx;
+	height:50rpx;
+	font-size:36rpx;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(61,172,106,1);
+	line-height:50rpx;
+	}
+.del{
+	width:32rpx;
+	height:32rpx;
+	position:absolute;
+	right:22rpx;
+	top:26rpx;
+}
+.dataBox {
+    height: 1014rpx;
+    overflow: auto;
+}
+
+.dataList {
+    height: auto;
+}
+.dataList-item{
+	width:100%;
+	height:132rpx;
+	border:1px solid #ededed
+}
+.wechat{
+	width:64rpx;
+	height:64rpx;
+	margin-left:32rpx;
+	margin-top:36rpx;
+}
+.dataList-item-box{
+	margin-left:24rpx;
+	width:350rpx;
+	display:inline-block;
+}
+.dataList-item-box-top{
+	width:100%;
+}
+.dataList-item-box-top-name{
+	display:inline-block;
+	width:224rpx;
+height:40rpx;
+font-size:28rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:rgba(51,51,51,1);
+line-height:40rpx;
+}
+.dataList-item-box-top-tag{
+	margin-left:14rpx;
+	display: inline-block;
+	width:96rpx;
+height:34rpx;
+font-size:24rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:rgba(51,51,51,1);
+line-height:34rpx;
+}
+.dataList-item-box-top-tag1{
+	margin-left:14rpx;
+	display: inline-block;
+	width:96rpx;
+height:34rpx;
+font-size:24rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:#C49769;
+line-height:34rpx;
+}
+.dataList-item-box-top-tag2{
+	margin-left:14rpx;
+	display: inline-block;
+	width:96rpx;
+height:34rpx;
+font-size:24rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:#EB4B3E;
+line-height:34rpx;
+}
+.dataList-item-box-time{
+	width:294rpx;
+height:40rpx;
+font-size:28rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:rgba(153,153,153,1);
+line-height:40rpx;
+}
+.dataList-item-money{
+	display:inline-block;
+	width:190rpx;
+	margin-left:30rpx;
+	height:132rpx;
+font-size:28rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:rgba(51,51,51,1);
+line-height:132rpx;
+text-align:right;
+vertical-align: top;
+}
+.dataList-item-money1{
+	display:inline-block;
+	width:190rpx;
+	margin-left:30rpx;
+	height:132rpx;
+font-size:28rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:#EB4B3E;
+line-height:132rpx;
+text-align:right;
+vertical-align: top;
+}
+.youimg1{
+	width:16rpx;
+height:28rpx;
+display: inline-block;
+vertical-align:top;
+margin-left:18rpx;
+margin-top:50rpx;
+}

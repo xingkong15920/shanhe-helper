@@ -1,0 +1,22 @@
+<!--pages/dl-manage/index.wxml-->
+<view class='searchBox'>
+<view class='seach'>
+        <view class='iconfont icon-xiazai5 sousuoIcon fdj'></view>
+        <input class='seachInput' placeholder='手机号/名称'  bindinput='wxSearchinput' bindconfirm="sub"  ></input>
+    </view>
+</view>
+<scroll-view class='dataBox' scroll-y  bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" >
+	<view class='dataList'>
+			<view class='dataList-item' wx:for="{{dataList}}" wx:key="{{index}}" bindtap="check" data-id="{{index}}">
+					<view class='dataList-item-left'>
+						<view class='dataList-item-name'>{{item.agentName}}</view>
+						<view class='dataList-item-time'>{{item.insertTime}}</view>
+					</view>
+					<view class='dataList-item-right' >
+						<view class='dataList-item-right-text'>更多详情</view>
+						<image src='../img/you.png' class='you'></image>
+					</view>
+			</view>
+	</view>
+</scroll-view>
+

@@ -1,0 +1,8 @@
+{
+	"component": true,
+	"navigationBarBackgroundColor": "#ededed",
+	"backgroundColor": "#fff",
+	"navigationBarTitleText": "自定义查询",
+	"navigationBarTextStyle": "black",
+	"usingComponents": {}
+}

@@ -1,0 +1,16 @@
+<view class='head'>
+目前仅支持三个月以内的查询
+</view>
+<view class='startTime'>
+	<view class="name">开始时间</view>
+  	<picker mode="date" class="chooseTime"   start="" end="" bindchange="bindDateChange">
+	  	<input placeholder='选择开始时间' disabled='disabled' class='chooseStartTime' value="{{startTime}}"></input>
+  </picker>
+</view>
+<view class='startTime'>
+	<view class="name">结束时间</view>
+  	<picker mode="date" class="chooseTime"   start="" end="" bindchange="bindDateChange1">
+	  	<input placeholder='选择结束时间' disabled='disabled' class='chooseStartTime' value="{{endTime}}"></input>
+  </picker>
+</view>
+<view class='sub-ok'  bindtap="check" >查询</view>

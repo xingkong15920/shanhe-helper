@@ -1,0 +1,7 @@
+{
+	"component": true,
+	"navigationBarTitleText": "修改费率",
+	"navigationBarBackgroundColor": "#E5E5E5",
+	"navigationBarTextStyle": "black",
+	"usingComponents": {}
+}

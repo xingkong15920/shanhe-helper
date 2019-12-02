@@ -1,0 +1,7 @@
+{
+	"component": true,
+	"navigationBarTitleText": "服务商账单",
+	"navigationBarBackgroundColor": "#ededed",
+	"navigationBarTextStyle": "black",
+	"usingComponents": {}
+}

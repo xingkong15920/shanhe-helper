@@ -1,0 +1,153 @@
+/* 导航 */
+.nav{
+	width:700rpx;
+	height:94rpx;
+	padding-left:50rpx;
+	position:relative;
+	left:0;
+	top:0;
+	border-bottom:1px solid #E5E5E5
+}
+.nav-item{
+	width:auto;
+	line-height:94rpx;
+	font-size:32rpx;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(102,102,102,1);
+	float:left;
+	margin-right:100rpx;
+}
+.nav-item-active{
+	width:auto;
+	line-height:90rpx;
+	font-size:32rpx;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	float:left;
+	color:rgba(61,172,106,1);
+	border-bottom:3px solid rgba(61,172,106,1);
+	margin-right:100rpx;
+}
+
+/* search */
+.search{
+	width:56rpx;
+	height:56rpx;
+	position:absolute;
+	right:30rpx;
+	top:20rpx;
+}
+.dataBox {
+    height: 90vh;
+    overflow: auto;
+}
+
+.dataList {
+    height: auto;
+}
+.dataList-item{
+	width:100%;
+	height:132rpx;
+	border:1px solid #ededed
+}
+.wechat{
+	width:64rpx;
+	height:64rpx;
+	margin-left:32rpx;
+	margin-top:36rpx;
+}
+.dataList-item-box{
+	margin-left:24rpx;
+	width:350rpx;
+	display:inline-block;
+}
+.dataList-item-box-top{
+	width:100%;
+}
+.dataList-item-box-top-name{
+	display:inline-block;
+	width:224rpx;
+height:40rpx;
+font-size:28rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:rgba(51,51,51,1);
+line-height:40rpx;
+}
+.dataList-item-box-top-tag{
+	margin-left:14rpx;
+	display: inline-block;
+	width:96rpx;
+height:34rpx;
+font-size:24rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:rgba(51,51,51,1);
+line-height:34rpx;
+}
+.dataList-item-box-top-tag1{
+	margin-left:14rpx;
+	display: inline-block;
+	width:96rpx;
+height:34rpx;
+font-size:24rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:#C49769;
+line-height:34rpx;
+}
+.dataList-item-box-top-tag2{
+	margin-left:14rpx;
+	display: inline-block;
+	width:96rpx;
+height:34rpx;
+font-size:24rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:#EB4B3E;
+line-height:34rpx;
+}
+.dataList-item-box-time{
+	width:294rpx;
+height:40rpx;
+font-size:28rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:rgba(153,153,153,1);
+line-height:40rpx;
+}
+.dataList-item-money{
+	display:inline-block;
+	width:190rpx;
+	margin-left:30rpx;
+	height:132rpx;
+font-size:28rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:rgba(51,51,51,1);
+line-height:132rpx;
+text-align:right;
+vertical-align: top;
+}
+.dataList-item-money1{
+	display:inline-block;
+	width:190rpx;
+	margin-left:30rpx;
+	height:132rpx;
+font-size:28rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:#EB4B3E;
+line-height:132rpx;
+text-align:right;
+vertical-align: top;
+}
+.youimg1{
+	width:16rpx;
+height:28rpx;
+display: inline-block;
+vertical-align:top;
+margin-left:18rpx;
+margin-top:50rpx;
+}

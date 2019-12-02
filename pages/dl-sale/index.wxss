@@ -1,0 +1,97 @@
+/* pages/dl-manage/index.wxss */
+page{
+	height:100vh
+}
+.searchBox {
+    width: 100%;
+    height: 100rpx;
+    padding-top: 20rpx;
+    background: rgba(245, 245, 245, 1);
+}
+
+.seach {
+    width: 690rpx;
+    height: 80rpx;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 8rpx;
+    margin-left: 30rpx;
+}
+
+.fdj {
+    width: 40rpx;
+    height: 40rpx;
+    margin-left: 30rpx;
+    margin-top: 22rpx;
+    font-size: 40rpx;
+    line-height: 40rpx;
+}
+
+.seachInput {
+    font-size: 36rpx;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(205, 205, 205, 1);
+    line-height: 50rpx;
+}
+
+/* 服务商列表 */
+
+.dataBox {
+    height: 85%;
+    overflow: auto;
+}
+
+.dataList {
+    width: 100%;
+    height: auto;
+}
+
+.dataList-item {
+    width: 720rpx;
+    height: 106rpx;
+	padding-left:30rpx;
+    border-bottom: 1px solid #ededed;
+	position:relative;
+	left:0;
+	top:0;
+}
+.dataList-item-name{
+	display: inline-block;
+	width:220rpx;
+	font-size:32rpx;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(51,51,51,1);
+	line-height:106rpx;
+	margin-right:24rpx;
+}
+.dataList-item-tel{
+	display:inline-block;
+	width:auto;
+font-size:32rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:rgba(51,51,51,1);
+line-height:106rpx;
+}
+.you{
+	width:40rpx;
+	height:40rpx;
+	position:absolute;
+	right:20rpx;
+	top:34rpx;
+}
+.addSale{
+	position:fixed;
+	bottom:0;
+	left:0;
+	text-align:center;
+width:750rpx;
+height:100rpx;
+background:linear-gradient(360deg,rgba(61,172,106,1) 0%,rgba(12,186,93,1) 100%);
+font-size:32rpx;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:rgba(255,255,255,1);
+line-height:100rpx;
+}

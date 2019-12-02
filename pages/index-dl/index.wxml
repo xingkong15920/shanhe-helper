@@ -1,0 +1,88 @@
+<view style='height:100vh;overflow:auto;'>
+<view style='height:2268rpx'>
+<view class="top">
+	<view class='header'>
+		<image class='head-round' src="../img/bianzu.png"></image>
+		<view class="xuanzhuan " style="transform: rotate({{rotate}}deg);" >
+				<image src="../img/zhizhen.png" class="zhizhen"></image>
+			</view>
+		<view class="{{fx=='left'?'head-bottom-left':'head-bottom-right'}}">
+			
+			<view class="round-text {{fx=='left'?'round-text':'round-text1'}}">
+				<text class='text1'>昨日</text>
+				<text class='text2'>交易金额(元)</text>
+				<text class='text3'>{{yesMoney}}</text>
+			</view>
+		</view>
+	</view>
+	<view class='tongji'>
+		<view class='tongji-item'  wx:for="{{tongjiList}}">
+			<view class='{{item.color}}'></view>
+			<text class='small-text'>{{item.name}}</text>
+			<text class='small-money'>{{item.data}}</text>
+		</view>
+		
+	</view>
+</view>
+	<view class='model' >
+		<view class='model-item'  wx:for="{{modelList}}" bindtap="{{item.tap}}">
+			<image src="{{item.img}}" class='model-item-img'></image>
+			<text class='model-item-text'>{{item.name}}</text>
+		</view>
+	</view>
+	<view class='borderX'></view>
+	<view class='census'>
+		<view class='census-title'>
+			<text class='census-title-left'></text>
+			<text class='census-title-right'>账户统计</text>
+		</view>
+		<view class='census-body'>
+			<view class='census-body-left'>
+				<view class='census-body-left-title'>账户金额统计</view>
+				<view class='census-body-left-name'>佣金汇总</view>
+				<view class='census-body-left-data'>￥{{yue}}</view>
+				<view class='census-body-left-name'>交易金额</view>
+				<view class='census-body-left-data'>￥{{jiaoyi}}</view>
+			</view>
+			<view class='census-body-right'>
+				<view class='census-body-right-item'>
+					<view class='tianchong'></view>
+					<view class='census-body-right-name'>提现中</view>
+					<view class='census-body-right-data'> ￥{{tixian}}</view>
+				</view>
+				<view class='census-body-right-item1'>
+					<view class='tianchong'></view>
+					<view class='census-body-right-name'>已提现</view>
+					<view class='census-body-right-data'> ￥{{yitixian}}</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class='borderX'></view>
+	<view class='dataBox'>
+		<view class='census-title'>
+			<text class='census-title-left'></text>
+			<text class='census-title-right'>数据统计</text>
+		</view>
+		<view class='dataBox-body'>
+			<view class='dataBox-item' wx:for="{{dataList}}">
+					<view class='dataBox-item-left'>{{item.name}}</view>
+					<view class='dataBox-item-mid'>
+						<view class='dataBox-item-mid-data'>{{item.data1}}</view>
+						<view class='dataBox-item-mid-name'>{{item.name1}}</view>
+					</view>
+					<view class='dataBox-item-right'>
+						<view class='dataBox-item-right-item'>
+							<view class='dataBox-item-right-name'>{{item.name2}}</view>
+							<view class='dataBox-item-right-data'>{{item.data2}}</view>
+						</view>
+						<view class='dataBox-item-right-item'>
+							<view class='dataBox-item-right-name'>{{item.name3}}</view>
+							<view class='dataBox-item-right-data'>{{item.data3}}</view>
+						</view>
+					</view>
+			</view>
+		</view>
+	</view>
+</view>
+</view>
