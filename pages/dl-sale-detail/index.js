@@ -3,21 +3,26 @@ const config = require('../../utils/config1.js')
 const common = require('../../utils/common-dl.js').CmsConfig
 Page({
 
-	/**
-	 * 页面的初始数据
-	 */
+    /**
+     * 页面的初始数据
+     */
 	data: {
-		server:config.server,
-		infoList:[],
-			changeRate:false,
-			changePass:false,
-			rate:'',
-			pass:'',
-			repass:''
+		server: config.server,
+		infoList: [],
+		saleInfo: '',
+		changeRate: false,
+		changePass: false,
+		rate: '',
+		pass: '',
+		repass: '',
+		aliR: '',
+		wxR: '',
+		un1R: '',
+		un2R: '',
 	},
-	rate:function(){
+	rate: function () {
 		this.setData({
-			changeRate:!this.data.changeRate
+			changeRate: !this.data.changeRate
 		})
 	},
 	pass: function () {
@@ -25,15 +30,15 @@ Page({
 			changePass: !this.data.changePass
 		})
 	},
-	hide:function(e){
+	hide: function (e) {
 		console.log(e.target)
-		if(e.target.dataset.hide == 'no'){
+		if (e.target.dataset.hide == 'no') {
 			this.setData({
-				changeRate:false,
-				changePass:false
+				changeRate: false,
+				changePass: false
 			})
 		}
-		
+
 	},
 	// noClick: function (e) {
 	// 	console.log(e)
@@ -46,7 +51,7 @@ Page({
 	// 	})
 	// },
 	//修改状态
-	switch1Change:function(e){
+	switch1Change: function (e) {
 		var addData = new Object()
 		addData.saleNumber = this.data.saleInfo.saleNumber
 		addData.state = e.detail.value ? '0' : '1';
@@ -69,9 +74,9 @@ Page({
 						icon: 'none'
 					})
 					var infoList = that.data.infoList
-					infoList[3].onOff = addData.state == 0 ? true:false
+					infoList[3].onOff = addData.state == 0 ? true : false
 					that.setData({
-						infoList:infoList
+						infoList: infoList
 					})
 				} else {
 					wx.showToast({
@@ -82,9 +87,9 @@ Page({
 			}
 		})
 	},
-	rateInput:function(e){
+	rateInput: function (e) {
 		this.setData({
-			rate:e.detail.value
+			rate: e.detail.value
 		})
 	},
 	pass1: function (e) {
@@ -92,15 +97,56 @@ Page({
 			pass: e.detail.value
 		})
 	},
-	repass:function(e){
+	repass: function (e) {
 		this.setData({
 			repass: e.detail.value
 		})
 	},
-	changeRate:function(e){
-		if(this.data.rate == ''){
+	aliRinput: function (e) {
+		this.setData({
+			aliR: e.detail.value
+		})
+	},
+	wxRinput: function (e) {
+		this.setData({
+			wxR: e.detail.value
+		})
+	},
+	un1Rinput: function (e) {
+		this.setData({
+			un1R: e.detail.value
+		})
+	},
+	un2Rinput: function (e) {
+		this.setData({
+			un2R: e.detail.value
+		})
+	},
+	changeRate: function (e) {
+		if (this.data.aliR == '' || parseFloat(this.data.aliR) >= 1) {
 			wx.showToast({
-				title: '请输入费率',
+				title: '请输入正确的支付宝费率',
+				icon: 'none'
+			})
+			return
+		}
+		if (this.data.wxR == '' || parseFloat(this.data.wxR) >= 1) {
+			wx.showToast({
+				title: '请输入正确的微信费率',
+				icon: 'none'
+			})
+			return
+		}
+		if (this.data.un1R == '' || parseFloat(this.data.un1R) >= 1) {
+			wx.showToast({
+				title: '请输入正确的云闪付1费率',
+				icon: 'none'
+			})
+			return
+		}
+		if (this.data.un2R == '' || parseFloat(this.data.un2R) >= 1) {
+			wx.showToast({
+				title: '请输入正确的云闪付2费率',
 				icon: 'none'
 			})
 			return
@@ -109,8 +155,13 @@ Page({
 		addData.saleName = this.data.saleInfo.saleName
 		addData.registerCell = this.data.saleInfo.registerCell
 		addData.saleNumber = this.data.saleInfo.saleNumber
-		addData.proportion = (this.data.rate.replace('%','') / 100).toFixed(4)
+		addData.aliRate = (this.data.aliR.replace('%', '') / 100).toFixed(4)
+		addData.weChatRate = (this.data.wxR.replace('%', '') / 100).toFixed(4)
+		addData.unionPayRate = (this.data.un1R.replace('%', '') / 100).toFixed(4)
+		addData.unionPayRateTwo = (this.data.un2R.replace('%', '') / 100).toFixed(4)
 		addData.institutionNumber = wx.getStorageSync('shopInfo').institutionNumber
+		console.log(addData)
+		// return
 		var that = this
 		wx.request({
 			url: this.data.server + common.updateSale, //仅为示例，并非真实的接口地址
@@ -128,14 +179,17 @@ Page({
 						icon: 'none'
 					})
 					var infoList = that.data.infoList
-					infoList[2].value = (addData.proportion*100).toFixed(2) + '%'
+					infoList[2].value = (addData.aliRate * 100).toFixed(2) + '%'
+					infoList[3].value = (addData.weChatRate * 100).toFixed(2) + '%'
+					infoList[4].value = (addData.unionPayRate * 100).toFixed(2) + '%'
+					infoList[5].value = (addData.unionPayRateTwo * 100).toFixed(2) + '%'
 					var saleInfo = that.data.saleInfo
 					saleInfo.proportion = (addData.proportion * 100).toFixed(2)
 					that.setData({
 						changeRate: !that.data.changeRate,
 						infoList: infoList,
 						saleInfo: saleInfo,
-						rate:''
+						rate: ''
 					})
 				} else {
 					wx.showToast({
@@ -146,27 +200,27 @@ Page({
 			}
 		})
 	},
-	changePass:function(e){
-		if(this.data.pass.length < 6 || this.data.pass.length >12){
+	changePass: function (e) {
+		if (this.data.pass.length < 6 || this.data.pass.length > 12) {
 			wx.showToast({
 				title: '密码为6-12位',
 				icon: 'none'
 			})
 			return
 		}
-		if(this.data.repass == ''){
+		if (this.data.repass == '') {
 			wx.showToast({
 				title: '请重复输入密码',
 				icon: 'none'
 			})
 			return
 		}
-		if(this.data.pass != this.data.repass){
+		if (this.data.pass != this.data.repass) {
 			wx.showToast({
-				title:'两次密码不相同',
-				icon:'none'
+				title: '两次密码不相同',
+				icon: 'none'
 			})
-			return 
+			return
 		}
 		var addData = new Object()
 		addData.saleNumber = this.data.saleInfo.saleNumber
@@ -200,94 +254,98 @@ Page({
 			}
 		})
 	},
-	/**
-	 * 生命周期函数--监听页面加载
-	 */
+    /**
+     * 生命周期函数--监听页面加载
+     */
 	onLoad: function (options) {
 		var da = JSON.parse(options.info)
-		da.proportion = (da.proportion*100).toFixed(2)
+		da.proportion = (da.proportion * 100).toFixed(2)
 		console.log(da)
 		var no = [{
 			key: '姓名',
 			value: da.saleName,
 			type: 1
-			}, {
-				key: '联系电话',
-				value: da.registerCell,
-				type: 1
-				}, {
-					key: '支付宝费率',
-					value: (da.aliRate *100).toFixed(2) + '%',
-					type: 1
-			}, {
-				key: '微信费率',
-				value: (da.weChatRate * 100).toFixed(2) + '%',
-				type: 1
-			}, {
-				key: '云闪付费率1',
-				value: (da.unionPayRate * 100).toFixed(2) + '%',
-				type: 1
-			}, {
-				key: '云闪付费率2',
-				value: (da.unionPayRatetwo * 100).toFixed(2) + '%',
-				type: 1
-			}, {
-					key: '状态',
-					value: '',
-					type: 2,
-					onOff:da.state==0?true:false
-				}]
+		}, {
+			key: '联系电话',
+			value: da.registerCell,
+			type: 1
+		}, {
+			key: '支付宝费率',
+			value: (da.aliRate * 100).toFixed(2) + '%',
+			type: 1
+		}, {
+			key: '微信费率',
+			value: (da.weChatRate * 100).toFixed(2) + '%',
+			type: 1
+		}, {
+			key: '云闪付费率1',
+			value: (da.unionPayRate * 100).toFixed(2) + '%',
+			type: 1
+		}, {
+			key: '云闪付费率2',
+			value: (da.unionPayRatetwo * 100).toFixed(2) + '%',
+			type: 1
+		}, {
+			key: '状态',
+			value: '',
+			type: 2,
+			onOff: da.state == 0 ? true : false
+		}]
 		this.setData({
-			infoList:no,
-			saleInfo:da
+			infoList: no,
+			saleInfo: da,
+			aliR: (da.aliRate * 100).toFixed(2),
+			wxR: (da.weChatRate * 100).toFixed(2),
+			un1R: (da.unionPayRate * 100).toFixed(2),
+			un2R: (da.unionPayRatetwo * 100).toFixed(2),
 		})
 	},
 
-	/**
-	 * 生命周期函数--监听页面初次渲染完成
-	 */
+    /**
+     * 生命周期函数--监听页面初次渲染完成
+     */
 	onReady: function () {
 
 	},
 
-	/**
-	 * 生命周期函数--监听页面显示
-	 */
+    /**
+     * 生命周期函数--监听页面显示
+     */
 	onShow: function () {
 
 	},
 
-	/**
-	 * 生命周期函数--监听页面隐藏
-	 */
+    /**
+     * 生命周期函数--监听页面隐藏
+     */
 	onHide: function () {
 
 	},
 
-	/**
-	 * 生命周期函数--监听页面卸载
-	 */
+    /**
+     * 生命周期函数--监听页面卸载
+     */
 	onUnload: function () {
 
 	},
 
-	/**
-	 * 页面相关事件处理函数--监听用户下拉动作
-	 */
+    /**
+     * 页面相关事件处理函数--监听用户下拉动作
+     */
 	onPullDownRefresh: function () {
 
 	},
 
-	/**
-	 * 页面上拉触底事件的处理函数
-	 */
+    /**
+     * 页面上拉触底事件的处理函数
+     */
 	onReachBottom: function () {
 
 	},
 
-	/**
-	 * 用户点击右上角分享
-	 */
+    /**
+     * 用户点击右上角分享
+     */
 	onShareAppMessage: function () {
 
 	}

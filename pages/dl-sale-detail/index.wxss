@@ -176,8 +176,23 @@ view, scroll-view, ::after, ::before {
     width: 670rpx;
     height: 74rpx;
     margin: 0 auto;
-	padding-top:30rpx;
+    padding: 15rpx 0;
     border-bottom: 1px solid #ededed;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.input-rate label {
+    width: 40%;
+	font-size: 28rpx;
+	text-align: left;
+}
+
+.input-rate input {
+    width: 60%;
+	font-size: 28rpx;
+	text-align: left;
 }
 
 .input-tag {

@@ -1,53 +1,66 @@
 <!--pages/dl-detail/index.wxml-->
 <view class='census-title'>
-			<text class='census-title-left'></text>
-			<text class='census-title-right'>基本信息</text>
+    <text class='census-title-left'></text>
+    <text class='census-title-right'>基本信息</text>
 </view>
 <view class='infoBox'>
-	<view class='info-item' wx:for="{{infoList}}">
-		<view class='info-item-left'>{{item.key}}</view>
-		<view class='info-item-right' wx:if="{{item.type==1}}">{{item.value}}</view>
-		  <switch checked bindchange="switch1Change" checked="{{item.onOff}}" class='swich'  wx:if="{{item.type==2}}" value="关闭"/>
-	</view>
+    <view class='info-item' wx:for="{{infoList}}">
+        <view class='info-item-left'>{{item.key}}</view>
+        <view class='info-item-right' wx:if="{{item.type==1}}">{{item.value}}</view>
+        <switch checked bindchange="switch1Change" checked="{{item.onOff}}" class='swich' wx:if="{{item.type==2}}" value="关闭" />
+    </view>
 </view>
 <view class='census-title'>
-			<text class='census-title-left'></text>
-			<text class='census-title-right'>功能应用</text>
+    <text class='census-title-left'></text>
+    <text class='census-title-right'>功能应用</text>
 </view>
 <view class='rate' bindtap="rate">
-	<image src="../img/rate.png" class='rate-left'></image>
-	<view class='rate-mid'>修改费率</view>
-	<image src="../img/you.png" class='rate-right'></image>
+    <image src="../img/rate.png" class='rate-left'></image>
+    <view class='rate-mid'>修改费率</view>
+    <image src="../img/you.png" class='rate-right'></image>
 </view>
 <view class='rate' bindtap="pass">
-	<image src="../img/pass.png" class='rate-left'></image>
-	<view class='rate-mid'>修改密码</view>
-	<image src="../img/you.png" class='rate-right'></image>
+    <image src="../img/pass.png" class='rate-left'></image>
+    <view class='rate-mid'>修改密码</view>
+    <image src="../img/you.png" class='rate-right'></image>
 </view>
-<view class='mask1' wx:if="{{changeRate==true}}"  data-hide="no"  catchtap="hide">
-	<view class='changeRate1' data-hide="yes" >
-		<view class='change-title'>修改费率</view>
-		<view class="input-rate">
-			<view style="display:inline-block;widht:30%;vertical-align:top;margin-right:30rpx;font-size:26rpx">支付宝费率</view>
-			<input style="display:inline-block;width:60%;vertical-align:top;" placeholder='支付宝费率' bindinput="aliRate"></input>
-		</view>
-		
-		<!-- <input class='input-rate' placeholder='微信费率' bindinput="weChatRate"></input>
-		<input class='input-rate' placeholder='云闪付费率1' bindinput="unionPayRate"></input>
-		<input class='input-rate' placeholder='云闪付费率2' bindinput="unionPayRatetwo"></input> -->
-		<view class='input-tag'>费率单位为百分比，示例：0.38</view>
-		<view class="{{rate ==''?'input-sub':'input-sub-ok'}}" bindtap="changeRate">确认修改</view>
-	</view>
-	
-</view>
-<view class='mask' wx:if="{{changePass==true}}"  data-hide="no"  catchtap="hide">
-	<view class='changeRate' data-hide="yes">
-		<view class='change-title'>修改密码</view>
-		<input class='input-rate' type="password" placeholder='新密码' bindinput="pass1"></input>
-		<input class='input-rate' type="password" placeholder='确认密码' bindinput="repass"></input>
-		<view class='input-tag'>注：不修改密码请留空</view>
-		<view class='input-sub-ok' bindtap="changePass">确认修改</view>
-	</view>
-	
-</view>
+<view class='mask1' wx:if="{{changeRate==true}}" data-hide="no" catchtap="hide">
+    <view class='changeRate1' data-hide="yes">
+        <view class='change-title'>修改费率</view>
 
+        <!-- <view class='input-rate {{idx==(0||1)?"hide":""}}' wx:for='{{infoList}}' wx:for-index="idx" wx:for-item="item" wx:if="{{item.type==1}}">
+            <label>{{item.key}}:{{idx}}</label>
+            <input placeholder='{{item.key}}' value="{{item.value}}" bindinput="aliRate"></input>
+        </view> -->
+
+        <view class="input-rate">
+			<label>支付宝费率(%)</label>
+            <input placeholder='支付宝费率' value="{{aliR}}" bindinput="aliRinput"></input>
+        </view>
+        <view class="input-rate">
+			<label>微信费率(%)</label>
+            <input placeholder='微信费率' value="{{wxR}}" bindinput="wxRinput"></input>
+        </view>
+        <view class="input-rate">
+			<label>云闪付费率1(%)</label>
+            <input placeholder='云闪付费率1' value="{{un1R}}" bindinput="un1Rinput"></input>
+        </view>
+        <view class="input-rate">
+			<label>云闪付费率2(%)</label>
+            <input placeholder='云闪付费率2' value="{{un2R}}" bindinput="un2Rinput"></input>
+        </view>
+        <view class='input-tag'>费率单位为百分比，示例：0.38</view>
+        <view class="input-sub-ok" bindtap="changeRate">确认修改</view>
+    </view>
+
+</view>
+<view class='mask' wx:if="{{changePass==true}}" data-hide="no" catchtap="hide">
+    <view class='changeRate' data-hide="yes">
+        <view class='change-title'>修改密码</view>
+        <input class='input-rate' type="password" placeholder='新密码' bindinput="pass1"></input>
+        <input class='input-rate' type="password" placeholder='确认密码' bindinput="repass"></input>
+        <view class='input-tag'>注：不修改密码请留空</view>
+        <view class='input-sub-ok' bindtap="changePass">确认修改</view>
+    </view>
+
+</view>
