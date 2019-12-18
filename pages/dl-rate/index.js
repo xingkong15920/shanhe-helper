@@ -9,91 +9,112 @@ Page({
 	 */
 	data: {
 		server: config.server,
-wecharRate:'0',
-aliRate:'0',
-fuyouRateT1:'0',
-fuyouRateD1:'0',
-fuyouRateD0:'0',
-yrmRateT1:'0',
-yrmRateD1:'0',
-yrmRateD0:'0',
-xdlRateT1:'0',
-xdlRateD1:'0',
-xdlRateD0:'0',
-sxfRateT1:'0',
-sxfRateD1:'0',
-sxfRateD0:'0',
+		xdlaliRate:'0.30',
+		xdlweChatRate:'0.30',
+		xdlUnionPayRate:'0.30',
+		xdlJDWallet:'0.30',
+		xdlQQWallet:'0.30',
+		fyweChatRate:'0.30',
+		fyaliRate:'0.30',
+		fyUnionPayRate:'0.30',
+		fyJDWallet:'0.30',
+		fyQQWallet:'0.30',
+		sxfweChatRate:'0.30',
+		sxfaliRate:'0.30',
+		sxfUnionPayRate:'0.30',
+		sxfJDWallet:'0.30',
+		sxfQQWallet:'0.30',
+		gfAliRate:'0.30',
+		gfWeChatRate:'0.30',
+		lsUnionPayRatetwo:'0.30',
+		sxfUnionPayRatetwo:'0.30',
+		fyUnionPayRatetwo:'0.30',
+		XdlUnionPayRatetwo:'0.30',
+		lsweChatRate:'0.30',
+		lsaliRate:'0.30',
+		lsUnionPayRate:'0.30',
+		lsJDWallet:'0.30',
+		lsQQWallet:'0.30',
+		lsWingPayRate:'0.30',
+		sxfWingPayRate:'0.30',
+		fyWingPayRate:'0.30',
+		xdlWingPayRate:'0.30',
 	},
 	rateInput:function(e){
 		switch (e.currentTarget.dataset.type) {
-			case 'wecharRate':
+			//官方支付宝
+			case 'gfAliRate':
 				this.setData({
-					wecharRate:e.detail.value
+					gfAliRate:e.detail.value
 				})
 				break;
-			case 'aliRate':
+			//官方微信
+			case 'gfWeChatRate':
 				this.setData({
-					aliRate: e.detail.value
+					gfWeChatRate: e.detail.value
 				})
 				break;
-			case 'fuyouRateT1':
+			//富友
+			case 'fyweChatRate':
 				this.setData({
-					fuyouRateT1: e.detail.value
+					fyweChatRate: e.detail.value
 				})
 				break;
-			case 'fuyouRateD1':
+			case 'fyaliRate':
 				this.setData({
-					fuyouRateD1: e.detail.value
+					fyaliRate: e.detail.value
 				})
 				break;
-			case 'fuyouRateD0':
+			case 'fyUnionPayRate':
 				this.setData({
-					fuyouRateD0: e.detail.value
+					fyUnionPayRate: e.detail.value
 				})
 				break;
-			case 'yrmRateT1':
+			case 'fyUnionPayRatetwo':
 				this.setData({
-					yrmRateT1: e.detail.value
+					fyUnionPayRatetwo: e.detail.value
 				})
 				break;
-			case 'yrmRateD1':
+			//新大陆通道
+			case 'xdlweChatRate':
 				this.setData({
-					yrmRateD1: e.detail.value
+					xdlweChatRate: e.detail.value
 				})
 				break;
-			case 'yrmRateD0':
+			case 'xdlaliRate':
 				this.setData({
-					yrmRateD0: e.detail.value
+					xdlaliRate: e.detail.value
 				})
 				break;
-			case 'xdlRateT1':
+			case 'xdlUnionPayRate':
 				this.setData({
-					xdlRateT1: e.detail.value
+					xdlUnionPayRate: e.detail.value
 				})
 				break;
-			case 'xdlRateD1':
+			case 'XdlUnionPayRatetwo':
 				this.setData({
-					xdlRateD1: e.detail.value
+					XdlUnionPayRatetwo: e.detail.value
 				})
 				break;
-			case 'xdlRateD0':
+			//随行付通道
+			case 'sxfweChatRate':
 				this.setData({
-					xdlRateD0: e.detail.value
+					sxfweChatRate: e.detail.value
 				})
 				break;
-			case 'sxfRateT1':
+			case 'sxfaliRate':
 				this.setData({
-					sxfRateT1: e.detail.value
+					sxfaliRate: e.detail.value
 				})
 				break;
-			case 'sxfRateD1':
+			case 'sxfUnionPayRate':
 				this.setData({
-					sxfRateD1: e.detail.value
+					sxfUnionPayRate: e.detail.value
 				})
 				break;
-			case 'sxfRateD0':
+			case 'sxfUnionPayRatetwo':
 				this.setData({
-					sxfRateD0: e.detail.value
+					sxfUnionPayRatetwo: e.detail.value
 				})
 				break;
 			default:
@@ -148,86 +169,77 @@ sxfRateD0:'0',
 					for (var i = 0; i < dataList.length;i++){
 						if(dataList[i].paymentChanneltype == 0){
 							that.setData({
-								aliRate: (dataList[i].rate*100).toFixed(3)
+								gfAliRate: (dataList[i].rate*100).toFixed(2)
 							})
 						}
 						if (dataList[i].paymentChanneltype == 1) {
 							that.setData({
-								wecharRate: (dataList[i].rate * 100).toFixed(3)
+								gfWeChatRate: (dataList[i].rate * 100).toFixed(2)
 							})
 						}
 						if (dataList[i].paymentChanneltype == 2) {
-							switch (dataList[i].rateType) {
-								case 'D0':
+							switch (dataList[i].onePaymentTypeINT) {
+								case 0:
 									that.setData({
-										fuyouRateD0: (dataList[i].rate * 100).toFixed(3)
+										fyaliRate: (dataList[i].rate * 100).toFixed(2)
 									})
 									break;
-								case 'T1':
+								case 1:
 									that.setData({
-										fuyouRateT1: (dataList[i].rate * 100).toFixed(3)
+										fyweChatRate: (dataList[i].rate * 100).toFixed(2)
 									})
 									break;
-								case 'D1':
+								case 3:
 									that.setData({
-										fuyouRateD1: (dataList[i].rate * 100).toFixed(3)
+										fyUnionPayRate: (dataList[i].rate * 100).toFixed(2)
 									})
-									break;
-							}
-						}
-						if (dataList[i].paymentChanneltype == 3) {
-							switch (dataList[i].rateType) {
-								case 'D0':
 									that.setData({
-										yrmRateD0: (dataList[i].rate * 100).toFixed(3)
-									})
-									break;
-								case 'T1':
-									that.setData({
-										yrmRateT1: (dataList[i].rate * 100).toFixed(3)
-									})
-									break;
-								case 'D1':
-									that.setData({
-										yrmRateD1: (dataList[i].rate * 100).toFixed(3)
+										fyUnionPayRatetwo: (dataList[i].ysfrate * 100).toFixed(2)
 									})
 									break;
 							}
 						}
+						
 						if (dataList[i].paymentChanneltype == 4) {
-							switch (dataList[i].rateType) {
-								case 'D0':
+							switch (dataList[i].onePaymentTypeINT) {
+								case 0:
 									that.setData({
-										xdlRateD0: (dataList[i].rate * 100).toFixed(3)
+										xdlaliRate: (dataList[i].rate * 100).toFixed(2)
 									})
 									break;
-								case 'T1':
+								case 1:
 									that.setData({
-										xdlRateT1: (dataList[i].rate * 100).toFixed(3)
+										xdlweChatRate: (dataList[i].rate * 100).toFixed(2)
 									})
 									break;
-								case 'D1':
+								case 3:
 									that.setData({
-										xdlRateD1: (dataList[i].rate * 100).toFixed(3)
+										xdlUnionPayRate: (dataList[i].rate * 100).toFixed(2)
+									})
+									that.setData({
+										XdlUnionPayRatetwo: (dataList[i].ysfrate * 100).toFixed(2)
 									})
 									break;
 							}
 						}
 						if (dataList[i].paymentChanneltype == 5) {
-							switch (dataList[i].rateType) {
-								case 'D0':
+							switch (dataList[i].onePaymentTypeINT) {
+								case 0:
 									that.setData({
-										sxfRateD0: (dataList[i].rate * 100).toFixed(3)
+										sxfaliRate: (dataList[i].rate * 100).toFixed(2)
 									})
 									break;
-								case 'T1':
+								case 1:
 									that.setData({
-										sxfRateT1: (dataList[i].rate * 100).toFixed(3)
+										sxfweChatRate: (dataList[i].rate * 100).toFixed(2)
 									})
 									break;
-								case 'D1':
+								case 3:
 									that.setData({
-										sxfRateD1: (dataList[i].rate * 100).toFixed(3)
+										sxfUnionPayRate: (dataList[i].rate * 100).toFixed(2)
+									})
+									that.setData({
+										sxfUnionPayRatetwo: (dataList[i].ysfrate * 100).toFixed(2)
 									})
 									break;
 							}
@@ -255,20 +267,36 @@ sxfRateD0:'0',
 		nOData.agentLevel = this.data.info.agentLevel
 		nOData.pAgentNumber = wx.getStorageSync('shopInfo').Number
 		nOData.pAgentLevel = wx.getStorageSync('shopInfo').agentLevel
-		nOData.aliRate = (this.data.aliRate/10000*100).toFixed(5)
-		nOData.wecharRate = (this.data.wecharRate/10000*100).toFixed(5)
-		nOData.fuyouRateD1 = (this.data.fuyouRateD1/10000*100).toFixed(5)
-		nOData.fuyouRateD0 = (this.data.fuyouRateD0/10000*100).toFixed(5)
-		nOData.fuyouRateT1 = (this.data.fuyouRateT1/10000*100).toFixed(5)
-		nOData.yrmRateD1 = (this.data.yrmRateD1/10000*100).toFixed(5)
-		nOData.yrmRateD0 = (this.data.yrmRateD0/10000*100).toFixed(5)
-		nOData.yrmRateT1 = (this.data.yrmRateT1/10000*100).toFixed(5)
-		nOData.xdlRateD1 = (this.data.xdlRateD1/10000*100).toFixed(5)
-		nOData.xdlRateD0 = (this.data.xdlRateD0/10000*100).toFixed(5)
-		nOData.xdlRateT1 = (this.data.xdlRateT1/10000*100).toFixed(5)
-		nOData.sxfRateD0 = (this.data.sxfRateD0/10000*100).toFixed(5)
-		nOData.sxfRateD1 = (this.data.sxfRateD1/10000*100).toFixed(5)
-		nOData.sxfRateT1 = (this.data.sxfRateT1/10000*100).toFixed(5)	
+		nOData.xdlaliRate = (this.data.xdlaliRate/10000*100).toFixed(4)
+		nOData.xdlweChatRate = (this.data.xdlweChatRate/10000*100).toFixed(4)
+		nOData.xdlUnionPayRate = (this.data.xdlUnionPayRate/10000*100).toFixed(4)
+		nOData.xdlJDWallet = (this.data.xdlJDWallet/10000*100).toFixed(4)
+		nOData.xdlQQWallet = (this.data.xdlQQWallet/10000*100).toFixed(4)
+		nOData.fyweChatRate = (this.data.fyweChatRate/10000*100).toFixed(4)
+		nOData.fyaliRate = (this.data.fyaliRate/10000*100).toFixed(4)
+		nOData.fyUnionPayRate = (this.data.fyUnionPayRate/10000*100).toFixed(4)
+		nOData.fyJDWallet = (this.data.fyJDWallet/10000*100).toFixed(4)
+		nOData.fyQQWallet = (this.data.fyQQWallet/10000*100).toFixed(4)
+		nOData.sxfweChatRate = (this.data.sxfweChatRate/10000*100).toFixed(4)
+		nOData.sxfaliRate = (this.data.sxfaliRate/10000*100).toFixed(4)
+		nOData.sxfUnionPayRate = (this.data.sxfUnionPayRate/10000*100).toFixed(4)
+		nOData.sxfJDWallet = (this.data.sxfJDWallet/10000*100).toFixed(4)
+		nOData.sxfQQWallet = (this.data.sxfQQWallet/10000*100).toFixed(4)
+		nOData.gfAliRate = (this.data.gfAliRate/10000*100).toFixed(4)
+		nOData.gfWeChatRate = (this.data.gfWeChatRate/10000*100).toFixed(4)
+		nOData.lsUnionPayRatetwo = (this.data.lsUnionPayRatetwo/10000*100).toFixed(4)
+		nOData.sxfUnionPayRatetwo = (this.data.sxfUnionPayRatetwo/10000*100).toFixed(4)
+		nOData.fyUnionPayRatetwo = (this.data.fyUnionPayRatetwo/10000*100).toFixed(4)
+		nOData.XdlUnionPayRatetwo = (this.data.XdlUnionPayRatetwo/10000*100).toFixed(4)
+		nOData.lsweChatRate = (this.data.lsweChatRate/10000*100).toFixed(4)
+		nOData.lsaliRate = (this.data.lsaliRate/10000*100).toFixed(4)
+		nOData.lsUnionPayRate = (this.data.lsUnionPayRate/10000*100).toFixed(4)
+		nOData.lsJDWallet = (this.data.lsJDWallet/10000*100).toFixed(4)
+		nOData.lsQQWallet = (this.data.lsQQWallet/10000*100).toFixed(4)
+		nOData.lsWingPayRate = (this.data.lsWingPayRate/10000*100).toFixed(4)
+		nOData.sxfWingPayRate = (this.data.sxfWingPayRate/10000*100).toFixed(4)
+		nOData.fyWingPayRate = (this.data.fyWingPayRate/10000*100).toFixed(4)
+		nOData.xdlWingPayRate = (this.data.xdlWingPayRate/10000*100).toFixed(4)
 		var that = this	
 		wx.request({
 			url: this.data.server + common.updataAgentRate, //仅为示例，并非真实的接口地址

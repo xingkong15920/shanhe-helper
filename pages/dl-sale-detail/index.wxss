@@ -1,8 +1,10 @@
 /* pages/dl-detail/index.wxss */
-view, scroll-view,::after,::before {
+
+view, scroll-view, ::after, ::before {
     /* box-sizing: border-box; */
-    transition: .5s all;
+    transition: 0.5s all;
 }
+
 .census-title {
     width: 100%;
     height: 68rpx;
@@ -35,7 +37,7 @@ view, scroll-view,::after,::before {
 
 .infoBox {
     width: 100%;
-    height: 426rpx;
+    height: 756rpx;
     background: white;
 }
 
@@ -47,7 +49,7 @@ view, scroll-view,::after,::before {
 
 .info-item-left {
     margin-left: 30rpx;
-    width: 140rpx;
+    width: 200rpx;
     height: 106rpx;
     font-size: 28rpx;
     font-family: PingFangSC-Medium;
@@ -58,7 +60,7 @@ view, scroll-view,::after,::before {
 }
 
 .info-item-right {
-    width: 496rpx;
+    width: 400rpx;
     height: 106rpx;
     font-size: 28rpx;
     font-family: PingFangSC-Medium;
@@ -106,15 +108,25 @@ view, scroll-view,::after,::before {
 }
 
 /* 修改费率 */
-.mask{
-	width:100%;
-	height:100vh;
-	position:fixed;
-	left:0;
-	top:0;
-	background:rgba(0,0,0,0.3);
-	
+
+.mask {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.3);
 }
+
+.mask1 {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.3);
+}
+
 .changeRate {
     width: 100%;
     height: 618rpx;
@@ -122,8 +134,19 @@ view, scroll-view,::after,::before {
     position: fixed;
     bottom: 0;
     left: 0;
-	opacity:1;
-	z-index:9999
+    opacity: 1;
+    z-index: 9999;
+}
+
+.changeRate1 {
+    width: 100%;
+    height: 818rpx;
+    background: white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    opacity: 1;
+    z-index: 9999;
 }
 
 .change-title {
@@ -135,60 +158,66 @@ view, scroll-view,::after,::before {
     font-weight: 500;
     color: rgba(51, 51, 51, 1);
     line-height: 44rpx;
-	margin-bottom:32rpx;
+    margin-bottom: 32rpx;
 }
-.change-now{
-	width:100%;
-	text-align:center;
-	font-size:28rpx;
-font-family:PingFangSC-Medium;
-font-weight:500;
-color:rgba(61,172,106,1);
-line-height:40rpx;
-margin-bottom:20rpx;
+
+.change-now {
+    width: 100%;
+    text-align: center;
+    font-size: 28rpx;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(61, 172, 106, 1);
+    line-height: 40rpx;
+    margin-bottom: 20rpx;
 }
-.input-rate{
-	width:670rpx;
-	height:104rpx;
-	margin:0 auto;
-	border-bottom:1px solid #EDEDED
+
+.input-rate {
+    width: 670rpx;
+    height: 74rpx;
+    margin: 0 auto;
+	padding-top:30rpx;
+    border-bottom: 1px solid #ededed;
 }
-.input-tag{
-	margin-left:40rpx;
-	width:440rpx;
-height:40rpx;
-font-size:28rpx;
-font-family:PingFangSC-Medium;
-font-weight:500;
-color:rgba(153,153,153,1);
-line-height:40rpx;
-margin-top:32rpx;
-margin-bottom:80rpx;
+
+.input-tag {
+    margin-left: 40rpx;
+    width: 440rpx;
+    height: 40rpx;
+    font-size: 28rpx;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(153, 153, 153, 1);
+    line-height: 40rpx;
+    margin-top: 32rpx;
+    margin-bottom: 80rpx;
 }
-.input-sub{
-	margin-left:40rpx;
-	width:670rpx;
-height:96rpx;
-background:rgba(61,172,106,1);
-border-radius:8rpx;
-opacity:0.3;
-font-size:32rpx;
-font-family:PingFangSC-Medium;
-font-weight:500;
-color:rgba(255,255,255,1);
-line-height:96rpx;
-text-align:center;
+
+.input-sub {
+    margin-left: 40rpx;
+    width: 670rpx;
+    height: 96rpx;
+    background: rgba(61, 172, 106, 1);
+    border-radius: 8rpx;
+    opacity: 0.3;
+    font-size: 32rpx;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+    line-height: 96rpx;
+    text-align: center;
 }
-.input-sub-ok{
-	margin-left:40rpx;
-	width:670rpx;
-height:96rpx;
-background:rgba(61,172,106,1);
-border-radius:8rpx;
-font-size:32rpx;
-font-family:PingFangSC-Medium;
-font-weight:500;
-color:rgba(255,255,255,1);
-line-height:96rpx;
-text-align:center;
+
+.input-sub-ok {
+    margin-left: 40rpx;
+    width: 670rpx;
+    height: 96rpx;
+    background: rgba(61, 172, 106, 1);
+    border-radius: 8rpx;
+    font-size: 32rpx;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+    line-height: 96rpx;
+    text-align: center;
 }

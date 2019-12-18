@@ -216,10 +216,22 @@ Page({
 				value: da.registerCell,
 				type: 1
 				}, {
-					key: '费率',
-					value: da.proportion + '%',
+					key: '支付宝费率',
+					value: (da.aliRate *100).toFixed(2) + '%',
 					type: 1
-				}, {
+			}, {
+				key: '微信费率',
+				value: (da.weChatRate * 100).toFixed(2) + '%',
+				type: 1
+			}, {
+				key: '云闪付费率1',
+				value: (da.unionPayRate * 100).toFixed(2) + '%',
+				type: 1
+			}, {
+				key: '云闪付费率2',
+				value: (da.unionPayRatetwo * 100).toFixed(2) + '%',
+				type: 1
+			}, {
 					key: '状态',
 					value: '',
 					type: 2,

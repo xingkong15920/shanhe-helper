@@ -93,6 +93,10 @@ Page({
 				wx.hideLoading()
 				console.log(res)
 				if (res.data.code == 1000) {
+					for (let i = 0; i < res.data.data.saleRegisterInfoList.length;i++ ){
+						res.data.data.saleRegisterInfoList[i].saleName1 = that.lengthMore(res.data.data.saleRegisterInfoList[i].saleName)
+						
+					}
 					if (that.data.page == 1) {
 						that.setData({
 							dataList: res.data.data.saleRegisterInfoList,
@@ -116,6 +120,13 @@ Page({
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
+	lengthMore:function(res){
+		if(res.length >=6 ){
+			return res.substring(0,6) + '...';
+		}else{
+			return res
+		}
+	},
 	onReady: function () {
 		
 	},

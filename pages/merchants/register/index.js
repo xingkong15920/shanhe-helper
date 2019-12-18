@@ -1076,7 +1076,21 @@ Page({
                     }
 
                 }
-
+				if (isNaN(shopInput.alipayRate) == true){
+					wx.showToast({
+						title: "官方费率输入错误",
+						icon: 'none'
+					})
+					return
+				}else{
+					if (shopInput.alipayRate > 0.6 || shopInput.alipayRate < 0.38){
+						wx.showToast({
+							title: "官方费率请在0.38与0.6之间",
+							icon: 'none'
+						})
+						return
+					}
+				}
                 //结算
                 shopInput.settlementLogo = this.data.settlementLogo
                 shopInput.rateType = this.data.rateType

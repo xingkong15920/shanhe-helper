@@ -1,7 +1,8 @@
 {
 	"pages": [
-		
 		"pages/login/index",
+		"pages/dl-sale/index",
+		
 		"pages/index-dl/index",
 		"pages/index/index",
 		"pages/dl-tixian/index",
@@ -11,11 +12,11 @@
 		"pages/merchants/index",
 		"pages/dl-merchant/index",
 		
-		
-		"pages/main/index",
 		"pages/dl-rate/index",
+		"pages/main/index",
 		
-		"pages/dl-sale/index",
+		
+		
 		"pages/dl-sale-zhangdan/index",
 		"pages/order-merchant-search/index",
 		"pages/order-search/index",

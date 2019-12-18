@@ -41,13 +41,37 @@ Page({
 				class: 'btn-hide'
             },
             {
-                name: '费率',
+                name: '支付宝费率(%)',
                 pla: '请填写费率,示例0.45%',
                 type: 'text',
-				key: 'rate',
+				key: 'aliRate',
 				value: '',
 				class: 'btn'
-            },
+			},
+			{
+				name: '微信费率(%)',
+				pla: '请填写费率,示例0.45%',
+				type: 'text',
+				key: 'weChatRate',
+				value: '',
+				class: 'btn'
+			},
+			{
+				name: '云闪付费率1(%)',
+				pla: '单笔1000以内包括1000',
+				type: 'text',
+				key: 'unionPayRate',
+				value: '',
+				class: 'btn'
+			},
+			{
+				name: '云闪付费率2(%)',
+				pla: '单笔1000以上',
+				type: 'text',
+				key: 'unionPayRatetwo',
+				value: '',
+				class: 'btn'
+			},
         ],
 		tel:'',
 		name:'',
@@ -101,13 +125,38 @@ Page({
 				repassHide: !this.data.repassHide
 			})
 		}
-		if (e.target.dataset.id == 'rate') {
+		if (e.target.dataset.id == 'aliRate') {
 			saleList[4].value = e.detail.value
 			this.setData({
-				rate: '',
+				aliRate: '',
 				saleList: saleList
 			})
 		}
+		if (e.target.dataset.id == 'weChatRate') {
+			saleList[5].value = e.detail.value
+			this.setData({
+				weChatRate: '',
+				saleList: saleList
+			})
+		}
+		if (e.target.dataset.id == 'unionPayRate') {
+			saleList[6].value = e.detail.value
+			this.setData({
+				unionPayRate: '',
+				saleList: saleList
+			})
+		}
+		if (e.target.dataset.id == 'unionPayRatetwo') {
+			saleList[7].value = e.detail.value
+			this.setData({
+				unionPayRatetwo: '',
+				saleList: saleList
+			})
+		}
+		aliRate
+		weChatRate
+		unionPayRate
+		unionPayRatetwo
 	},
     inputChage: function(e) {
         var key = e.currentTarget.dataset.type
@@ -139,12 +188,30 @@ Page({
                     repass: e.detail.value
                 })
                 break;
-            case 'rate':
+            case 'aliRate':
 				saleList[4].value = e.detail.value
                 this.setData({
-                    rate: e.detail.value
+                    aliRate: e.detail.value
                 })
                 break;
+			case 'weChatRate':
+				saleList[5].value = e.detail.value
+				this.setData({
+					weChatRate: e.detail.value
+				})
+				break;
+			case 'unionPayRate':
+				saleList[6].value = e.detail.value
+				this.setData({
+					unionPayRate: e.detail.value
+				})
+				break;
+			case 'unionPayRatetwo':
+				saleList[7].value = e.detail.value
+				this.setData({
+					unionPayRatetwo: e.detail.value
+				})
+				break;
         }
 
     },
@@ -199,16 +266,30 @@ Page({
 			})
 			return
 		}
-		if (this.data.rate == '' ) {
+		if (this.data.aliRate == '' ) {
 			wx.showToast({
-				title: '请输入销售费率',
+				title: '请输入支付宝费率',
 				icon: 'none'
 			})
 			return
 		}
-		if(this.data.rate.indexOf('%') < 0){
+		if (this.data.weChatRate == '') {
 			wx.showToast({
-				title: '费率为百分比，请输入%',
+				title: '请输入微信费率',
+				icon: 'none'
+			})
+			return
+		}
+		if (this.data.unionPayRate == '') {
+			wx.showToast({
+				title: '请输入云闪付费率1',
+				icon: 'none'
+			})
+			return
+		}
+		if (this.data.unionPayRatetwo == '') {
+			wx.showToast({
+				title: '请输入云闪付费率2',
 				icon: 'none'
 			})
 			return
@@ -219,7 +300,11 @@ Page({
         nOData.registerCell = this.data.tel
         nOData.saleName = this.data.name
         nOData.passWord = this.data.repass
-        nOData.proportion = (this.data.rate.replace('%','')/10000*100).toFixed(4)
+		nOData.aliRate = (this.data.aliRate/10000*100).toFixed(4)
+		nOData.weChatRate = (this.data.weChatRate/10000*100).toFixed(4)
+		nOData.unionPayRate = (this.data.unionPayRate/10000*100).toFixed(4)
+		nOData.unionPayRatetwo = (this.data.unionPayRatetwo/10000*100).toFixed(4)
+
         var that = this
         wx.request({
             url: this.data.server + common.addSale, //仅为示例，并非真实的接口地址

@@ -1,101 +1,111 @@
 <view class="head">费率单位为百分比，示例0.38%</view>
+<view class="head">云闪付费率1为单笔1000以内包括1000所设置</view>
+<view class="head">云闪付费率2为单笔1000以上所设置</view>
 <view class="item-body">
+    <view class="item">
+        <view class="item-head">
+            <view class="biao"></view>
+            <view class="title">官方支付宝(%)</view>
+        </view>
+        <view class="item-content">
+            <view class="item-content-list">
+                <view class="item-content-list-name">支付宝费率</view>
+                <input class="item-content-list-input" maxlength="6" value="{{gfAliRate}}" data-type="gfAliRate" type="number" bindinput="rateInput"></input>
+            </view>
+
+        </view>
+    </view>
 	<view class="item">
-	<view class="item-head">
-		<view class="biao"></view>
-		<view class="title">官方通道(%)</view>
-	</view>
-	<view class="item-content">
-		<view class="item-content-list">
-			<view class="item-content-list-name">微信费率</view>
-			<input class="item-content-list-input" maxlength="6" value="{{wecharRate}}" data-type="wecharRate" type="number"  bindinput="rateInput"></input>
-		</view>
-		<view class="item-content-list">
-			<view class="item-content-list-name">支付宝费率</view>
-			<input class="item-content-list-input"  maxlength="6" value="{{aliRate}}" data-type="aliRate" type="number" bindinput="rateInput"></input>
-		</view>
-		
-	</view>
-</view>
-<view class="item">
-	<view class="item-head">
-		<view class="biao"></view>
-		<view class="title">富友通道(%)</view>
-	</view>
-	<view class="item-content">
-		<view class="item-content-list">
-			<view class="item-content-list-name">T1费率</view>
-			<input class="item-content-list-input"  maxlength="6" value="{{fuyouRateT1}}" data-type="fuyouRateT1" type="number"  bindinput="rateInput"></input>
-		</view>
-		<view class="item-content-list">
-			<view class="item-content-list-name">D1费率</view>
-			<input class="item-content-list-input"  maxlength="6" value="{{fuyouRateD1}}" data-type="fuyouRateD1" type="number" bindinput="rateInput"></input>
-		</view>
-		<view class="item-content-list">
-			<view class="item-content-list-name">D0费率</view>
-			<input class="item-content-list-input"  maxlength="6" value="{{fuyouRateD0}}" data-type="fuyouRateD0" type="number" bindinput="rateInput"></input>
-		</view>
-	</view>
-</view>
-<view class="item">
-	<view class="item-head">
-		<view class="biao"></view>
-		<view class="title">易融码通道(%)</view>
-	</view>
-	<view class="item-content">
-		<view class="item-content-list">
-			<view class="item-content-list-name">T1费率</view>
-			<input class="item-content-list-input"  maxlength="6" value="{{yrmRateT1}}" data-type="yrmRateT1" type="number"  bindinput="rateInput"></input>
-		</view>
-		<view class="item-content-list">
-			<view class="item-content-list-name">D1费率</view>
-			<input class="item-content-list-input"  maxlength="6" value="{{yrmRateD1}}" data-type="yrmRateD1" type="number" bindinput="rateInput"></input>
-		</view>
-		<view class="item-content-list">
-			<view class="item-content-list-name">D0费率</view>
-			<input class="item-content-list-input"  maxlength="6" value="{{yrmRateD0}}" data-type="yrmRateD0" type="number" bindinput="rateInput"></input>
-		</view>
-	</view>
-</view>
-<view class="item">
-	<view class="item-head">
-		<view class="biao"></view>
-		<view class="title">新大陆通道(%)</view>
-	</view>
-	<view class="item-content">
-		<view class="item-content-list">
-			<view class="item-content-list-name">T1费率</view>
-			<input class="item-content-list-input"  maxlength="6" value="{{xdlRateT1}}" data-type="xdlRateT1" type="number"  bindinput="rateInput"></input>
-		</view>
-		<view class="item-content-list">
-			<view class="item-content-list-name">D1费率</view>
-			<input class="item-content-list-input"  maxlength="6" value="{{xdlRateD1}}" data-type="xdlRateD1" type="number" bindinput="rateInput"></input>
-		</view>
-		<view class="item-content-list">
-			<view class="item-content-list-name">D0费率</view>
-			<input class="item-content-list-input"  maxlength="6" value="{{xdlRateD0}}" data-type="xdlRateD0" type="number" bindinput="rateInput"></input>
-		</view>
-	</view>
-</view>
-<view class="item">
-	<view class="item-head">
-		<view class="biao"></view>
-		<view class="title">随行付通道(%)</view>
-	</view>
-	<view class="item-content">
-		<view class="item-content-list">
-			<view class="item-content-list-name">T1费率</view>
-			<input class="item-content-list-input"  maxlength="6" value="{{sxfRateT1}}" data-type="sxfRateT1" type="number"  bindinput="rateInput"></input>
-		</view>
-		<view class="item-content-list">
-			<view class="item-content-list-name">D1费率</view>
-			<input class="item-content-list-input"  maxlength="6" value="{{sxfRateD1}}" data-type="sxfRateD1" type="number" bindinput="rateInput"></input>
-		</view>
-		<view class="item-content-list">
-			<view class="item-content-list-name">D0费率</view>
-			<input class="item-content-list-input"  maxlength="6" value="{{sxfRateD0}}" data-type="sxfRateD0" type="number" bindinput="rateInput"></input>
-		</view>
-	</view>
-</view>
+        <view class="item-head">
+            <view class="biao"></view>
+            <view class="title">官方微信(%)</view>
+        </view>
+        <view class="item-content">
+            <view class="item-content-list">
+                <view class="item-content-list-name">微信费率</view>
+                <input class="item-content-list-input" maxlength="6" value="{{gfWeChatRate}}" data-type="gfWeChatRate" type="number" bindinput="rateInput"></input>
+            </view>
+
+        </view>
+    </view>
+    <view class="item">
+        <view class="item-head">
+            <view class="biao"></view>
+            <view class="title">富友通道(%)</view>
+        </view>
+        <view class="item-content">
+            <view class="item-content-list">
+                <view class="item-content-list-name">微信费率</view>
+                <input class="item-content-list-input" maxlength="6" value="{{fyweChatRate}}" data-type="fyweChatRate" type="number" bindinput="rateInput"></input>
+            </view>
+            <view class="item-content-list">
+                <view class="item-content-list-name">支付宝费率</view>
+                <input class="item-content-list-input" maxlength="6" value="{{fyaliRate}}" data-type="fyaliRate" type="number" bindinput="rateInput"></input>
+            </view>
+        </view>
+		<view class="item-content">
+            <view class="item-content-list">
+                <view class="item-content-list-name">云闪付费率1</view>
+                <input class="item-content-list-input" maxlength="6" value="{{fyUnionPayRate}}" data-type="fyUnionPayRate" type="number" bindinput="rateInput"></input>
+            </view>
+            <view class="item-content-list">
+                <view class="item-content-list-name">云闪付费率2</view>
+                <input class="item-content-list-input" maxlength="6" value="{{fyUnionPayRatetwo}}" data-type="fyUnionPayRatetwo" type="number" bindinput="rateInput"></input>
+            </view>
+        </view>
+    </view>
+    
+    <view class="item">
+        <view class="item-head">
+            <view class="biao"></view>
+            <view class="title">新大陆通道(%)</view>
+        </view>
+        <view class="item-content">
+            <view class="item-content-list">
+                <view class="item-content-list-name">微信费率</view>
+                <input class="item-content-list-input" maxlength="6" value="{{xdlweChatRate}}" data-type="xdlweChatRate" type="number" bindinput="rateInput"></input>
+            </view>
+            <view class="item-content-list">
+                <view class="item-content-list-name">支付宝费率</view>
+                <input class="item-content-list-input" maxlength="6" value="{{xdlaliRate}}" data-type="xdlaliRate" type="number" bindinput="rateInput"></input>
+            </view>
+        </view>
+		<view class="item-content">
+            <view class="item-content-list">
+                <view class="item-content-list-name">云闪付费率1</view>
+                <input class="item-content-list-input" maxlength="6" value="{{xdlUnionPayRate}}" data-type="xdlUnionPayRate" type="number" bindinput="rateInput"></input>
+            </view>
+            <view class="item-content-list">
+                <view class="item-content-list-name">云闪付费率2</view>
+                <input class="item-content-list-input" maxlength="6" value="{{XdlUnionPayRatetwo}}" data-type="XdlUnionPayRatetwo" type="number" bindinput="rateInput"></input>
+            </view>
+        </view>
+    </view>
+    <view class="item">
+        <view class="item-head">
+            <view class="biao"></view>
+            <view class="title">随行付通道(%)</view>
+        </view>
+        <view class="item-content">
+            <view class="item-content-list">
+                <view class="item-content-list-name">微信费率</view>
+                <input class="item-content-list-input" maxlength="6" value="{{sxfweChatRate}}" data-type="sxfweChatRate" type="number" bindinput="rateInput"></input>
+            </view>
+            <view class="item-content-list">
+                <view class="item-content-list-name">支付宝费率</view>
+                <input class="item-content-list-input" maxlength="6" value="{{sxfaliRate}}" data-type="sxfaliRate" type="number" bindinput="rateInput"></input>
+            </view>
+        </view>
+		<view class="item-content">
+            <view class="item-content-list">
+                <view class="item-content-list-name">云闪付费率1</view>
+                <input class="item-content-list-input" maxlength="6" value="{{sxfUnionPayRate}}" data-type="sxfUnionPayRate" type="number" bindinput="rateInput"></input>
+            </view>
+            <view class="item-content-list">
+                <view class="item-content-list-name">云闪付费率2</view>
+                <input class="item-content-list-input" maxlength="6" value="{{sxfUnionPayRatetwo}}" data-type="sxfUnionPayRatetwo" type="number" bindinput="rateInput"></input>
+            </view>
+        </view>
+    </view>
 </view>
 <view class="sub" bindtap="sub">保存修改</view>
