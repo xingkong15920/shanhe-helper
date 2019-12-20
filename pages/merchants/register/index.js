@@ -566,39 +566,39 @@ Page({
 
 
         }
-		//修复个人个体企业的按钮选择
-		console.log(e.detail.value)
-		if(e.detail.value == 0){
-			var shopData = this.data.shopData
-			console.log(shopData[0].stepsCon[0].basicsetup[1].radiolist)
-			for(let i = 0 ; i < shopData[0].stepsCon[0].basicsetup[1].radiolist.length;i++){
-				shopData[0].stepsCon[0].basicsetup[1].radiolist[i].checked = false
-			}
-			shopData[0].stepsCon[0].basicsetup[1].radiolist[0].checked = true
-			this.setData({
-				shopData:shopData
-			})
-		}else if(e.detail.value == 1){
-			var shopData = this.data.shopData
-			console.log(shopData[0].stepsCon[0].basicsetup[1].radiolist)
-			for (let i = 0; i < shopData[0].stepsCon[0].basicsetup[1].radiolist.length; i++) {
-				shopData[0].stepsCon[0].basicsetup[1].radiolist[i].checked = false
-			}
-			shopData[0].stepsCon[0].basicsetup[1].radiolist[1].checked = true
-			this.setData({
-				shopData: shopData
-			})
-		}else if(e.detail.value == 2){
-			var shopData = this.data.shopData
-			console.log(shopData[0].stepsCon[0].basicsetup[1].radiolist)
-			for (let i = 0; i < shopData[0].stepsCon[0].basicsetup[1].radiolist.length; i++) {
-				shopData[0].stepsCon[0].basicsetup[1].radiolist[i].checked = false
-			}
-			shopData[0].stepsCon[0].basicsetup[1].radiolist[2].checked = true
-			this.setData({
-				shopData: shopData
-			})
-		}
+        //修复个人个体企业的按钮选择
+        console.log(e.detail.value)
+        if (e.detail.value == 0) {
+            var shopData = this.data.shopData
+            console.log(shopData[0].stepsCon[0].basicsetup[1].radiolist)
+            for (let i = 0; i < shopData[0].stepsCon[0].basicsetup[1].radiolist.length; i++) {
+                shopData[0].stepsCon[0].basicsetup[1].radiolist[i].checked = false
+            }
+            shopData[0].stepsCon[0].basicsetup[1].radiolist[0].checked = true
+            this.setData({
+                shopData: shopData
+            })
+        } else if (e.detail.value == 1) {
+            var shopData = this.data.shopData
+            console.log(shopData[0].stepsCon[0].basicsetup[1].radiolist)
+            for (let i = 0; i < shopData[0].stepsCon[0].basicsetup[1].radiolist.length; i++) {
+                shopData[0].stepsCon[0].basicsetup[1].radiolist[i].checked = false
+            }
+            shopData[0].stepsCon[0].basicsetup[1].radiolist[1].checked = true
+            this.setData({
+                shopData: shopData
+            })
+        } else if (e.detail.value == 2) {
+            var shopData = this.data.shopData
+            console.log(shopData[0].stepsCon[0].basicsetup[1].radiolist)
+            for (let i = 0; i < shopData[0].stepsCon[0].basicsetup[1].radiolist.length; i++) {
+                shopData[0].stepsCon[0].basicsetup[1].radiolist[i].checked = false
+            }
+            shopData[0].stepsCon[0].basicsetup[1].radiolist[2].checked = true
+            this.setData({
+                shopData: shopData
+            })
+        }
         this.getTop()
     },
     radioChange1: function(e) {
@@ -1076,21 +1076,23 @@ Page({
                     }
 
                 }
-				if (isNaN(shopInput.alipayRate) == true){
-					wx.showToast({
-						title: "官方费率输入错误",
-						icon: 'none'
-					})
-					return
-				}else{
-					if (shopInput.alipayRate > 0.6 || shopInput.alipayRate < 0.38){
-						wx.showToast({
-							title: "官方费率请在0.38与0.6之间",
-							icon: 'none'
-						})
-						return
-					}
-				}
+                if (this.data.channelType == 0) {
+                    if (isNaN(shopInput.alipayRate) == true) {
+                        wx.showToast({
+                            title: "官方费率输入错误",
+                            icon: 'none'
+                        })
+                        return
+                    } else {
+                        if (shopInput.alipayRate > 1 || shopInput.alipayRate < 0.21) {
+                            wx.showToast({
+                                title: "官方费率请在0.21与1之间",
+                                icon: 'none'
+                            })
+                            return
+                        }
+                    }
+                }
                 //结算
                 shopInput.settlementLogo = this.data.settlementLogo
                 shopInput.rateType = this.data.rateType
@@ -1124,21 +1126,21 @@ Page({
                 shopInput.juridicalPersonIDType = this.data.juridicalPersonIDType
                 var that = this
                 console.log(shopInput)
-				
-				shopInput.juridicalPersonIDEndTime = this.dateFormat(shopInput.juridicalPersonIDEndTime)
-				if (shopInput.merchantType != 0){
-					shopInput.businessLicenseEndTime = this.dateFormat(shopInput.businessLicenseEndTime)
-					if (this.data.businessLicenseType == 1) {
 
-						shopInput.businessLicenseTime = this.dateFormat(shopInput.businessLicenseTime)
-					}
-				}
-				
-				if (this.data.juridicalPersonIDType == 1) {
-					console.log(shopInput.juridicalpersonIdTime)
-					shopInput.juridicalpersonIdTime = this.dateFormat(shopInput.juridicalpersonIdTime)
-				}
-				
+                shopInput.juridicalPersonIDEndTime = this.dateFormat(shopInput.juridicalPersonIDEndTime)
+                if (shopInput.merchantType != 0) {
+                    shopInput.businessLicenseEndTime = this.dateFormat(shopInput.businessLicenseEndTime)
+                    if (this.data.businessLicenseType == 1) {
+
+                        shopInput.businessLicenseTime = this.dateFormat(shopInput.businessLicenseTime)
+                    }
+                }
+
+                if (this.data.juridicalPersonIDType == 1) {
+                    console.log(shopInput.juridicalpersonIdTime)
+                    shopInput.juridicalpersonIdTime = this.dateFormat(shopInput.juridicalpersonIdTime)
+                }
+
                 wx.request({
                     url: this.data.server + common.merchantRegister,
                     method: 'post',
@@ -1187,33 +1189,33 @@ Page({
 
         console.log(jgData)
         if (this.data.steps == 0) {
-			if (this.data.feilvType == false || this.data.channelType == 0 || this.data.channelType == 1) {
+            if (this.data.feilvType == false || this.data.channelType == 0 || this.data.channelType == 1) {
                 for (let i = 0; i < jgData.length; i++) {
-					if (jgData[i].id == 'rate1' ) {
+                    if (jgData[i].id == 'rate1') {
                         jgData.splice(i, 1)
                         break
                     }
-					
+
                 }
             }
-			if ( this.data.channelType != 0 && this.data.channelType != 1) {
-				for (let i = 0; i < jgData.length; i++) {
-					if (jgData[i].id == 'alipayRate') {
-						jgData.splice(i, 1)
-						break
-					}
-					
-				}
-			}
-			if (this.data.channelType != 0 && this.data.channelType != 1) {
-				for (let i = 0; i < jgData.length; i++) {
-					
-					if (jgData[i].id == 'alipayNo') {
-						jgData.splice(i, 1)
-						break
-					}
-				}
-			}
+            if (this.data.channelType != 0 && this.data.channelType != 1) {
+                for (let i = 0; i < jgData.length; i++) {
+                    if (jgData[i].id == 'alipayRate') {
+                        jgData.splice(i, 1)
+                        break
+                    }
+
+                }
+            }
+            if (this.data.channelType != 0 && this.data.channelType != 1) {
+                for (let i = 0; i < jgData.length; i++) {
+
+                    if (jgData[i].id == 'alipayNo') {
+                        jgData.splice(i, 1)
+                        break
+                    }
+                }
+            }
             if (this.data.juridicalPersonIDType == 0) {
                 for (let i = 0; i < jgData.length; i++) {
 
@@ -1447,9 +1449,9 @@ Page({
                 addresslistc = []
             var provincelist = that.data.provincelist
             var provincelistc = that.data.provincelistc
-			for (let i = 0; i < that.data.proCode[num].cityList.length; i++) {
-				addresslist.push(that.data.proCode[num].cityList[i].cityName)
-				addresslistc.push(that.data.proCode[num].cityList[i].cityCode)
+            for (let i = 0; i < that.data.proCode[num].cityList.length; i++) {
+                addresslist.push(that.data.proCode[num].cityList[i].cityName)
+                addresslistc.push(that.data.proCode[num].cityList[i].cityCode)
             }
             provincelist[1] = addresslist
             provincelistc[1] = addresslistc
@@ -1457,9 +1459,9 @@ Page({
             var addresslist1 = [],
                 addresslistc1 = []
             var num1 = e.detail.value
-			for (let i = 0; i < that.data.proCode[num].cityList[0].areaList.length; i++) {
-				addresslist1.push(that.data.proCode[num].cityList[0].areaList[i].areaName)
-				addresslistc1.push(that.data.proCode[num].cityList[0].areaList[i].areaCode)
+            for (let i = 0; i < that.data.proCode[num].cityList[0].areaList.length; i++) {
+                addresslist1.push(that.data.proCode[num].cityList[0].areaList[i].areaName)
+                addresslistc1.push(that.data.proCode[num].cityList[0].areaList[i].areaCode)
             }
             provincelist[2] = addresslist1
             provincelistc[2] = addresslistc1
@@ -1537,9 +1539,9 @@ Page({
             var num1 = e.detail.value
             var provincelist = that.data.provincelist
             var provincelistc = that.data.provincelistc
-			for (let i = 0; i < that.data.proCode[that.data.provincecode].cityList[num1].areaList.length; i++) {
-				addresslist.push(that.data.proCode[that.data.provincecode].cityList[num1].areaList[i].areaName)
-				addresslistc.push(that.data.proCode[that.data.provincecode].cityList[num1].areaList[i].areaCode)
+            for (let i = 0; i < that.data.proCode[that.data.provincecode].cityList[num1].areaList.length; i++) {
+                addresslist.push(that.data.proCode[that.data.provincecode].cityList[num1].areaList[i].areaName)
+                addresslistc.push(that.data.proCode[that.data.provincecode].cityList[num1].areaList[i].areaCode)
             }
             provincelist[2] = addresslist
             provincelistc[2] = addresslistc
@@ -1858,7 +1860,7 @@ Page({
                     rateList1: this.data.d0rateNum[data],
                     youzhiType: this.data.rateTypeList[data] == 3 ? true : false
                 })
-            } else if(this.data.rateType == 'D1') {
+            } else if (this.data.rateType == 'D1') {
                 this.setData({
                     status1: cur,
                     shopInput: shopInput,
@@ -1868,17 +1870,17 @@ Page({
                     rateList1: this.data.d1rateNum[data],
                     youzhiType: this.data.rateTypeList[data] == 3 ? true : false,
                 })
-            }else{
-				this.setData({
-					status1: cur,
-					shopInput: shopInput,
-					paymentChannel: this.data.rateNumList[data],
-					channelType: this.data.rateTypeList[data],
-					rateList: this.data.t1rate[data],
-					rateList1: this.data.t1rateNum[data],
-					youzhiType: this.data.rateTypeList[data] == 3 ? true : false,
-				})
-			}
+            } else {
+                this.setData({
+                    status1: cur,
+                    shopInput: shopInput,
+                    paymentChannel: this.data.rateNumList[data],
+                    channelType: this.data.rateTypeList[data],
+                    rateList: this.data.t1rate[data],
+                    rateList1: this.data.t1rateNum[data],
+                    youzhiType: this.data.rateTypeList[data] == 3 ? true : false,
+                })
+            }
             if (this.data.channelType == 3) {
                 var shopInput = this.data.shopInput
                 shopInput.operationId = ''
@@ -2162,10 +2164,10 @@ Page({
                                 })
                                 var imgSrc = JSON.parse(res.data)
                                 var imagelist = that.data.imagelist
-								
+
                                 imagelist[index].imgSrc = imgSrc.data + '?' + Math.random()
                                 imagelist[index].isS = true
-								console.log(imagelist)
+                                console.log(imagelist)
                                 that.setData({
                                     imagelist: imagelist
                                 })
@@ -2377,31 +2379,31 @@ Page({
                         }
                     }
                 }
-				if (this.data.channelType == 4 && this.data.merchantType == 1) {
-					for (let i = 0; i < imgList.length; i++) {
-						if (imgList[i].xdl == 1) {
-							if (imgList[i].isS == false) {
-								wx.showToast({
-									title: '请补充完整图片信息',
-									icon: "none"
-								})
-								this.setData({
-									imgTrue: false
-								})
-								break
-							} else {
-								if (imgList[i].imgSrc.indexOf('?') > -1) {
-									tjData[imgList[i].name] = imgList[i].imgSrc.split('?')[0]
-								} else {
-									tjData[imgList[i].name] = imgList[i].imgSrc
-								}
-								this.setData({
-									imgTrue: true
-								})
-							}
-						}
-					}
-				}
+                if (this.data.channelType == 4 && this.data.merchantType == 1) {
+                    for (let i = 0; i < imgList.length; i++) {
+                        if (imgList[i].xdl == 1) {
+                            if (imgList[i].isS == false) {
+                                wx.showToast({
+                                    title: '请补充完整图片信息',
+                                    icon: "none"
+                                })
+                                this.setData({
+                                    imgTrue: false
+                                })
+                                break
+                            } else {
+                                if (imgList[i].imgSrc.indexOf('?') > -1) {
+                                    tjData[imgList[i].name] = imgList[i].imgSrc.split('?')[0]
+                                } else {
+                                    tjData[imgList[i].name] = imgList[i].imgSrc
+                                }
+                                this.setData({
+                                    imgTrue: true
+                                })
+                            }
+                        }
+                    }
+                }
             }
         } else if (this.data.channelType == 3) {
             if (type == 2) {
@@ -2480,32 +2482,32 @@ Page({
                 }
             }
         }
-		if(this.data.channelType == 4 && this.data.merchantType == 1 && this.data.settlementLogo == '对公'){
-			for (var i = 0; i < imgList.length; i++) {
-				if (imgList[i].name == "openingPermit") {
-					if (imgList[i].isS == false) {
-						wx.showToast({
-							title: '请补充完整图片信息',
-							icon: "none"
-						})
-						this.setData({
-							imgTrue: false
-						})
-						break
-					} else {
+        if (this.data.channelType == 4 && this.data.merchantType == 1 && this.data.settlementLogo == '对公') {
+            for (var i = 0; i < imgList.length; i++) {
+                if (imgList[i].name == "openingPermit") {
+                    if (imgList[i].isS == false) {
+                        wx.showToast({
+                            title: '请补充完整图片信息',
+                            icon: "none"
+                        })
+                        this.setData({
+                            imgTrue: false
+                        })
+                        break
+                    } else {
 
-						if (imgList[i].imgSrc.indexOf('?') > -1) {
-							tjData[imgList[i].name] = imgList[i].imgSrc.split('?')[0]
-						} else {
-							tjData[imgList[i].name] = imgList[i].imgSrc
-						}
-						this.setData({
-							imgTrue: true
-						})
-					}
-				}
-			}
-		}
+                        if (imgList[i].imgSrc.indexOf('?') > -1) {
+                            tjData[imgList[i].name] = imgList[i].imgSrc.split('?')[0]
+                        } else {
+                            tjData[imgList[i].name] = imgList[i].imgSrc
+                        }
+                        this.setData({
+                            imgTrue: true
+                        })
+                    }
+                }
+            }
+        }
         tjData.paymentChannel = this.data.paymentChannel
         console.log(this.data.imgTrue)
         console.log(tjData)
@@ -2599,15 +2601,14 @@ Page({
                             }
                         })
                     } else {
-                        
-						wx.showModal({
-							title: '提示',
-							content: res.data.msg,
-							showCancel: false,
-							icon: 'none',
-							success: function (res) {
-							}
-						})
+
+                        wx.showModal({
+                            title: '提示',
+                            content: res.data.msg,
+                            showCancel: false,
+                            icon: 'none',
+                            success: function(res) {}
+                        })
                     }
                 }
             })
@@ -3194,14 +3195,14 @@ Page({
             for (var j = 0; j < shopData[i].stepsCon.length; j++) {
                 for (var k = 0; k < shopData[i].stepsCon[j].basicsetup.length; k++) {
 
-					if (shopData[i].stepsCon[j].basicsetup[k].type == 0 || shopData[i].stepsCon[j].basicsetup[k].type == 11) {
+                    if (shopData[i].stepsCon[j].basicsetup[k].type == 0 || shopData[i].stepsCon[j].basicsetup[k].type == 11) {
 
                         list[i].push(shopData[i].stepsCon[j].basicsetup[k])
                     }
                 }
             }
         }
-		
+
         this.setData({
             step0: step0,
             step1: step1
@@ -3209,7 +3210,7 @@ Page({
         var that = this
         //获取省市区
         wx.request({
-			url: 'https://nb.51shanhe.com/shanhe-common/cache/getAreajson02',
+            url: 'https://nb.51shanhe.com/shanhe-common/cache/getAreajson02',
             method: 'post',
             dataType: 'json',
             header: {
@@ -3219,32 +3220,32 @@ Page({
                 if (res.data.code == '1000') {
                     // console.log(JSON.parse(res.data.data))
                     that.setData({
-                        proCode:res.data.data
+                        proCode: res.data.data
                     })
                     var provincelist = that.data.provincelist
                     var provincelistc = that.data.provincelistc
                     var addresslist = [],
                         addresslistc = []
                     for (let i = 0; i < that.data.proCode.length; i++) {
-						addresslist.push(that.data.proCode[i].provName)
-						addresslistc.push(that.data.proCode[i].provCode)
+                        addresslist.push(that.data.proCode[i].provName)
+                        addresslistc.push(that.data.proCode[i].provCode)
                     }
                     provincelist.push(addresslist)
                     provincelistc.push(addresslistc)
 
                     var addresslist1 = [],
                         addresslistc1 = []
-					for (let i = 0; i < that.data.proCode[0].cityList.length; i++) {
-						addresslist1.push(that.data.proCode[0].cityList[i].cityName)
-						addresslistc1.push(that.data.proCode[0].cityList[i].cityCode)
+                    for (let i = 0; i < that.data.proCode[0].cityList.length; i++) {
+                        addresslist1.push(that.data.proCode[0].cityList[i].cityName)
+                        addresslistc1.push(that.data.proCode[0].cityList[i].cityCode)
                     }
                     provincelist.push(addresslist1)
                     provincelistc.push(addresslistc1)
                     var addresslist2 = [],
                         addresslistc2 = []
-					for (let i = 0; i < that.data.proCode[0].cityList[0].areaList.length; i++) {
-						addresslist2.push(that.data.proCode[0].cityList[0].areaList[i].areaName)
-						addresslistc2.push(that.data.proCode[0].cityList[0].areaList[i].areaCode)
+                    for (let i = 0; i < that.data.proCode[0].cityList[0].areaList.length; i++) {
+                        addresslist2.push(that.data.proCode[0].cityList[0].areaList[i].areaName)
+                        addresslistc2.push(that.data.proCode[0].cityList[0].areaList[i].areaCode)
                     }
                     provincelist.push(addresslist2)
                     provincelistc.push(addresslistc2)
@@ -3868,8 +3869,8 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-		
-        
+
+
         if (wx.getStorageSync('shopInput')) {
             this.setData({
                 shopInput: wx.getStorageSync('shopInput')
@@ -3946,17 +3947,17 @@ Page({
     onShareAppMessage: function() {
 
     },
-	dateFormat(date){
-		console.log(date)
-		var year = date.split('-')[0]
-		var month = date.split('-')[1]
-		var day = date.split('-')[2]
-		if(month < 10){
-			month = '0' + parseFloat(month)
-		}
-		if(day < 10){
-			day = '0' + parseFloat(day)
-		}
-		return year + '-' + month + '-' + day
-	}
+    dateFormat(date) {
+        console.log(date)
+        var year = date.split('-')[0]
+        var month = date.split('-')[1]
+        var day = date.split('-')[2]
+        if (month < 10) {
+            month = '0' + parseFloat(month)
+        }
+        if (day < 10) {
+            day = '0' + parseFloat(day)
+        }
+        return year + '-' + month + '-' + day
+    }
 })
