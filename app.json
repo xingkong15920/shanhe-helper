@@ -1,8 +1,9 @@
 {
 	"pages": [
+		
 		"pages/login/index",
 		"pages/dl-sale/index",
-		
+		"pages/dl-manage/index",
 		"pages/index-dl/index",
 		"pages/index/index",
 		"pages/dl-tixian/index",
@@ -30,7 +31,7 @@
 		"pages/dl-sale-detail/index",
 		"pages/dl-sale-add/index",
 		"pages/dl-detail/index",
-		"pages/dl-manage/index",
+		
 		"pages/dl-searchMerchant/index",
 	
 		"pages/salekit/index",

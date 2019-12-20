@@ -26,10 +26,10 @@ Page({
 		sxfQQWallet:'0.30',
 		gfAliRate:'0.30',
 		gfWeChatRate:'0.30',
-		lsUnionPayRatetwo:'0.30',
-		sxfUnionPayRatetwo:'0.30',
-		fyUnionPayRatetwo:'0.30',
-		XdlUnionPayRatetwo:'0.30',
+		lsUnionPayRatetwo:'0.52',
+		sxfUnionPayRatetwo:'0.52',
+		fyUnionPayRatetwo:'0.52',
+		XdlUnionPayRatetwo:'0.52',
 		lsweChatRate:'0.30',
 		lsaliRate:'0.30',
 		lsUnionPayRate:'0.30',
@@ -265,6 +265,116 @@ Page({
 		nOData.deletionFlag = '0'
 		nOData.agentNumber = this.data.info.agentNumber
 		nOData.agentLevel = this.data.info.agentLevel
+		if (isNaN(this.data.gfAliRate) || this.data.gfAliRate > 1 || this.data.gfAliRate < 0.21){
+			wx.showToast({
+				icon:"none",
+				title: '支付宝费率不正确，0.21-1之间',
+			})
+			return
+		}
+		if (isNaN(this.data.gfWeChatRate) || this.data.gfWeChatRate > 1 || this.data.gfWeChatRate < 0.21) {
+			wx.showToast({
+				icon: "none",
+				title: '微信费率不正确，0.21-1之间',
+			})
+			return
+		}
+		if (isNaN(this.data.fyweChatRate) || this.data.fyweChatRate > 1 || this.data.fyweChatRate < 0.21) {
+			wx.showToast({
+				icon: "none",
+				title: '富友微信费率不正确，0.21-1之间',
+			})
+			return
+		}
+		if (isNaN(this.data.fyaliRate) || this.data.fyaliRate > 1 || this.data.fyaliRate < 0.21) {
+			wx.showToast({
+				icon: "none",
+				title: '富友支付宝费率不正确，0.21-1之间',
+			})
+			return
+		}
+		if (isNaN(this.data.fyUnionPayRate) || this.data.fyUnionPayRate > 1 || this.data.fyUnionPayRate < 0.23) {
+			wx.showToast({
+				icon: "none",
+				title: '富友云闪付费率1不正确，0.23-1之间',
+			})
+			return
+		}
+		if (isNaN(this.data.fyUnionPayRatetwo) || this.data.fyUnionPayRatetwo > 1 || this.data.fyUnionPayRatetwo < 0.52) {
+			wx.showToast({
+				icon: "none",
+				title: '富友云闪付费率2不正确，0.52-1之间',
+			})
+			return
+		}
+
+
+
+
+
+
+
+
+
+		if (isNaN(this.data.xdlaliRate) || this.data.xdlaliRate > 1 || this.data.xdlaliRate < 0.21) {
+			wx.showToast({
+				icon: "none",
+				title: '新大陆信支付宝费率不正确，0.21-1之间',
+			})
+			return
+		}
+		if (isNaN(this.data.xdlweChatRate) || this.data.xdlweChatRate > 1 || this.data.xdlweChatRate < 0.21) {
+			wx.showToast({
+				icon: "none",
+				title: '新大陆微费率不正确，0.21-1之间',
+			})
+			return
+		}
+		if (isNaN(this.data.xdlUnionPayRate) || this.data.xdlUnionPayRate > 1 || this.data.xdlUnionPayRate < 0.23) {
+			wx.showToast({
+				icon: "none",
+				title: '新大陆云闪付费率1不正确，0.23-1之间',
+			})
+			return
+		}
+		if (isNaN(this.data.XdlUnionPayRatetwo) || this.data.XdlUnionPayRatetwo > 1 || this.data.XdlUnionPayRatetwo < 0.52) {
+			wx.showToast({
+				icon: "none",
+				title: '新大陆云闪付费率2不正确，0.52-1之间',
+			})
+			return
+		}
+
+
+		if (isNaN(this.data.sxfweChatRate) || this.data.sxfweChatRate > 1 || this.data.sxfweChatRate < 0.21) {
+			wx.showToast({
+				icon: "none",
+				title: '随行付信支付宝费率不正确，0.21-1之间',
+			})
+			return
+		}
+		if (isNaN(this.data.sxfaliRate) || this.data.sxfaliRate > 1 || this.data.sxfaliRate < 0.21) {
+			wx.showToast({
+				icon: "none",
+				title: '随行付微费率不正确，0.21-1之间',
+			})
+			return
+		}
+		if (isNaN(this.data.sxfUnionPayRate) || this.data.sxfUnionPayRate > 1 || this.data.sxfUnionPayRate < 0.23) {
+			wx.showToast({
+				icon: "none",
+				title: '随行付云闪付费率1不正确，0.23-1之间',
+			})
+			return
+		}
+		if (isNaN(this.data.sxfUnionPayRatetwo) || this.data.sxfUnionPayRatetwo > 1 || this.data.sxfUnionPayRatetwo < 0.52) {
+			wx.showToast({
+				icon: "none",
+				title: '随行付云闪付费率2不正确，0.52-1之间',
+			})
+			return
+		}
+
 		nOData.pAgentNumber = wx.getStorageSync('shopInfo').Number
 		nOData.pAgentLevel = wx.getStorageSync('shopInfo').agentLevel
 		nOData.xdlaliRate = (this.data.xdlaliRate/10000*100).toFixed(4)
@@ -297,6 +407,8 @@ Page({
 		nOData.sxfWingPayRate = (this.data.sxfWingPayRate/10000*100).toFixed(4)
 		nOData.fyWingPayRate = (this.data.fyWingPayRate/10000*100).toFixed(4)
 		nOData.xdlWingPayRate = (this.data.xdlWingPayRate/10000*100).toFixed(4)
+		
+
 		var that = this	
 		wx.request({
 			url: this.data.server + common.updataAgentRate, //仅为示例，并非真实的接口地址

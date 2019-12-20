@@ -123,34 +123,35 @@ Page({
 		})
 	},
 	changeRate: function (e) {
-		if (this.data.aliR == '' || parseFloat(this.data.aliR) >= 1) {
+		if (this.data.aliR == '' || parseFloat(this.data.aliR) > 1 || parseFloat(this.data.aliR) < 0.21) {
 			wx.showToast({
-				title: '请输入正确的支付宝费率',
+				title: '请输入正确的支付宝费率,0.21-1之间',
 				icon: 'none'
 			})
 			return
 		}
-		if (this.data.wxR == '' || parseFloat(this.data.wxR) >= 1) {
+		if (this.data.wxR == '' || parseFloat(this.data.wxR) > 1 || parseFloat(this.data.wxR) < 0.21) {
 			wx.showToast({
-				title: '请输入正确的微信费率',
+				title: '请输入正确的微信费率,0.21-1之间',
 				icon: 'none'
 			})
 			return
 		}
-		if (this.data.un1R == '' || parseFloat(this.data.un1R) >= 1) {
+		if (this.data.un1R == '' || parseFloat(this.data.un1R) > 1 || parseFloat(this.data.un1R) < 0.23) {
 			wx.showToast({
-				title: '请输入正确的云闪付1费率',
+				title: '请输入正确的云闪付1费率,0.23-1之间',
 				icon: 'none'
 			})
 			return
 		}
-		if (this.data.un2R == '' || parseFloat(this.data.un2R) >= 1) {
+		if (this.data.un2R == '' || parseFloat(this.data.un2R) > 1 || parseFloat(this.data.un1R) < 0.52) {
 			wx.showToast({
-				title: '请输入正确的云闪付2费率',
+				title: '请输入正确的云闪付2费率,0.52-1之间',
 				icon: 'none'
 			})
 			return
 		}
+		
 		var addData = new Object()
 		addData.saleName = this.data.saleInfo.saleName
 		addData.registerCell = this.data.saleInfo.registerCell

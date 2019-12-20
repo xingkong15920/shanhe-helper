@@ -273,10 +273,24 @@ Page({
 			})
 			return
 		}
+		if (isNaN(this.data.aliRate) || this.data.aliRate > 1 || this.data.aliRate < 0.21) {
+			wx.showToast({
+				icon: "none",
+				title: '支付宝费率不正确，0.21-1之间',
+			})
+			return
+		}
 		if (this.data.weChatRate == '') {
 			wx.showToast({
 				title: '请输入微信费率',
 				icon: 'none'
+			})
+			return
+		}
+		if (isNaN(this.data.weChatRate) || this.data.weChatRate > 1 || this.data.weChatRate < 0.21) {
+			wx.showToast({
+				icon: "none",
+				title: '微信费率不正确，0.21-1之间',
 			})
 			return
 		}
@@ -287,10 +301,24 @@ Page({
 			})
 			return
 		}
+		if (isNaN(this.data.unionPayRate) || this.data.unionPayRate > 1 || this.data.unionPayRate < 0.23) {
+			wx.showToast({
+				icon: "none",
+				title: '云闪付费率1不正确，0.23-1之间',
+			})
+			return
+		}
 		if (this.data.unionPayRatetwo == '') {
 			wx.showToast({
 				title: '请输入云闪付费率2',
 				icon: 'none'
+			})
+			return
+		}
+		if (isNaN(this.data.unionPayRatetwo) || this.data.unionPayRatetwo > 1 || this.data.unionPayRatetwo < 0.52) {
+			wx.showToast({
+				icon: "none",
+				title: '云闪付费率2不正确，0.52-1之间',
 			})
 			return
 		}
