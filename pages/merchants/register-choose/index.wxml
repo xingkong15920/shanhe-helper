@@ -1,0 +1,33 @@
+<view class="container">
+    <view class="conta">
+        <view class="tips1">请先选择您的信息类型</view>
+        <view class="tips2">只需3秒，快速选择，入件更便捷</view>
+        <view class="lxTit">
+            <view class="lxTitbefore"></view>入件类型
+            <view class="lxTitafter"></view>
+        </view>
+        <view class="choose_ul rjlx">
+            <view class="choose_li" wx:for="{{rjlx}}" wx:for-index="idx">
+                <view class="choose_li_img {{active_rj == idx?'chooseIng':''}}" data-idx="{{idx}}" data-type="{{item.rjlxType}}" bindtap="chooseRJ">
+                    <image src="{{item.imgUrl}}" mode="widthFix"></image>
+                    <image src="../../img/duigou.png" class="chooseingimg" mode="widthFix"></image>
+                </view>
+                <view class="choose_li_p">{{item.name}}</view>
+            </view>
+        </view>
+        <view class="lxTit">
+            <view class="lxTitbefore"></view>通道类型
+            <view class="lxTitafter"></view>
+        </view>
+        <view class="choose_ul tdlx">
+            <view class="choose_li" wx:for="{{tdlx}}" wx:for-index="idx">
+                <view class="choose_li_img {{active_td == idx?'chooseIng':''}}" data-idx="{{idx}}" data-type="{{item.tdlxType}}" bindtap="chooseTD">
+                    <image src="{{item.imgUrl}}" mode="widthFix"></image>
+                    <image src="../../img/duigou.png" class="chooseingimg" mode="widthFix"></image>
+                </view>
+                <view class="choose_li_p">{{item.name}}</view>
+            </view>
+        </view>
+        <view class="nextBtn" bindtap="toRegisterNew">下一步</view>
+    </view>
+</view>

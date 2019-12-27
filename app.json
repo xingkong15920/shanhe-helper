@@ -1,6 +1,7 @@
 {
 	"pages": [
-		
+		"pages/merchants/register-new/index",
+		"pages/merchants/register-choose/index",
 		"pages/login/index",
 		"pages/dl-sale/index",
 		"pages/dl-manage/index",
@@ -8,6 +9,7 @@
 		"pages/index/index",
 		"pages/dl-tixian/index",
 		"pages/merchants/register/index",
+		
 		
 		"pages/merchants/manage/index",
 		"pages/merchants/index",

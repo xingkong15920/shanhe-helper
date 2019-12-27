@@ -1,0 +1,469 @@
+<view class="container">
+    <view class="steps_box">
+        <progress percent="{{Steps*percent}}" class="progress" stroke-width="3" activeColor="rgba(254,166,0,1)" style="width:{{progress}}%" />
+        <view class="steps_all">
+            <view class="steps_one_box" wx:for="{{StepsList}}" wx:key="index">
+                <view class='steps'>
+                    <image wx:if="{{Steps<index}}" src="{{item.icon3}}" class="steps_img"></image>
+                    <image wx:if="{{Steps==index}}" src="{{item.icon2}}" class="steps_img"></image>
+                    <image wx:if="{{Steps>index}}" src="{{item.icon1}}" class="steps_img"></image>
+                </view>
+                <view class="steps_wenzi">{{item.name}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="conbody">
+        <!-- 第一步 -->
+        <view class="shxx" wx:if="{{Steps==0}}">
+            <view class="line10"></view>
+            <view class="xxblock">
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>商户名称
+                    </view>
+                    <input class="inpinput {{input_active == 'merchantName'?'inpinput_a':''}}" id="merchantName" value="{{shopData.merchantName}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写商户名称" placeholder-class="input-placeholder"></input>
+                    <view class="inpfun">
+                        <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="注：商户名称，包括商户全称和商户简称，填写规范如下：商户所属行业合法，禁止入网的行业包括：广告、棋牌类、基金、理财 、套现、信用卡、传销等。商户名称中，不得包括以下敏感词汇：藏独、法轮功、色情、毒品、赌博、博彩、基金、理财、担保、贷款、集资、P2P、麻醉、间谍服务、私人侦探、股权、众筹、乐刷、套现、自选、千万户、000、T0、信用卡、担保、资金、淘宝、财务、收款、超时、商圈、金服、资产管理、微盘。"></image>
+                        <!-- <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>注册手机号
+                    </view>
+                    <input class="inpinput {{input_active == 'registerCell'?'inpinput_a':''}}" id="registerCell" value="{{shopData.registerCell}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写注册手机号" type="number" maxlength="11" placeholder-class="input-placeholder"></input>
+                    <view class="inpfun">
+                        <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="该手机号做为商户登录时用，密码默认为后六位"></image>
+                        <!-- <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                    </view>
+                </view>
+            </view>
+            <view class="line10"></view>
+            <view class="xxblock">
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>姓名
+                    </view>
+                    <input class="inpinput {{input_active == 'juridicalpersonName'?'inpinput_a':''}}" id="juridicalpersonName" value="{{shopData.juridicalpersonName}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写姓名" placeholder-class="input-placeholder"></input>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image> -->
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix" catchtap="tipsscan"></image>
+                        <!-- <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>身份证号
+                    </view>
+                    <input class="inpinput {{input_active == 'juridicalpersonId'?'inpinput_a':''}}" id="juridicalpersonId" value="{{shopData.juridicalpersonId}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" type="idcard" maxlength="18" placeholder="请填写身份证号"
+                        placeholder-class="input-placeholder"></input>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image> -->
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix" catchtap="tipsscan"></image>
+                        <!-- <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>身份证开始时间
+                    </view>
+                    <picker mode="date" value="{{idstartTime}}" bindchange="idstartTime" id="juridicalpersonIdTime">
+                        <input class="inpinput {{input_active == 'juridicalpersonIdTime'?'inpinput_a':''}}" id="juridicalpersonIdTime" value="{{shopData.juridicalPersonIDEndTime}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择身份证开始时间" disabled="true"
+                            placeholder-class="input-placeholder" value="{{shopData.juridicalpersonIdTime}}"></input>
+                    </picker>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image>
+                        <view class="inpfunBtn1 {{id_time?'active_btn':''}}" data-type="false" catchtap="inpfunBtn_idtime">长期</view>
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>身份证结束时间
+                    </view>
+                    <picker mode="date" value="{{idendTime}}" bindchange="idendTime" id="juridicalPersonIDEndTime">
+                        <input class="inpinput {{input_active == 'juridicalPersonIDEndTime'?'inpinput_a':''}}" id="juridicalPersonIDEndTime" value="{{shopData.juridicalPersonIDEndTime}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择身份证结束时间"
+                            disabled="true" placeholder-class="input-placeholder" value="{{shopData.juridicalPersonIDEndTime}}"></input>
+                    </picker>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image>
+                    </view>
+                </view>
+            </view>
+            <view class="line10"></view>
+            <view class="xxblock">
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>营业执照名称
+                    </view>
+                    <input class="inpinput {{input_active == 'businessLicenseName'?'inpinput_a':''}}" id="businessLicenseName" value="{{shopData.businessLicenseName}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写营业执照名称" placeholder-class="input-placeholder"></input>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>营业执照号
+                    </view>
+                    <input class="inpinput {{input_active == 'businessLicenseNo'?'inpinput_a':''}}" id="businessLicenseNo" value="{{shopData.businessLicenseNo}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写身营业执照号" placeholder-class="input-placeholder"></input>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>营业执照地址
+                    </view>
+                    <input class="inpinput {{input_active == 'businessLicenseAddress'?'inpinput_a':''}}" id="businessLicenseAddress" value="{{shopData.businessLicenseAddress}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写身营业执照地址" placeholder-class="input-placeholder"></input>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>营业执照开始时间
+                    </view>
+                    <input class="inpinput {{input_active == 'businessLicenseEndTime'?'inpinput_a':''}}" id="businessLicenseEndTime" value="{{shopData.businessLicenseEndTime}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择营业执照开始时间" placeholder-class="input-placeholder"></input>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>营业执照结束时间
+                    </view>
+                    <input class="inpinput {{input_active == 'businessLicenseTime'?'inpinput_a':''}}" id="businessLicenseTime" value="{{shopData.businessLicenseTime}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择营业执照结束时间" placeholder-class="input-placeholder"></input>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                    </view>
+                </view>
+            </view>
+            <view class="line10"></view>
+            <view class="xxblock">
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>经营范围
+                    </view>
+                    <view class="jyfw_ul">
+                        <view class="jyfw_li {{jyfw_kj_a==index?'jyfw_li_a':''}}" bindtap="jyfwbtn" data-type="{{index}}" wx:for="{{jyfw_kj}}" wx:key="{{index}}">
+                            {{item.mccTypeNm}}
+                        </view>
+                    </view>
+                    <picker mode="multiSelector" bindchange="jyfwPicker" bindcolumnchange="jyfwChange" value="{{jyfwChoose}}" range="{{jifwArray}}">
+                        <input class="inpinput {{input_active == 'jyfwSelect'?'inpinput_a':''}}" id="jyfwSelect" value="{{jyfwSelect}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择经营范围" disabled="true" placeholder-class="input-placeholder"></input>
+                        {{jifwArray[0][jyfwChoose[0]]}}，{{jifwArray[1][jyfwChoose[1]]}}，{{jifwArray[2][jyfwChoose[2]]}}
+                    </picker>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image>
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>省市区
+                    </view>
+                    <picker mode="region" value="{{shq}}" bindchange="shqPicker">
+                        <input class="inpinput {{input_active == 'region'?'inpinput_a':''}}" id="region" value="{{shopData.region}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择省市区" disabled="true" placeholder-class="input-placeholder"></input>
+                    </picker>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image>
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>详细地址
+                    </view>
+                    <input class="inpinput {{input_active == 'address'?'inpinput_a':''}}" id="address" value="{{shopData.address}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写详细地址" placeholder-class="input-placeholder"></input>
+                    <view class="inpfun">
+                        <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="填写门店实际经营地址，详细到XX路XX号。"></image>
+                        <!-- <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                    </view>
+                </view>
+            </view>
+        </view>
+        <!-- 第二步 -->
+        <view class="jsxx" wx:if="{{Steps==1}}">
+            <view class="line10"></view>
+            <view class="xxblock">
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>结算标识
+                    </view>
+                    <view class="jstype">
+                        <view class="jstbtn {{jstype==index?'active_btn':''}}" bindtap="jstypebtn" data-type="{{index}}" wx:for="{{jsbs}}" wx:key="{{index}}">
+                            {{item}}
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="line1"></view>
+            <view class="xxblock">
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>银行卡号
+                    </view>
+                    <input class="inpinput {{input_active == 'bankCardNo'?'inpinput_a':''}}" id="bankCardNo" value="{{shopData.bankCardNo}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写/扫描银行卡号" placeholder-class="input-placeholder"></input>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="注：商户名称，包括商户全称和商户简称，填写规范如下：商户所属行业合法，禁止入网的行业包括：广告、棋牌类、基金、理财 、套现、信用卡、传销等。商户名称中，不得包括以下敏感词汇：藏独、法轮功、色情、毒品、赌博、博彩、基金、理财、担保、贷款、集资、P2P、麻醉、间谍服务、私人侦探、股权、众筹、乐刷、套现、自选、千万户、000、T0、信用卡、担保、资金、淘宝、财务、收款、超时、商圈、金服、资产管理、微盘。"></image> -->
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <!-- <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>开户行
+                    </view>
+                    <picker mode="region" value="{{shq}}" bindchange="shqPicker">
+                        <input class="inpinput {{input_active == 'openingBank'?'inpinput_a':''}}" id="openingBank" value="{{shopData.openingBank}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写/选择开户银行" disabled="true" placeholder-class="input-placeholder"></input>
+                    </picker>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image>
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>开户地区
+                    </view>
+                    <picker mode="region" value="{{shq}}" bindchange="shqPicker">
+                        <input class="inpinput {{input_active == 'shoujihao'?'inpinput_a':''}}" id="shoujihao" value="{{shopData.shoujihao}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择开户地区" disabled="true" placeholder-class="input-placeholder"></input>
+                    </picker>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image>
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>开户支行
+                    </view>
+                    <picker mode="region" value="{{shq}}" bindchange="shqPicker">
+                        <input class="inpinput {{input_active == 'openingBankBranch'?'inpinput_a':''}}" id="openingBankBranch" value="{{shopData.openingBankBranch}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择/填写开户支行" disabled="true" placeholder-class="input-placeholder"></input>
+                    </picker>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <!-- 第三步 -->
+        <view class="tpxx" wx:if="{{Steps==2}}">
+            <view class="line10"></view>
+            <view class="tpxxDiv">
+                <view class="picTips">*请上传真实有效的营业执照照片，保证图片清晰可见</view>
+                <view class="picDivul">
+                    <view class="picDivli">
+                        <view class="picDivliimg">
+                            <image src="{{shopData.businessLicense}}" mode="aspectFit"></image>
+                        </view>
+                        <view class="picyulan" data-pic="1" catchtap="picmodel">查看示例</view>
+                    </view>
+                    <view class="picDivli">
+                        <view class="picDivliimg">
+                            <image src="{{shopData.openingPermit}}" mode="aspectFit"></image>
+                        </view>
+                        <view class="picyulan" data-pic="2" catchtap="picmodel">查看示例</view>
+                    </view>
+                </view>
+                <view class="picTips">*请上传真实有效的身份证照片，保证图片清晰可见</view>
+                <view class="picDivul">
+                    <view class="picDivli">
+                        <view class="picDivliimg">
+                            <image src="{{shopData.juridicalpersonIdPositive}}" mode="aspectFit"></image>
+                        </view>
+                        <view class="picyulan" data-pic="3" catchtap="picmodel">查看示例</view>
+                    </view>
+                    <view class="picDivli">
+                        <view class="picDivliimg">
+                            <image src="{{shopData.juridicalpersonIdReverseside}}" mode="aspectFit"></image>
+                        </view>
+                        <view class="picyulan" data-pic="4" catchtap="picmodel">查看示例</view>
+                    </view>
+                    <view class="picDivli">
+                        <view class="picDivliimg">
+                            <image src="{{shopData.holdId}}" mode="aspectFit"></image>
+                        </view>
+                        <view class="picyulan" data-pic="5" catchtap="picmodel">查看示例</view>
+                    </view>
+                </view>
+                <view class="picTips">*请上传真实有效的银行卡照片，保证图片清晰可见</view>
+                <view class="picDivul">
+                    <view class="picDivli">
+                        <view class="picDivliimg">
+                            <image src="{{shopData.bankCardPositive}}" mode="aspectFit"></image>
+                        </view>
+                        <view class="picyulan" data-pic="6" catchtap="picmodel">查看示例</view>
+                    </view>
+                </view>
+                <view class="picTips">*请上传真实有效的门店场景照片，保证图片清晰可见</view>
+                <view class="picDivul">
+                    <view class="picDivli">
+                        <view class="picDivliimg">
+                            <image src="{{shopData.doorheadPhoto}}" mode="aspectFit"></image>
+                        </view>
+                        <view class="picyulan" data-pic="7" catchtap="picmodel">查看示例</view>
+                    </view>
+                    <view class="picDivli">
+                        <view class="picDivliimg">
+                            <image src="{{shopData.cashier}}" mode="aspectFit"></image>
+                        </view>
+                        <view class="picyulan" data-pic="8" catchtap="picmodel">查看示例</view>
+                    </view>
+                    <view class="picDivli">
+                        <view class="picDivliimg">
+                            <image src="{{shopData.placeBusiness}}" mode="aspectFit"></image>
+                        </view>
+                        <view class="picyulan" data-pic="9" catchtap="picmodel">查看示例</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <!-- 第四步 -->
+        <view class="flxx" wx:if="{{Steps==3}}">
+            <view class="line10"></view>
+            <view class="xxblock huixian">
+                <view class="huixianblock">
+                    <view class="inplable hxlable">
+                        <view>*</view>商户名称:
+                    </view>
+                    <view class="hxinput">{{shopData.merchantName}}</view>
+                </view>
+                <view class="line1"></view>
+                <view class="huixianblock">
+                    <view class="inplable hxlable">
+                        <view>*</view>注册手机号:
+                    </view>
+                    <view class="hxinput">{{shopData.registerCell}}</view>
+                </view>
+            </view>
+            <view class="line10"></view>
+            <view class="xxblock">
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>微信/支付宝费率
+                    </view>
+                    <picker mode="region" value="{{shq}}">
+                        <input class="inpinput {{input_active == 'rate'?'inpinput_a':''}}" id="rate" value="{{shopData.rate}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写/选择费率(示例0.38)" placeholder-class="input-placeholder"></input>
+                    </picker>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
+                        <image src="../../img/sanjiao.png" class="tipsimg" catchtap="shqPicker" mode="widthFix"></image>
+                    </view>
+                </view>
+                <view class="switchblock">
+                    是否开通云闪付费率
+                    <switch checked="{{ysfswitch}}" bindchange="ysfswitch" />
+                </view>
+                <view class="inputblock" wx:if="{{ysfswitch}}">
+                    <view class="inplable">
+                        <view>*</view>云闪付1000以下费率
+                    </view>
+                    <picker mode="region" value="{{shq}}" bindchange="shqPicker">
+                        <input class="inpinput {{input_active == 'unionPayRate'?'inpinput_a':''}}" id="unionPayRate" value="{{shopData.unionPayRate}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择云闪付1000以下费率" disabled="true" placeholder-class="input-placeholder"
+                            value="{{shq}}"></input>
+                    </picker>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image>
+                    </view>
+                </view>
+                <view class="inputblock" wx:if="{{ysfswitch}}">
+                    <view class="inplable">
+                        <view>*</view>云闪付1000以上费率
+                    </view>
+                    <picker mode="region" value="{{shq}}" bindchange="shqPicker">
+                        <input class="inpinput {{input_active == 'unionPayRate2'?'inpinput_a':''}}" id="unionPayRate2" value="{{shopData.unionPayRate2}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择云闪付1000以上费率" disabled="true" placeholder-class="input-placeholder"></input>
+                    </picker>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image>
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>邮箱
+                    </view>
+                    <input class="inpinput {{input_active == 'mailbox'?'inpinput_a':''}}" id="mailbox" value="{{shopData.mailbox}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" cursor-spacing="200" placeholder="请填写邮箱" placeholder-class="input-placeholder"></input>
+                    <view class="inpfun">
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="注：商户名称，包括商户全称和商户简称，填写规范如下：商户所属行业合法，禁止入网的行业包括：广告、棋牌类、基金、理财 、套现、信用卡、传销等。商户名称中，不得包括以下敏感词汇：藏独、法轮功、色情、毒品、赌博、博彩、基金、理财、担保、贷款、集资、P2P、麻醉、间谍服务、私人侦探、股权、众筹、乐刷、套现、自选、千万户、000、T0、信用卡、担保、资金、淘宝、财务、收款、超时、商圈、金服、资产管理、微盘。"></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                    </view>
+                    <view class="mailTips" wx:if="{{mail_active}}">
+                        <view class="mailTipsli" wx:for="{{mailTips}}" wx:key="index" data-key="{{index}}" catchtap="mailtap">{{item}}</view>
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>微信号
+                    </view>
+                    <input class="inpinput {{input_active == 'weChatNo'?'inpinput_a':''}}" id="weChatNo" value="{{shopData.weChatNo}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写微信号" placeholder-class="input-placeholder"></input>
+                    <view class="inpfun">
+                        <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips='请填写商户联系人微信信息,微信要求已绑定银行卡完成实名认证，且实名的姓名与所填写的联系人姓名一致，微信号：需打开微信，在 "个人信息" 中看到的 "微信号",如 "微信号" 一栏显示 "未设置"，需先进行设置'></image>
+                        <!-- <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                    </view>
+                </view>
+                <view class="inputblock">
+                    <view class="inplable">
+                        <view>*</view>支付宝号
+                    </view>
+                    <input class="inpinput {{input_active == 'aliPayNo'?'inpinput_a':''}}" id="aliPayNo" value="{{shopData.aliPayNo}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写支付宝号" placeholder-class="input-placeholder"></input>
+                    <view class="inpfun">
+                        <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="支付宝账号为登录时的手机号或者邮箱号！"></image>
+                        <!-- <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="stepDiv">
+            <view class="stepBtn {{Steps>0?'stepBtnhalf':''}}" bindtap="upStep" wx:if="{{Steps>0}}">上一步</view>
+            <view class="stepBtn {{Steps>0?'stepBtnhalf':''}}" bindtap="downStep" wx:if="{{Steps>=0&&Steps<=2}}">下一步</view>
+            <view class="stepBtn wancheng {{Steps>0?'stepBtnhalf':''}}" bindtap="lastStep" wx:if="{{Steps==3}}">完成</view>
+        </view>
+    </view>
+    <!--mask-->
+    <view class="mask" catchtouchmove="preventTouchMove" data-statu="close" wx:if="{{maskTips||maskPic}}"></view>
+    <!-- 文字提示 -->
+    <view class="modalDlg" animation="{{animationData}}" data-statu="close" wx:if="{{maskTips}}">
+        <view class="tipsCon">
+            <text>{{tipsCon}}</text>
+            <image src="../../img/guanbi.png" class="guanbiBtn" bindtap="tipsmodelclose"></image>
+        </view>
+    </view>
+    <!-- 图片示例 -->
+    <view class="modalDlg" animation="{{animationData}}" data-statu="close" wx:if="{{maskPic}}">
+        <view class="tipsCon">
+            <image src="{{picCon}}" class="picShili" mode="widthFix"></image>
+            <image src="../../img/guanbi.png" class="guanbiBtn" bindtap="picmodelclose"></image>
+        </view>
+    </view>
+    <!--mask-->
+</view>
