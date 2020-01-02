@@ -3380,7 +3380,6 @@ Page({
         wx.request({
             url: 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=BIuEzeLr4mZaCGuDjEeLvSCp&client_secret=q5XFY7XBaZ48ccbMpdebqsU1hurMLxsB&',
             method: 'post',
-
             success: function(data) {
                 that.setData({
                     accesstoken: data.data.access_token

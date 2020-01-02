@@ -26,6 +26,7 @@ Page({
         active_td: 10000,
         type_rj: 0,
         type_td: 0,
+		merNumber:'',
     },
     chooseRJ: function(e) {
         var that = this,
@@ -62,7 +63,13 @@ Page({
             return
         }
         wx.navigateTo({
-            url: '../register-new/index?rjlx=' + that.data.type_rj + '&tdlx=' + that.data.type_td,
+			url: '../register-new/index?rjlx=' + that.data.type_rj + '&tdlx=' + that.data.type_td + '&merNumber=' + that.data.merNumber,
         })
     },
+    onLoad: function(options) {
+        var options = options
+        this.setData({
+            merNumber: options.merchantNumber,
+        })
+    }
 })

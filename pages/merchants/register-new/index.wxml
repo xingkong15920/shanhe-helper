@@ -49,7 +49,7 @@
                     <input class="inpinput {{input_active == 'juridicalpersonName'?'inpinput_a':''}}" id="juridicalpersonName" value="{{shopData.juridicalpersonName}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写姓名" placeholder-class="input-placeholder"></input>
                     <view class="inpfun">
                         <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image> -->
-                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix" catchtap="tipsscan"></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix" catchtap="getIdInfo"></image>
                         <!-- <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
                     </view>
                 </view>
@@ -61,7 +61,7 @@
                         placeholder-class="input-placeholder"></input>
                     <view class="inpfun">
                         <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image> -->
-                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix" catchtap="tipsscan"></image>
+                        <!-- <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix" catchtap="tipsscan"></image> -->
                         <!-- <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
                     </view>
                 </view>
@@ -69,7 +69,7 @@
                     <view class="inplable">
                         <view>*</view>身份证开始时间
                     </view>
-                    <picker mode="date" value="{{idstartTime}}" bindchange="idstartTime" id="juridicalpersonIdTime">
+                    <picker mode="date" value="{{shopData.juridicalpersonIdTime}}" bindchange="changeTime" id="juridicalpersonIdTime">
                         <input class="inpinput {{input_active == 'juridicalpersonIdTime'?'inpinput_a':''}}" id="juridicalpersonIdTime" value="{{shopData.juridicalPersonIDEndTime}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择身份证开始时间" disabled="true"
                             placeholder-class="input-placeholder" value="{{shopData.juridicalpersonIdTime}}"></input>
                     </picker>
@@ -80,11 +80,11 @@
                         <view class="inpfunBtn1 {{id_time?'active_btn':''}}" data-type="false" catchtap="inpfunBtn_idtime">长期</view>
                     </view>
                 </view>
-                <view class="inputblock">
+                <view class="inputblock" wx:if="{{sfz_cq}}">
                     <view class="inplable">
                         <view>*</view>身份证结束时间
                     </view>
-                    <picker mode="date" value="{{idendTime}}" bindchange="idendTime" id="juridicalPersonIDEndTime">
+                    <picker mode="date" value="{{shopData.juridicalPersonIDEndTime}}" bindchange="changeTime" id="juridicalPersonIDEndTime">
                         <input class="inpinput {{input_active == 'juridicalPersonIDEndTime'?'inpinput_a':''}}" id="juridicalPersonIDEndTime" value="{{shopData.juridicalPersonIDEndTime}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择身份证结束时间"
                             disabled="true" placeholder-class="input-placeholder" value="{{shopData.juridicalPersonIDEndTime}}"></input>
                     </picker>
@@ -134,22 +134,28 @@
                     <view class="inplable">
                         <view>*</view>营业执照开始时间
                     </view>
-                    <input class="inpinput {{input_active == 'businessLicenseEndTime'?'inpinput_a':''}}" id="businessLicenseEndTime" value="{{shopData.businessLicenseEndTime}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择营业执照开始时间" placeholder-class="input-placeholder"></input>
+                    <picker mode="date" bindchange="changeTime" value="{{shopData.businessLicenseTime}}" id="businessLicenseTime">
+                        <input class="inpinput {{input_active == 'businessLicenseTime'?'inpinput_a':''}}" id="businessLicenseTime" value="{{shopData.businessLicenseTime}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" disabled="true" placeholder="请选择营业执照开始时间"
+                            placeholder-class="input-placeholder"></input>
+                    </picker>
                     <view class="inpfun">
                         <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
-                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
-                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image>
                     </view>
                 </view>
                 <view class="inputblock">
                     <view class="inplable">
                         <view>*</view>营业执照结束时间
                     </view>
-                    <input class="inpinput {{input_active == 'businessLicenseTime'?'inpinput_a':''}}" id="businessLicenseTime" value="{{shopData.businessLicenseTime}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择营业执照结束时间" placeholder-class="input-placeholder"></input>
+                    <picker mode="date" bindchange="changeTime" value="{{shopData.businessLicenseEndTime}}" id="businessLicenseEndTime">
+                        <input class="inpinput {{input_active == 'businessLicenseEndTime'?'inpinput_a':''}}" id="businessLicenseEndTime" value="{{shopData.businessLicenseEndTime}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" disabled="true" placeholder="请选择营业执照结束时间"
+                            placeholder-class="input-placeholder"></input>
+                    </picker>
                     <view class="inpfun">
                         <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
-                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
-                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image>
                     </view>
                 </view>
             </view>
@@ -160,13 +166,13 @@
                         <view>*</view>经营范围
                     </view>
                     <view class="jyfw_ul">
-                        <view class="jyfw_li {{jyfw_kj_a==index?'jyfw_li_a':''}}" bindtap="jyfwbtn" data-type="{{index}}" wx:for="{{jyfw_kj}}" wx:key="{{index}}">
+                        <view class="jyfw_li {{jyfw_kj_a==index?'jyfw_li_a':''}}" bindtap="jyfwbtn" data-type="{{index}}" wx:for="{{jyfw_kj}}" wx:key="index">
                             {{item.mccTypeNm}}
                         </view>
                     </view>
-                    <picker mode="multiSelector" bindchange="jyfwPicker" bindcolumnchange="jyfwChange" value="{{jyfwChoose}}" range="{{jifwArray}}">
-                        <input class="inpinput {{input_active == 'jyfwSelect'?'inpinput_a':''}}" id="jyfwSelect" value="{{jyfwSelect}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择经营范围" disabled="true" placeholder-class="input-placeholder"></input>
-                        {{jifwArray[0][jyfwChoose[0]]}}，{{jifwArray[1][jyfwChoose[1]]}}，{{jifwArray[2][jyfwChoose[2]]}}
+                    <picker mode="multiSelector" bindchange="jyfwPicker" bindcolumnchange="jyfwChange" value="{{jyfwIndex}}" range="{{jyfwOnly}}">
+                        <input class="inpinput {{input_active == 'jyfwSelect'?'inpinput_a':''}}" id="jyfwSelect" value="{{jyfwOnly[0][jyfwIndex[0]]}} - {{jyfwOnly[1][jyfwIndex[1]]}} - {{jyfwOnly[2][jyfwIndex[2]]}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur"
+                            placeholder="请选择经营范围" disabled="true" placeholder-class="input-placeholder"></input>
                     </picker>
                     <view class="inpfun">
                         <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
@@ -178,8 +184,9 @@
                     <view class="inplable">
                         <view>*</view>省市区
                     </view>
-                    <picker mode="region" value="{{shq}}" bindchange="shqPicker">
-                        <input class="inpinput {{input_active == 'region'?'inpinput_a':''}}" id="region" value="{{shopData.region}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择省市区" disabled="true" placeholder-class="input-placeholder"></input>
+                    <picker mode="multiSelector" bindchange="shqPicker" bindcolumnchange="shqChange" value="{{shqIndex}}" range="{{shqOnly}}">
+                        <input class="inpinput {{input_active == 'region'?'inpinput_a':''}}" id="region" value="{{shqOnly[0][shqIndex[0]]}} - {{shqOnly[1][shqIndex[1]]}} - {{shqOnly[2][shqIndex[2]]}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择省市区"
+                            disabled="true" placeholder-class="input-placeholder"></input>
                     </picker>
                     <view class="inpfun">
                         <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
@@ -209,7 +216,7 @@
                         <view>*</view>结算标识
                     </view>
                     <view class="jstype">
-                        <view class="jstbtn {{jstype==index?'active_btn':''}}" bindtap="jstypebtn" data-type="{{index}}" wx:for="{{jsbs}}" wx:key="{{index}}">
+                        <view class="jstbtn {{jstype==index?'active_btn':''}}" data-type="{{index}}" wx:for="{{jsbs}}" wx:key="index">
                             {{item}}
                         </view>
                     </view>
@@ -224,7 +231,7 @@
                     <input class="inpinput {{input_active == 'bankCardNo'?'inpinput_a':''}}" id="bankCardNo" value="{{shopData.bankCardNo}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写/扫描银行卡号" placeholder-class="input-placeholder"></input>
                     <view class="inpfun">
                         <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="注：商户名称，包括商户全称和商户简称，填写规范如下：商户所属行业合法，禁止入网的行业包括：广告、棋牌类、基金、理财 、套现、信用卡、传销等。商户名称中，不得包括以下敏感词汇：藏独、法轮功、色情、毒品、赌博、博彩、基金、理财、担保、贷款、集资、P2P、麻醉、间谍服务、私人侦探、股权、众筹、乐刷、套现、自选、千万户、000、T0、信用卡、担保、资金、淘宝、财务、收款、超时、商圈、金服、资产管理、微盘。"></image> -->
-                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix" catchtap="getBackCard"></image>
                         <!-- <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
                     </view>
                 </view>
@@ -232,8 +239,8 @@
                     <view class="inplable">
                         <view>*</view>开户行
                     </view>
-                    <picker mode="region" value="{{shq}}" bindchange="shqPicker">
-                        <input class="inpinput {{input_active == 'openingBank'?'inpinput_a':''}}" id="openingBank" value="{{shopData.openingBank}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写/选择开户银行" disabled="true" placeholder-class="input-placeholder"></input>
+                    <picker bindchange="yhPicker" value="{{yhIndex}}" range="{{yhOnly}}">
+                        <input class="inpinput {{input_active == 'openingBank'?'inpinput_a':''}}" id="openingBank" value="{{yhOnly[yhIndex]}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写/选择开户银行" disabled="true" placeholder-class="input-placeholder"></input>
                     </picker>
                     <view class="inpfun">
                         <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
@@ -245,8 +252,8 @@
                     <view class="inplable">
                         <view>*</view>开户地区
                     </view>
-                    <picker mode="region" value="{{shq}}" bindchange="shqPicker">
-                        <input class="inpinput {{input_active == 'shoujihao'?'inpinput_a':''}}" id="shoujihao" value="{{shopData.shoujihao}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择开户地区" disabled="true" placeholder-class="input-placeholder"></input>
+                    <picker mode="multiSelector" bindchange="khPicker" bindcolumnchange="khChange" value="{{khIndex}}" range="{{khOnly}}">
+                        <input class="inpinput {{input_active == 'region'?'inpinput_a':''}}" id="region" value="{{khOnly[0][khIndex[0]]}} - {{khOnly[1][khIndex[1]]}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择开户地区" disabled="true" placeholder-class="input-placeholder"></input>
                     </picker>
                     <view class="inpfun">
                         <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
@@ -258,9 +265,7 @@
                     <view class="inplable">
                         <view>*</view>开户支行
                     </view>
-                    <picker mode="region" value="{{shq}}" bindchange="shqPicker">
-                        <input class="inpinput {{input_active == 'openingBankBranch'?'inpinput_a':''}}" id="openingBankBranch" value="{{shopData.openingBankBranch}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择/填写开户支行" disabled="true" placeholder-class="input-placeholder"></input>
-                    </picker>
+                    <input class="inpinput {{input_active == 'openingBankBranch'?'inpinput_a':''}}" id="openingBankBranch" value="{{shopData.openingBankBranch}}" bindtap="searchInput" placeholder="请选择开户支行" disabled="true" placeholder-class="input-placeholder"></input>
                     <view class="inpfun">
                         <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
                         <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
@@ -277,13 +282,13 @@
                 <view class="picDivul">
                     <view class="picDivli">
                         <view class="picDivliimg">
-                            <image src="{{shopData.businessLicense}}" mode="aspectFit"></image>
+                            <image src="{{shopData.businessLicense}}" id="businessLicense" data-type="1" mode="aspectFit" bindtap="chooseImage"></image>
                         </view>
                         <view class="picyulan" data-pic="1" catchtap="picmodel">查看示例</view>
                     </view>
                     <view class="picDivli">
                         <view class="picDivliimg">
-                            <image src="{{shopData.openingPermit}}" mode="aspectFit"></image>
+                            <image src="{{shopData.openingPermit}}" id="openingPermit" data-type="12" mode="aspectFit" bindtap="chooseImage"></image>
                         </view>
                         <view class="picyulan" data-pic="2" catchtap="picmodel">查看示例</view>
                     </view>
@@ -292,19 +297,19 @@
                 <view class="picDivul">
                     <view class="picDivli">
                         <view class="picDivliimg">
-                            <image src="{{shopData.juridicalpersonIdPositive}}" mode="aspectFit"></image>
+                            <image src="{{shopData.juridicalpersonIdPositive}}" id="juridicalpersonIdPositive" data-type="2" mode="aspectFit" bindtap="chooseImage"></image>
                         </view>
                         <view class="picyulan" data-pic="3" catchtap="picmodel">查看示例</view>
                     </view>
                     <view class="picDivli">
                         <view class="picDivliimg">
-                            <image src="{{shopData.juridicalpersonIdReverseside}}" mode="aspectFit"></image>
+                            <image src="{{shopData.juridicalpersonIdReverseside}}" id="juridicalpersonIdReverseside" data-type="3" mode="aspectFit" bindtap="chooseImage"></image>
                         </view>
                         <view class="picyulan" data-pic="4" catchtap="picmodel">查看示例</view>
                     </view>
                     <view class="picDivli">
                         <view class="picDivliimg">
-                            <image src="{{shopData.holdId}}" mode="aspectFit"></image>
+                            <image src="{{shopData.holdId}}" id="holdId" data-type="11" mode="aspectFit" bindtap="chooseImage"></image>
                         </view>
                         <view class="picyulan" data-pic="5" catchtap="picmodel">查看示例</view>
                     </view>
@@ -313,7 +318,7 @@
                 <view class="picDivul">
                     <view class="picDivli">
                         <view class="picDivliimg">
-                            <image src="{{shopData.bankCardPositive}}" mode="aspectFit"></image>
+                            <image src="{{shopData.bankCardPositive}}" id="bankCardPositive" data-type="6" mode="aspectFit" bindtap="chooseImage"></image>
                         </view>
                         <view class="picyulan" data-pic="6" catchtap="picmodel">查看示例</view>
                     </view>
@@ -322,19 +327,19 @@
                 <view class="picDivul">
                     <view class="picDivli">
                         <view class="picDivliimg">
-                            <image src="{{shopData.doorheadPhoto}}" mode="aspectFit"></image>
+                            <image src="{{shopData.doorheadPhoto}}" id="doorheadPhoto" data-type="5" mode="aspectFit" bindtap="chooseImage"></image>
                         </view>
                         <view class="picyulan" data-pic="7" catchtap="picmodel">查看示例</view>
                     </view>
                     <view class="picDivli">
                         <view class="picDivliimg">
-                            <image src="{{shopData.cashier}}" mode="aspectFit"></image>
+                            <image src="{{shopData.cashier}}" id="cashier" data-type="13" mode="aspectFit" bindtap="chooseImage"></image>
                         </view>
                         <view class="picyulan" data-pic="8" catchtap="picmodel">查看示例</view>
                     </view>
                     <view class="picDivli">
                         <view class="picDivliimg">
-                            <image src="{{shopData.placeBusiness}}" mode="aspectFit"></image>
+                            <image src="{{shopData.placeBusiness}}" id="placeBusiness" data-type="14" mode="aspectFit" bindtap="chooseImage"></image>
                         </view>
                         <view class="picyulan" data-pic="9" catchtap="picmodel">查看示例</view>
                     </view>
@@ -365,13 +370,11 @@
                     <view class="inplable">
                         <view>*</view>微信/支付宝费率
                     </view>
-                    <picker mode="region" value="{{shq}}">
-                        <input class="inpinput {{input_active == 'rate'?'inpinput_a':''}}" id="rate" value="{{shopData.rate}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写/选择费率(示例0.38)" placeholder-class="input-placeholder"></input>
-                    </picker>
+                    <input class="inpinput {{input_active == 'rate'?'inpinput_a':''}}" id="rate" value="{{waRate}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写/选择费率(示例0.38)" placeholder-class="input-placeholder"></input>
                     <view class="inpfun">
-                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
-                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
-                        <image src="../../img/sanjiao.png" class="tipsimg" catchtap="shqPicker" mode="widthFix"></image>
+                        <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="支付宝及微信费率,建议费率0.23-0.60之间"></image>
+                        <!-- <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/sanjiao.png" class="tipsimg" catchtap="shqPicker" mode="widthFix"></image> -->
                     </view>
                 </view>
                 <view class="switchblock">
@@ -382,27 +385,22 @@
                     <view class="inplable">
                         <view>*</view>云闪付1000以下费率
                     </view>
-                    <picker mode="region" value="{{shq}}" bindchange="shqPicker">
-                        <input class="inpinput {{input_active == 'unionPayRate'?'inpinput_a':''}}" id="unionPayRate" value="{{shopData.unionPayRate}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择云闪付1000以下费率" disabled="true" placeholder-class="input-placeholder"
-                            value="{{shq}}"></input>
-                    </picker>
+                    <input class="inpinput {{input_active == 'unionPayRate'?'inpinput_a':''}}" id="unionPayRate" value="{{yunRate1}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择云闪付1000以下费率" placeholder-class="input-placeholder"></input>
                     <view class="inpfun">
-                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
-                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
-                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="云闪付1000以下费率,建议费率0.23-0.6之间"></image>
+                        <!-- <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
                     </view>
                 </view>
                 <view class="inputblock" wx:if="{{ysfswitch}}">
                     <view class="inplable">
                         <view>*</view>云闪付1000以上费率
                     </view>
-                    <picker mode="region" value="{{shq}}" bindchange="shqPicker">
-                        <input class="inpinput {{input_active == 'unionPayRate2'?'inpinput_a':''}}" id="unionPayRate2" value="{{shopData.unionPayRate2}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择云闪付1000以上费率" disabled="true" placeholder-class="input-placeholder"></input>
-                    </picker>
+                    <input class="inpinput {{input_active == 'unionPayRate2'?'inpinput_a':''}}" id="unionPayRate2" value="{{yunRate2}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择云闪付1000以上费率" placeholder-class="input-placeholder"></input>
                     <view class="inpfun">
-                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
-                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
-                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="云闪付1000以上费率,建议费率0.53-1之间"></image>
+                        <!-- <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
+                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
                     </view>
                 </view>
                 <view class="inputblock">
@@ -463,6 +461,21 @@
         <view class="tipsCon">
             <image src="{{picCon}}" class="picShili" mode="widthFix"></image>
             <image src="../../img/guanbi.png" class="guanbiBtn" bindtap="picmodelclose"></image>
+        </view>
+    </view>
+    <!-- 开户支行搜索选择 -->
+    <view class="searchback" animation="{{animationData}}" data-statu="close" wx:if="{{maskKh}}">
+        <view class="stepBtn quxiaobtn" bindtap="maskKhgb">取消</view>
+        <view class="inputblock searchb">
+            <input class="inpinput {{input_active == 'searczh'?'inpinput_a':''}}" id="searczh" bindinput="searczh" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请搜索选择支行" placeholder-class="input-placeholder"></input>
+            <view class="inpfun">
+                <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips='请填写商户联系人微信信息,微信要求已绑定银行卡完成实名认证，且实名的姓名与所填写的联系人姓名一致，微信号：需打开微信，在 "个人信息" 中看到的 "微信号",如 "微信号" 一栏显示 "未设置"，需先进行设置'></image>
+                <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
+                <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image>
+            </view>
+        </view>
+        <view class="zh_ul">
+            <view class="zh_li" wx:for="{{zhlist}}" wx:key="index" data-index="{{index}}" bindtap="chooseZh">{{item.lbnkNm}}</view>
         </view>
     </view>
     <!--mask-->

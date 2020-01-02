@@ -218,9 +218,11 @@ view {
 .inpinput {
     box-sizing: border-box;
     height: 88rpx;
+    line-height: 88rpx;
     border-radius: 8rpx;
     border: 2rpx solid rgba(229, 229, 229, 1);
     padding: 0 20rpx;
+    padding-right: 100rpx;
     font-size: 32rpx;
     color: #333;
     transition: 0.35s all;
@@ -556,10 +558,56 @@ view {
     font-size: 28rpx;
     font-weight: 500;
     color: rgba(153, 153, 153, 1);
-	text-align: center;
-	border-radius: 8rpx;
+    text-align: center;
+    border-radius: 8rpx;
 }
-.jyfw_li_a{
-	background:rgba(254,166,0,1);
-	color: #fff;
+
+.jyfw_li_a {
+    background: rgba(254, 166, 0, 1);
+    color: #fff;
+}
+
+/* 开户支行搜索选择 */
+
+.quxiaobtn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 99999;
+}
+
+.searchback {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background: #fff;
+}
+
+.searchb {
+    width: calc(100% - 60rpx);
+    margin: 24rpx auto 32rpx;
+}
+
+.zh_ul {
+    width: 100%;
+    height: calc(100% - 240rpx);
+    overflow: scroll;
+}
+
+.zh_li {
+    width: 100%;
+    height: 88rpx;
+    line-height: 88rpx;
+    padding: 0 30rpx;
+    text-align: left;
+    font-size: 14px;
+    color: rgba(102, 102, 102, 1);
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.zh_li:first-child {
+    border-top: 1px solid #e5e5e5;
 }
