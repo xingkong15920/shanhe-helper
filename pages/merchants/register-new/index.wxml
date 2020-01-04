@@ -2,7 +2,7 @@
     <view class="steps_box">
         <progress percent="{{Steps*percent}}" class="progress" stroke-width="3" activeColor="rgba(254,166,0,1)" style="width:{{progress}}%" />
         <view class="steps_all">
-            <view class="steps_one_box" wx:for="{{StepsList}}" wx:key="index">
+            <view class="steps_one_box" wx:for="{{StepsList}}" data-index="{{index}}" wx:key="index" catchtap="setSteps">
                 <view class='steps'>
                     <image wx:if="{{Steps<index}}" src="{{item.icon3}}" class="steps_img"></image>
                     <image wx:if="{{Steps==index}}" src="{{item.icon2}}" class="steps_img"></image>
@@ -80,7 +80,7 @@
                         <view class="inpfunBtn1 {{id_time?'active_btn':''}}" data-type="false" catchtap="inpfunBtn_idtime">长期</view>
                     </view>
                 </view>
-                <view class="inputblock" wx:if="{{sfz_cq}}">
+                <view class="inputblock" wx:if="{{!id_time}}">
                     <view class="inplable">
                         <view>*</view>身份证结束时间
                     </view>
@@ -96,7 +96,7 @@
                 </view>
             </view>
             <view class="line10"></view>
-            <view class="xxblock">
+            <view class="xxblock" wx:if="{{shtype==1||shtype==2}}">
                 <view class="inputblock">
                     <view class="inplable">
                         <view>*</view>营业执照名称
@@ -165,7 +165,7 @@
                     <view class="inplable">
                         <view>*</view>经营范围
                     </view>
-                    <view class="jyfw_ul">
+                    <view class="jyfw_ul" wx:if="{{!isUpdata}}">
                         <view class="jyfw_li {{jyfw_kj_a==index?'jyfw_li_a':''}}" bindtap="jyfwbtn" data-type="{{index}}" wx:for="{{jyfw_kj}}" wx:key="index">
                             {{item.mccTypeNm}}
                         </view>
@@ -278,49 +278,55 @@
         <view class="tpxx" wx:if="{{Steps==2}}">
             <view class="line10"></view>
             <view class="tpxxDiv">
-                <view class="picTips">*请上传真实有效的营业执照照片，保证图片清晰可见</view>
-                <view class="picDivul">
-                    <view class="picDivli">
-                        <view class="picDivliimg">
-                            <image src="{{shopData.businessLicense}}" id="businessLicense" data-type="1" mode="aspectFit" bindtap="chooseImage"></image>
+                <view wx:if="{{shtype != 0}}">
+                    <view class="picTips">*请上传真实有效的营业执照照片，保证图片清晰可见</view>
+                    <view class="picDivul">
+                        <view class="picDivli">
+                            <view class="picDivliimg">
+                                <image src="{{shopData.businessLicense}}" id="businessLicense" data-type="1" mode="aspectFit" bindtap="chooseImage"></image>
+                            </view>
+                            <view class="picyulan" data-pic="1" catchtap="picmodel">查看示例</view>
                         </view>
-                        <view class="picyulan" data-pic="1" catchtap="picmodel">查看示例</view>
-                    </view>
-                    <view class="picDivli">
-                        <view class="picDivliimg">
-                            <image src="{{shopData.openingPermit}}" id="openingPermit" data-type="12" mode="aspectFit" bindtap="chooseImage"></image>
+                        <view class="picDivli" wx:if="{{shtype == 2}}">
+                            <view class="picDivliimg">
+                                <image src="{{shopData.openingPermit}}" id="openingPermit" data-type="12" mode="aspectFit" bindtap="chooseImage"></image>
+                            </view>
+                            <view class="picyulan" data-pic="2" catchtap="picmodel">查看示例</view>
                         </view>
-                        <view class="picyulan" data-pic="2" catchtap="picmodel">查看示例</view>
-                    </view>
-                </view>
-                <view class="picTips">*请上传真实有效的身份证照片，保证图片清晰可见</view>
-                <view class="picDivul">
-                    <view class="picDivli">
-                        <view class="picDivliimg">
-                            <image src="{{shopData.juridicalpersonIdPositive}}" id="juridicalpersonIdPositive" data-type="2" mode="aspectFit" bindtap="chooseImage"></image>
-                        </view>
-                        <view class="picyulan" data-pic="3" catchtap="picmodel">查看示例</view>
-                    </view>
-                    <view class="picDivli">
-                        <view class="picDivliimg">
-                            <image src="{{shopData.juridicalpersonIdReverseside}}" id="juridicalpersonIdReverseside" data-type="3" mode="aspectFit" bindtap="chooseImage"></image>
-                        </view>
-                        <view class="picyulan" data-pic="4" catchtap="picmodel">查看示例</view>
-                    </view>
-                    <view class="picDivli">
-                        <view class="picDivliimg">
-                            <image src="{{shopData.holdId}}" id="holdId" data-type="11" mode="aspectFit" bindtap="chooseImage"></image>
-                        </view>
-                        <view class="picyulan" data-pic="5" catchtap="picmodel">查看示例</view>
                     </view>
                 </view>
-                <view class="picTips">*请上传真实有效的银行卡照片，保证图片清晰可见</view>
-                <view class="picDivul">
-                    <view class="picDivli">
-                        <view class="picDivliimg">
-                            <image src="{{shopData.bankCardPositive}}" id="bankCardPositive" data-type="6" mode="aspectFit" bindtap="chooseImage"></image>
+                <view>
+                    <view class="picTips">*请上传真实有效的身份证照片，保证图片清晰可见</view>
+                    <view class="picDivul">
+                        <view class="picDivli">
+                            <view class="picDivliimg">
+                                <image src="{{shopData.juridicalpersonIdPositive}}" id="juridicalpersonIdPositive" data-type="2" mode="aspectFit" bindtap="chooseImage"></image>
+                            </view>
+                            <view class="picyulan" data-pic="3" catchtap="picmodel">查看示例</view>
                         </view>
-                        <view class="picyulan" data-pic="6" catchtap="picmodel">查看示例</view>
+                        <view class="picDivli">
+                            <view class="picDivliimg">
+                                <image src="{{shopData.juridicalpersonIdReverseside}}" id="juridicalpersonIdReverseside" data-type="3" mode="aspectFit" bindtap="chooseImage"></image>
+                            </view>
+                            <view class="picyulan" data-pic="4" catchtap="picmodel">查看示例</view>
+                        </view>
+                        <view class="picDivli" wx:if="{{shtype == 0}}">
+                            <view class="picDivliimg">
+                                <image src="{{shopData.holdId}}" id="holdId" data-type="11" mode="aspectFit" bindtap="chooseImage"></image>
+                            </view>
+                            <view class="picyulan" data-pic="5" catchtap="picmodel">查看示例</view>
+                        </view>
+                    </view>
+                </view>
+                <view wx:if="{{shtype != 2}}">
+                    <view class="picTips">*请上传真实有效的银行卡照片，保证图片清晰可见</view>
+                    <view class="picDivul">
+                        <view class="picDivli">
+                            <view class="picDivliimg">
+                                <image src="{{shopData.bankCardPositive}}" id="bankCardPositive" data-type="6" mode="aspectFit" bindtap="chooseImage"></image>
+                            </view>
+                            <view class="picyulan" data-pic="6" catchtap="picmodel">查看示例</view>
+                        </view>
                     </view>
                 </view>
                 <view class="picTips">*请上传真实有效的门店场景照片，保证图片清晰可见</view>
@@ -368,9 +374,9 @@
             <view class="xxblock">
                 <view class="inputblock">
                     <view class="inplable">
-                        <view>*</view>微信/支付宝费率
+                        <view>*</view>微信/支付宝费率(%)
                     </view>
-                    <input class="inpinput {{input_active == 'rate'?'inpinput_a':''}}" id="rate" value="{{waRate}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写/选择费率(示例0.38)" placeholder-class="input-placeholder"></input>
+                    <input class="inpinput {{input_active == 'rate'?'inpinput_a':''}}" type="digit" id="rate" value="{{shopData.rate}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写支/微费率(示例0.38)" placeholder-class="input-placeholder"></input>
                     <view class="inpfun">
                         <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="支付宝及微信费率,建议费率0.23-0.60之间"></image>
                         <!-- <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
@@ -383,9 +389,9 @@
                 </view>
                 <view class="inputblock" wx:if="{{ysfswitch}}">
                     <view class="inplable">
-                        <view>*</view>云闪付1000以下费率
+                        <view>*</view>云闪付1000以下费率(%)
                     </view>
-                    <input class="inpinput {{input_active == 'unionPayRate'?'inpinput_a':''}}" id="unionPayRate" value="{{yunRate1}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择云闪付1000以下费率" placeholder-class="input-placeholder"></input>
+                    <input class="inpinput {{input_active == 'unionPayRate'?'inpinput_a':''}}" type="digit" id="unionPayRate" value="{{shopData.unionPayRate}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择云闪付1000以下费率" placeholder-class="input-placeholder"></input>
                     <view class="inpfun">
                         <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="云闪付1000以下费率,建议费率0.23-0.6之间"></image>
                         <!-- <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
@@ -394,9 +400,9 @@
                 </view>
                 <view class="inputblock" wx:if="{{ysfswitch}}">
                     <view class="inplable">
-                        <view>*</view>云闪付1000以上费率
+                        <view>*</view>云闪付1000以上费率(%)
                     </view>
-                    <input class="inpinput {{input_active == 'unionPayRate2'?'inpinput_a':''}}" id="unionPayRate2" value="{{yunRate2}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择云闪付1000以上费率" placeholder-class="input-placeholder"></input>
+                    <input class="inpinput {{input_active == 'unionPayRate2'?'inpinput_a':''}}" type="digit" id="unionPayRate2" value="{{shopData.unionPayRate2}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择云闪付1000以上费率" placeholder-class="input-placeholder"></input>
                     <view class="inpfun">
                         <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="云闪付1000以上费率,建议费率0.53-1之间"></image>
                         <!-- <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
@@ -448,7 +454,7 @@
         </view>
     </view>
     <!--mask-->
-    <view class="mask" catchtouchmove="preventTouchMove" data-statu="close" wx:if="{{maskTips||maskPic}}"></view>
+    <view class="mask" catchtouchmove="preventTouchMove" data-statu="close" wx:if="{{maskTips||maskPic||confirmMSG}}"></view>
     <!-- 文字提示 -->
     <view class="modalDlg" animation="{{animationData}}" data-statu="close" wx:if="{{maskTips}}">
         <view class="tipsCon">
@@ -476,6 +482,24 @@
         </view>
         <view class="zh_ul">
             <view class="zh_li" wx:for="{{zhlist}}" wx:key="index" data-index="{{index}}" bindtap="chooseZh">{{item.lbnkNm}}</view>
+        </view>
+    </view>
+    <!-- 信息确认 -->
+    <view class="confirmMSG" animation="{{animationData}}" data-statu="close" wx:if="{{confirmMSG}}">
+        <view class="confirmMSG-title">请核对</view>
+        <view class="confirmMSG-content">
+            <view class="confirmMSG-content-con">商户名称：{{shopData.merchantName}}</view>
+            <view class="confirmMSG-content-con">注册手机号：{{shopData.registerCell}}</view>
+            <view class="confirmMSG-content-con" style="color:red">微信/支付宝费率：{{waRate}} %</view>
+            <view class="confirmMSG-content-con" wx:if="{{ysfswitch}}" style="color:red">云闪付1000以下费率：{{yunRate1}} %</view>
+            <view class="confirmMSG-content-con" wx:if="{{ysfswitch}}" style="color:red">云闪付1000以上费率：{{yunRate2}} %</view>
+            <view class="confirmMSG-content-con">邮箱：{{shopData.mailbox}}</view>
+            <view class="confirmMSG-content-con">微信号：{{shopData.weChatNo}}</view>
+            <view class="confirmMSG-content-con">支付宝号：{{shopData.aliPayNo}}</view>
+        </view>
+        <view class="confirmMSG-footer">
+            <view class="btn-cancel" bindtap="onCancel" data-status="cancel">修改</view>
+            <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">提交</view>
         </view>
     </view>
     <!--mask-->

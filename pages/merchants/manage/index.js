@@ -133,7 +133,8 @@ Page({
         var merchantNumber = e.currentTarget.dataset.mernumber
 
         wx.navigateTo({
-            url: '../../merchants/register/index?id=' + id + '&type=true' + '&subNumber=' + subNumber + '&merchantNumber=' + merchantNumber,
+			// url: '../../merchants/register/index?id=' + id + '&type=true' + '&subNumber=' + subNumber + '&merchantNumber=' + merchantNumber,
+            url: '../../merchants/register-new/index?id=' + id + '&type=true' + '&subNumber=' + subNumber + '&merchantNumber=' + merchantNumber,
         })
     },
     editShop: function(e) {

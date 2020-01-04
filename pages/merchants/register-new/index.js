@@ -8,6 +8,11 @@ const hangbie = require('../../../utils/hangbie.js')
 
 Page({
     data: {
+        //是否更新
+        isUpdata: false,
+        // 公共信息
+        tdlx: '',
+        baiduapi: [],
         // 必要信息
         merNumber: '',
         insNumber: '',
@@ -25,10 +30,11 @@ Page({
         maskTips: false,
         maskPic: false,
         maskKh: false,
+        confirmMSG: false,
         tipsCon: '',
         picCon: '',
         //设置步骤条
-        Steps: 3, //当前步数
+        Steps: 0, //当前步数
         StepsList: [{
             name: '商户信息',
             icon1: '../../img/step01.png',
@@ -56,6 +62,7 @@ Page({
         downstepBtn: true, //下一步按钮
         jsbs: ['对私账户', '对公账户', ],
         jstype: 0,
+        shtype: 0, //商户类型  0-个人   1-个体  2-企业
         mailTips: ['@qq.com', '@163.com', '@126.com', ],
         mail_active: false,
         input_active: '',
@@ -96,7 +103,7 @@ Page({
         ],
         jyfw_kj_a: 0,
         jyfwArray: [],
-        jyfwIndex: [0, 3, 3],
+        jyfwIndex: [5, 2, 23],
         jyfwOnly: [
             [],
             [],
@@ -129,101 +136,28 @@ Page({
         yhIndex: [0],
         yhOnly: [],
         yhCode: [],
-        // 身份证长期显示
-        sfz_cq: true,
         // 支行
         zhlist: [],
-        // 营业执照时间
-        businessLicenseTime: '',
-        businessLicenseEndTime: '',
         // 收集信息
-        // shopData: {
-        //     "businessLicense": '../../img/pic1.png',
-        //     "openingPermit": '../../img/pic2.png',
-        //     "juridicalpersonIdPositive": '../../img/pic3.png',
-        //     "juridicalpersonIdReverseside": '../../img/pic4.png',
-        //     "holdId": '../../img/pic5.png',
-        //     "bankCardPositive": '../../img/pic6.png',
-        //     "doorheadPhoto": '../../img/pic7.png',
-        //     "cashier": '../../img/pic8.png',
-        //     "placeBusiness": '../../img/pic9.png',
-        //     "oneOperate": "1",
-        //     "twoOperate": "02",
-        //     "threeOperate": "5812",
-        //     "juridicalPersonIDType": '1',
-        // },
         shopData: {
-            "acntType": "对私",
-            "address": "礼贤南街1号",
-            "agName": "闪盒测试代理商",
-            "agentNumber": "99",
-            "aliPayNo": "15111111111",
-            "area": "魏县",
-            "area1": "130434|魏县",
-            "areaID": "130434",
-            "bankCardNo": "6214990110114064",
-            "bankCardPositive": "http://sh-upfile.oss-cn-beijing.aliyuncs.com/1004/Merchant/1004000706/d2f8d0d0bfa8d5fdc3e6.jpg",
-            "businessLicense": "http://sh-upfile.oss-cn-beijing.aliyuncs.com/1004/Merchant/15771508624818522/d6a4bcfed5d5c6ac.jpg",
-            "businessLicenseAddress": "河北省邯郸市魏县礼贤南街",
-            "businessLicenseEndTime": "2019-12-24",
-            "businessLicenseName": "魏县西部来客大盘鸡饭店",
-            "businessLicenseNo": "92130434MA08GML99J",
-            "businessLicenseTime": "2017-05-02",
-            "businessLicenseType": 0,
-            "cashier": "http://sh-upfile.oss-cn-beijing.aliyuncs.com/1004/Merchant/15771508624818522/c0b6baa3cad5d2f8cca8d5d5c6ac.jpg",
-            "city": "邯郸市",
-            "city1": "1270|邯郸市",
-            "city11": "1270|邯郸市",
-            "cityID": "1270",
-            "customerServiceTell": "15111111111",
-            "doorheadPhoto": "http://sh-upfile.oss-cn-beijing.aliyuncs.com/1004/Merchant/15771508624818522/c3c5cdb7d5d5c6ac.jpg",
-            "facePhoto": "http://sh-upfile.oss-cn-beijing.aliyuncs.com/1004/Merchant/15771508624818522/c3c5cdb7d5d5c6ac.jpg",
-            "holdId": "",
-            "institutionNumber": 1004,
-            "isOpenYunPay": 0,
-            "juridicalPersonIDEndTime": "2029-06-16",
-            "juridicalPersonIDType": 1,
-            "juridicalpersonId": "130434197407112458",
-            "juridicalpersonIdPositive": "http://sh-upfile.oss-cn-beijing.aliyuncs.com/1004/Merchant/15771508624818522/b7a8c8cbc9edb7ddd6a4c3f7d5fdc3e6.jpg",
-            "juridicalpersonIdReverseside": "http://sh-upfile.oss-cn-beijing.aliyuncs.com/1004/Merchant/15771508624818522/b7a8c8cbc9edb7ddd6a4c3f7b7b4c3e6.jpg",
-            "juridicalpersonIdTime": "2009-06-16",
-            "juridicalpersonName": "孟志广",
-            "longTime": 1577417002000,
-            "mailbox": "1257736026@qq.com",
-            "merchantName": "西部来客",
-            "merchantNumber": "1004000706",
-            "merchantType": "个体",
-            "oneOperate": "1",
-            "openingBank": "中国建设银行",
-            "openingBank1": "0105|中国建设银行",
-            "openingBankBranch": "中国建设银行邯郸分行",
-            "openingBankBranchID": "105127000017",
-            "openingBankID": "0105",
-            "openingPermit": "",
-            "operationId": "5812",
-            "paymentChannel": "1564557799651",
-            "paymentType": "0",
-            "placeBusiness": "http://sh-upfile.oss-cn-beijing.aliyuncs.com/1004/Merchant/15771508624818522/c0b6baa3c3c5b5eac4dabeb0d5d5c6ac.jpg",
-            "prov1": "1200|河北省",
-            "prov11": "1200|河北省",
-            "province": "河北省",
-            "provinceID": "1200",
-            "rate": "0.0025",
-            "registerCell": "15111111111",
-            "reserveCell": "15111111111",
-            "saleNumber": "10040000089",
-            "slName": "测试",
-            "subsidy": 1,
-            "threeOperate": "5812",
-            "twoOperate": "02",
-            "unionPayRate": "0.0030",
-            "unionPayRate2": "0.0060",
-            "weChatNo": "15111111111",
+            "businessLicense": '../../img/pic1.png',
+            "openingPermit": '../../img/pic2.png',
+            "juridicalpersonIdPositive": '../../img/pic3.png',
+            "juridicalpersonIdReverseside": '../../img/pic4.png',
+            "holdId": '../../img/pic5.png',
+            "bankCardPositive": '../../img/pic6.png',
+            "doorheadPhoto": '../../img/pic7.png',
+            "cashier": '../../img/pic8.png',
+            "placeBusiness": '../../img/pic9.png',
         },
-        jyfwSelect: '',
-        shq: '',
         ysfswitch: false,
         // 收集信息
+    },
+    setSteps: function(e) {
+        console.log(e.currentTarget.dataset.index)
+        this.setData({
+            Steps: e.currentTarget.dataset.index
+        })
     },
     upStep: function() {
         var that = this;
@@ -237,6 +171,9 @@ Page({
             shqOnly = that.data.shqOnly,
             shqCode = that.data.shqCode,
             shqIndex = that.data.shqIndex;
+
+        console.log(shopData)
+
         var reg_hanzi = new RegExp("^([a-z]|[A-Z]|[0-9]|[\\u4e00-\\u9fa5]){0,20}$")
         var reg_id = new RegExp("^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$")
         var reg_call = /^1[3|4|5|6|7|8|9][0-9]{9}$/
@@ -263,27 +200,27 @@ Page({
                     that.showError('请选择身份证开始时间')
                     return
                 }
-                if (!shopData.juridicalPersonIDEndTime || shopData.juridicalPersonIDEndTime == '') {
+                if (!that.data.id_time && !shopData.juridicalPersonIDEndTime || shopData.juridicalPersonIDEndTime == '') {
                     that.showError('请选择身份证结束时间')
                     return
                 }
-                if (!shopData.businessLicenseName || shopData.businessLicenseName == '') {
+                if (that.data.shtype != 0 && !shopData.businessLicenseName || shopData.businessLicenseName == '') {
                     that.showError('请填写营业执照名称')
                     return
                 }
-                if (!shopData.businessLicenseNo || shopData.businessLicenseNo == '') {
+                if (that.data.shtype != 0 && !shopData.businessLicenseNo || shopData.businessLicenseNo == '') {
                     that.showError('请填写身营业执照号')
                     return
                 }
-                if (!shopData.businessLicenseAddress || shopData.businessLicenseAddress == '') {
+                if (that.data.shtype != 0 && !shopData.businessLicenseAddress || shopData.businessLicenseAddress == '') {
                     that.showError('请填写身营业执照地址')
                     return
                 }
-                if (!shopData.businessLicenseEndTime || shopData.businessLicenseEndTime == '') {
+                if (that.data.shtype != 0 && !shopData.businessLicenseEndTime || shopData.businessLicenseEndTime == '') {
                     that.showError('请选择营业执照开始时间')
                     return
                 }
-                if (!shopData.businessLicenseTime || shopData.businessLicenseTime == '') {
+                if (that.data.shtype != 0 && !shopData.businessLicenseTime || shopData.businessLicenseTime == '') {
                     that.showError('请选择营业执照结束时间')
                     return
                 }
@@ -326,39 +263,40 @@ Page({
                 }
                 break
             case 2:
-                if (shopData.businessLicense.indexOf('http') < 0) {
+                var shtype = that.data.shtype
+                if (shtype != 0 && shopData.businessLicense.indexOf('http') == -1) {
                     that.showError('请上传营业执照照片')
                     return
                 }
-                if (shopData.openingPermit.indexOf('http') < 0) {
+                if (shtype == 2 && shopData.openingPermit.indexOf('http') == -1) {
                     that.showError('请上传开户许可证照片')
                     return
                 }
-                if (shopData.juridicalpersonIdPositive.indexOf('http') < 0) {
+                if (shopData.juridicalpersonIdPositive.indexOf('http') == -1) {
                     that.showError('请上传身份证正面照片')
                     return
                 }
-                if (shopData.juridicalpersonIdReverseside.indexOf('http') < 0) {
+                if (shopData.juridicalpersonIdReverseside.indexOf('http') == -1) {
                     that.showError('请上传身份证反面照片')
                     return
                 }
-                if (shopData.holdId.indexOf('http') < 0) {
+                if (shtype == 0 && shopData.holdId.indexOf('http') == -1) {
                     that.showError('请上传手持身份证照片')
                     return
                 }
-                if (shopData.bankCardPositive.indexOf('http') < 0) {
+                if (shtype != 2 && shopData.bankCardPositive.indexOf('http') == -1) {
                     that.showError('请上传银行卡正面照片')
                     return
                 }
-                if (shopData.doorheadPhoto.indexOf('http') < 0) {
+                if (shopData.doorheadPhoto.indexOf('http') == -1) {
                     that.showError('请上传门头照片')
                     return
                 }
-                if (shopData.cashier.indexOf('http') < 0) {
+                if (shopData.cashier.indexOf('http') == -1) {
                     that.showError('请上传收银台照片')
                     return
                 }
-                if (shopData.placeBusiness.indexOf('http') < 0) {
+                if (shopData.placeBusiness.indexOf('http') == -1) {
                     that.showError('请上传经营场所照片')
                     return
                 }
@@ -371,12 +309,132 @@ Page({
     },
     lastStep: function() {
         var that = this,
-            shopData = this.data.shopData
+            shopData = this.data.shopData,
+            jyfwCode = this.data.jyfwCode,
+            jyfwIndex = this.data.jyfwIndex,
+            shqOnly = this.data.shqOnly,
+            shqCode = this.data.shqCode,
+            shqIndex = this.data.shqIndex;
+        var reg_mail = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
 
-        shopData.rate = (shopData.rate * 100).toFixed(2)
-        shopData.unionPayRate = (shopData.unionPayRate * 100).toFixed(2)
-        shopData.unionPayRate2 = (shopData.unionPayRate2 * 100).toFixed(2)
-        console.log(this.data.shopData)
+        // 默认经营类别
+        shopData['oneOperate'] = jyfwCode[0][jyfwIndex[0]]
+        shopData['twoOperate'] = jyfwCode[1][jyfwIndex[1]]
+        shopData['threeOperate'] = jyfwCode[2][jyfwIndex[2]]
+        shopData['operationId'] = jyfwCode[2][jyfwIndex[2]]
+
+        // 默认地区
+        shopData['province'] = shqOnly[0][shqIndex[0]]
+        shopData['city'] = shqOnly[1][shqIndex[1]]
+        shopData['area'] = shqOnly[2][shqIndex[2]]
+        shopData['provinceID'] = shqCode[0][shqIndex[0]]
+        shopData['cityID'] = shqCode[1][shqIndex[1]]
+        shopData['areaID'] = shqCode[2][shqIndex[2]]
+
+
+        // 判断图片是否是默认图片
+        console.log(shopData.businessLicense)
+        console.log(shopData.businessLicense.indexOf('../..'))
+        console.log(shopData.juridicalpersonIdPositive)
+        console.log(shopData.juridicalpersonIdPositive.indexOf('../..'))
+        if (shopData.businessLicense.indexOf('../..') > -1) {
+            shopData.businessLicense = ''
+        }
+        if (shopData.openingPermit.indexOf('../..') > -1) {
+            shopData.openingPermit = ''
+        }
+        if (shopData.juridicalpersonIdPositive.indexOf('../..') > -1) {
+            shopData.juridicalpersonIdPositive = ''
+        }
+        if (shopData.juridicalpersonIdReverseside.indexOf('../..') > -1) {
+            shopData.juridicalpersonIdReverseside = ''
+        }
+        if (shopData.holdId.indexOf('../..') > -1) {
+            shopData.holdId = ''
+        }
+        if (shopData.bankCardPositive.indexOf('../..') > -1) {
+            shopData.bankCardPositive = ''
+        }
+        if (shopData.doorheadPhoto.indexOf('../..') > -1) {
+            shopData.doorheadPhoto = ''
+        }
+        if (shopData.cashier.indexOf('../..') > -1) {
+            shopData.cashier = ''
+        }
+        if (shopData.placeBusiness.indexOf('../..') > -1) {
+            shopData.placeBusiness = ''
+        }
+
+        // 优质商户标识
+        shopData['subsidy'] = 1
+
+        // 设置商户信息相同默认值
+        shopData['reserveCell'] = shopData.registerCell
+        shopData['facePhoto'] = shopData.doorheadPhoto
+        shopData['institutionNumber'] = that.data.insNumber
+        shopData['agentNumber'] = wx.getStorageSync('saleInfo').agentNumber
+        shopData['saleNumber'] = wx.getStorageSync('saleInfo').Number
+
+        // 费率信息校验
+        if (!shopData.rate || shopData.rate == '' || isNaN(shopData.rate)) {
+            that.showError('请正确填写支/微费率')
+            return
+        } else if (parseFloat(shopData.rate) < 0.20 || parseFloat(shopData.rate) > 1) {
+            that.showError('支/微费率需在0.20 - 1之间')
+            return
+        }
+
+        if (that.data.ysfswitch) {
+            if (!shopData.unionPayRate || shopData.unionPayRate == '' || isNaN(shopData.unionPayRate)) {
+                that.showError('请选择云闪付1000以下费率')
+                return
+            } else if (parseFloat(shopData.unionPayRate) < 0.23 || parseFloat(shopData.unionPayRate) > 1) {
+                that.showError('云闪付1000以下费率需在0.23 - 1之间')
+                return
+            }
+            if (!shopData.unionPayRate2 || shopData.unionPayRate2 == '' || isNaN(shopData.unionPayRate2)) {
+                that.showError('请选择云闪付1000以上费率')
+                return
+            } else if (parseFloat(shopData.unionPayRate2) < 0.52 || parseFloat(shopData.unionPayRate2) > 1) {
+                that.showError('云闪付1000以上费率需在0.52 - 1之间')
+                return
+            }
+        }
+
+        if (!reg_mail.test(shopData.mailbox)) {
+            that.showError('请填写邮箱')
+            return
+        }
+        if (!shopData.weChatNo || shopData.weChatNo == '') {
+            that.showError('请填写微信号')
+            return
+        }
+        if (!shopData.aliPayNo || shopData.aliPayNo == '') {
+            that.showError('请填写支付宝号')
+            return
+        }
+
+        shopData['rate'] = (shopData.rate / 100).toFixed(4)
+        if (that.data.tdlx == 0) {
+            shopData['paymentChannels'] = JSON.stringify(wx.getStorageSync('payment_zl'))
+        } else {
+            shopData['paymentChannels'] = JSON.stringify(wx.getStorageSync('payment_jl'))
+        }
+        if (this.data.ysfswitch) {
+            shopData['unionPayRate'] = (shopData.unionPayRate / 100).toFixed(4)
+            shopData['unionPayRate2'] = (shopData.unionPayRate2 / 100).toFixed(4)
+        }
+        that.setData({
+            shopData: shopData,
+            confirmMSG: true,
+            waRate: (shopData.rate * 100).toFixed(2),
+            yunRate1: (shopData.unionPayRate * 100).toFixed(2) || '',
+            yunRate2: (shopData.unionPayRate2 * 100).toFixed(2) || '',
+        })
+
+        // shopData.rate = (shopData.rate * 100).toFixed(2)
+        // shopData.unionPayRate = (shopData.unionPayRate * 100).toFixed(2)
+        // shopData.unionPayRate2 = (shopData.unionPayRate2 * 100).toFixed(2)
     },
     // 提示model
     tipsmodel: function(e) {
@@ -393,6 +451,116 @@ Page({
         this.setData({
             maskTips: false,
         })
+    },
+    // 信息取消
+    onCancel: function() {
+        var shopData = this.data.shopData;
+        shopData['rate'] = (shopData.rate * 100).toFixed(2)
+        if (this.data.ysfswitch) {
+            shopData['unionPayRate'] = (shopData.unionPayRate * 100).toFixed(2)
+            shopData['unionPayRate2'] = (shopData.unionPayRate2 * 100).toFixed(2)
+        } else {
+            shopData['unionPayRate'] = ''
+            shopData['unionPayRate2'] = ''
+        }
+        this.setData({
+            confirmMSG: false,
+            shopData: shopData,
+        })
+    },
+    // 信息确认
+    onConfirm: function() {
+        var that = this;
+        console.log(that.data.shopData)
+        if (that.data.isUpdata == 'true') {
+            wx.request({
+                url: that.data.server_jg + 'InsMer/updateMerchantOrderInfo',
+                method: 'post',
+                data: that.data.shopData,
+                dataType: 'json',
+                header: {
+                    'content-type': 'application/x-www-form-urlencoded' // 默认值
+                    // 'content-type': 'application/json' // json
+                },
+                success: function(res) {
+                    if (res.data.code == 1000) {
+                        wx.showToast({
+                            title: '商户信息提交成功!',
+                            icon: 'success',
+                            duration: 1500,
+                            mask: true,
+                            success: function() {
+                                if (res.cancel) {
+
+                                } else {
+                                    setTimeout(function() {
+                                        wx.navigateBack({
+                                            delta: 1
+                                        })
+                                    }, 100)
+                                }
+                            }
+                        })
+
+                    } else {
+                        wx.showToast({
+                            title: res.data.msg,
+                            icon: 'none'
+                        })
+                    }
+                },
+                fail: function(res) {
+                    wx.showToast({
+                        title: res.data.msg,
+                        icon: 'none'
+                    })
+                }
+            })
+        } else {
+            wx.request({
+                url: that.data.server_jg + 'InsMer/insertMerchant',
+                method: 'post',
+                data: that.data.shopData,
+                dataType: 'json',
+                header: {
+                    'content-type': 'application/x-www-form-urlencoded' // 默认值
+                    // 'content-type': 'application/json' // json
+                },
+                success: function(res) {
+                    if (res.data.code == 1000) {
+                        wx.showToast({
+                            title: '商户信息提交成功!',
+                            icon: 'success',
+                            duration: 1500,
+                            mask: true,
+                            success: function() {
+                                if (res.cancel) {
+
+                                } else {
+                                    setTimeout(function() {
+                                        wx.navigateBack({
+                                            delta: 2
+                                        })
+                                    }, 100)
+                                }
+                            }
+                        })
+
+                    } else {
+                        wx.showToast({
+                            title: res.data.msg,
+                            icon: 'none'
+                        })
+                    }
+                },
+                fail: function(res) {
+                    wx.showToast({
+                        title: res.data.msg,
+                        icon: 'none'
+                    })
+                }
+            })
+        }
     },
     // 图片展示
     picmodel: function(e) {
@@ -456,7 +624,7 @@ Page({
             jyfw_kj_a: e.currentTarget.dataset.type,
             jyfwIndex: this.data.jyfw_kj[e.currentTarget.dataset.type].mccnum
         })
-        console.log(this.data.jyfw_kj[e.currentTarget.dataset.type].mccnum)
+        // this.setjyfw()
     },
     // 经营范围
     jyfwPicker: function(e) {
@@ -467,12 +635,11 @@ Page({
         shopData['oneOperate'] = jyfwCode[0][jyfwIndex[0]]
         shopData['twoOperate'] = jyfwCode[1][jyfwIndex[1]]
         shopData['threeOperate'] = jyfwCode[2][jyfwIndex[2]]
+        shopData['operationId'] = jyfwCode[2][jyfwIndex[2]]
 
         this.setData({
             jyfwIndex: e.detail.value,
         })
-        console.log(this.data.jyfwIndex)
-        console.log([jyfwCode[0][jyfwIndex[0]], jyfwCode[1][jyfwIndex[1]], jyfwCode[2][jyfwIndex[2]]])
     },
     // 经营范围滑动
     jyfwChange: function(e) {
@@ -481,7 +648,6 @@ Page({
             jyfwOnly = this.data.jyfwOnly,
             jyfwCode = this.data.jyfwCode;
 
-        jyfwIndex[e.detail.column] = e.detail.value;
         jyfwIndex[e.detail.column] = e.detail.value;
         // console.log(jyfwOnly);
 
@@ -531,11 +697,15 @@ Page({
     shqPicker: function(e) {
         var shqIndex = this.data.shqIndex,
             shqCode = this.data.shqCode,
-            shopData = this.data.shopData;
+            shopData = this.data.shopData,
+            shqOnly = this.data.shqOnly;
 
-        shopData['oneOperate'] = shqCode[0][shqIndex[0]]
-        shopData['twoOperate'] = shqCode[1][shqIndex[1]]
-        shopData['threeOperate'] = shqCode[2][shqIndex[2]]
+        shopData['province'] = shqOnly[0][shqIndex[0]]
+        shopData['city'] = shqOnly[1][shqIndex[1]]
+        shopData['area'] = shqOnly[2][shqIndex[2]]
+        shopData['provinceID'] = shqCode[0][shqIndex[0]]
+        shopData['cityID'] = shqCode[1][shqIndex[1]]
+        shopData['areaID'] = shqCode[2][shqIndex[2]]
 
         this.setData({
             shqIndex: e.detail.value,
@@ -597,11 +767,16 @@ Page({
     },
     // 开户行
     yhPicker: function(e) {
-        var yhIndex = this.data.yhIndex;
+        var yhIndex = this.data.yhIndex,
+            shopData = this.data.shopData;
 
+        shopData['openingBank'] = this.data.yhOnly[e.detail.value]
+        shopData['openingBankID'] = this.data.yhCode[e.detail.value]
         this.setData({
             yhIndex: e.detail.value,
+            shopData: shopData
         })
+        console.log(this.data.shopData)
     },
     // 开户行地区
     khPicker: function(e) {
@@ -661,7 +836,7 @@ Page({
     searczh: function(e) {
         var that = this;
         wx.request({
-            url: that.data.server_jg + 'cache/getBank',
+            url: that.data.server + 'cache/getBank',
             method: 'get',
             data: {
                 bankCode: that.data.yhCode[that.data.yhIndex].toString(),
@@ -801,9 +976,10 @@ Page({
             }
         })
     },
-    // 图片压缩上传
-    uploadImage: function(tempFilePaths, id, type) {
+    // 识别身份证
+    getIdInfo: function(e) {
         var that = this
+        var shopData = that.data.shopData
         var code1 = ''
         for (var i = 0; i < 4; i++) {
             code1 += Math.floor(Math.random() * 10)
@@ -811,100 +987,88 @@ Page({
         var longTime = new Date().getTime() + code1
         let uploadFile = ''
 
-    },
-    // 识别身份证
-    getIdInfo: function(e) {
-        console.log(e)
-        var that = this
-
         wx.chooseImage({
             count: 1,
             sizeType: ['compressed'],
             sourceType: ['album', 'camera'],
-            success(res) {
-                const imageSrc = res.tempFilePaths[0]
-                wx.showLoading({
-                    title: '正在上传',
-                })
-                var tempFilePaths = res.tempFilePaths
-                console.log(tempFilePaths)
-                wx.getFileSystemManager().readFile({
-                    filePath: res.tempFilePaths[0], //选择图片返回的相对路径
-                    encoding: 'base64', //编码格式
-                    success: res => { //成功的回调
-                        var imgBase = res.data
-                        wx.request({
-                            url: 'https://aip.baidubce.com/rest/2.0/ocr/v1/idcard?access_token=' + that.data.accesstoken,
-                            data: {
-                                "id_card_side": "front",
-                                "detect_direction": "true",
-                                image: imgBase
+            success(res1) {
+                console.log(res1)
+                var tempFilePaths = res1.tempFilePaths[0];
+                wx.compressImage({
+                    src: tempFilePaths, // 图片路径
+                    quality: 30, // 压缩质量
+                    success: function(res2) {
+                        uploadFile = res2.tempFilePath
+                        wx.showLoading({
+                            title: '正在上传',
+                        })
+                        wx.uploadFile({
+                            url: that.data.server_jg + 'InsMer/uploadMerchantImg',
+                            filePath: uploadFile,
+                            name: 'file',
+                            formData: {
+                                type: 2,
+                                institutionNumber: that.data.insNumber,
+                                longTime: longTime
                             },
-                            method: 'post',
-                            header: {
-                                "Content-type": "application/x-www-form-urlencoded"
-                            },
-                            success: res => {
-                                // console.log(res.data.words_result.公民身份号码)
-                                var shopData = that.data.shopData
-                                shopData['juridicalpersonId'] = res.data.words_result.公民身份号码.words
-                                shopData['juridicalpersonName'] = res.data.words_result.姓名.words
-                                that.setData({
-                                    shopData: shopData,
+                            success: function(res3) {
+                                var res33 = JSON.parse(res3.data)
+                                if (res33.code != 1000) {
+                                    wx.showToast({
+                                        title: res33.msg,
+                                        image: '../../img/guanbi.png',
+                                        duration: 1000
+                                    })
+                                    return
+                                }
+
+                                var aData = new Object()
+                                aData.image = res33.data
+                                aData.idCardSide = 'front'
+                                aData.type = '0'
+                                aData.appId = that.data.baiduapi.baiduAppID
+                                aData.aipKey = that.data.baiduapi.baiduAPIKey
+                                aData.aipToken = that.data.baiduapi.baiduSecretKey
+                                wx.request({
+                                    url: 'http://api.51shanhe.com/p-server/appServer/getIdCard',
+                                    data: JSON.stringify(aData),
+                                    method: 'post',
+                                    header: {
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(res) {
+                                        console.log(res)
+                                        shopData['juridicalpersonIdPositive'] = res33.data
+                                        shopData['juridicalpersonId'] = JSON.parse(res.data.data).words_result.公民身份号码.words
+                                        shopData['juridicalpersonName'] = JSON.parse(res.data.data).words_result.姓名.words
+                                        that.setData({
+                                            shopData: shopData,
+                                        })
+                                        wx.showToast({
+                                            title: '请核对信息',
+                                            icon: 'success',
+                                            duration: 1000
+                                        })
+                                    }
                                 })
+                            },
+                            fail(e) {
+                                // wx.showModal({
+                                // 	title: '',
+                                // 	content: e,
+                                // })
                                 wx.showToast({
-                                    title: '请核对信息',
+                                    title: '上传失败',
                                     icon: 'success',
                                     duration: 1000
                                 })
                             }
                         })
+                    },
+                    fail: function(res) {
+                        console.log(res)
                     }
                 })
-                // wx.uploadFile({
-                //     url: that.data.server1 + 'Sell/addPic',
-                //     filePath: imageSrc,
-                //     name: 'file',
-                //     formData: {
-                //         type: 2,
-                //         institutionNumber: that.data.institutionNumber,
-                //         orderNumber: that.data.orderNumber
-                //     },
-                //     success(res) {
-                //         wx.showToast({
-                //             title: '上传成功',
-                //             icon: 'success',
-                //             duration: 1000
-                //         })
-                //         var imgSrc = JSON.parse(res.data)
-                //         var imagelist = that.data.imagelist
-                //         console.log(imagelist)
-                //         for (let i = 0; i < imagelist.length; i++) {
-                //             if (imagelist[i].type == 2) {
-                //                 imagelist[i].imgSrc = imgSrc.data + '?' + Math.random()
-                //                 imagelist[i].isS = true
-                //             }
-                //         }
-
-                //         that.setData({
-                //             imagelist: imagelist
-                //         })
-                //         console.log(imagelist)
-                //     },
-                //     fail() {
-                //         wx.showToast({
-                //             title: '上传失败',
-                //             icon: 'success',
-                //             duration: 1000
-                //         })
-                //     }
-                // })
-            },
-
-            fail({
-                errMsg
-            }) {
-                console.log('chooseImage fail, err is', errMsg)
             }
         })
     },
@@ -974,44 +1138,6 @@ Page({
                         })
                     }
                 })
-                // wx.uploadFile({
-                //     url: that.data.server1 + 'Sell/addPic',
-                //     filePath: imageSrc,
-                //     name: 'file',
-                //     formData: {
-                //         type: 1,
-                //         institutionNumber: that.data.institutionNumber,
-                //         orderNumber: that.data.orderNumber
-                //     },
-                //     success(res) {
-                //         wx.showToast({
-                //             title: '上传成功',
-                //             icon: 'success',
-                //             duration: 1000
-                //         })
-                //         var imgSrc = JSON.parse(res.data)
-                //         var imagelist = that.data.imagelist
-                //         console.log(imagelist)
-                //         for (let i = 0; i < imagelist.length; i++) {
-                //             if (imagelist[i].type == 1) {
-                //                 imagelist[i].imgSrc = imgSrc.data + '?' + Math.random()
-                //                 imagelist[i].isS = true
-                //             }
-                //         }
-
-                //         that.setData({
-                //             imagelist: imagelist
-                //         })
-                //         console.log(imagelist)
-                //     },
-                //     fail() {
-                //         wx.showToast({
-                //             title: '上传失败',
-                //             icon: 'success',
-                //             duration: 1000
-                //         })
-                //     }
-                // })
             },
 
             fail({
@@ -1022,125 +1148,111 @@ Page({
         })
     },
     getBackCard: function(e) {
-        console.log(e)
         var that = this
+        var shopData = that.data.shopData
+        var code1 = ''
+        for (var i = 0; i < 4; i++) {
+            code1 += Math.floor(Math.random() * 10)
+        }
+        var longTime = new Date().getTime() + code1
+        let uploadFile = ''
 
         wx.chooseImage({
             count: 1,
             sizeType: ['compressed'],
             sourceType: ['album', 'camera'],
-            success(res) {
-                const imageSrc = res.tempFilePaths[0]
-                wx.showLoading({
-                    title: '正在上传',
-                })
-                var tempFilePaths = res.tempFilePaths
-                console.log(tempFilePaths)
-                wx.getFileSystemManager().readFile({
-                    filePath: res.tempFilePaths[0], //选择图片返回的相对路径
-                    encoding: 'base64', //编码格式
-                    success: res => { //成功的回调
-                        var imgBase = res.data
-                        wx.request({
-                            url: 'https://aip.baidubce.com/rest/2.0/ocr/v1/bankcard?access_token=' + that.data.accesstoken,
-                            data: {
-                                image: imgBase
+            success(res1) {
+                console.log(res1)
+                var tempFilePaths = res1.tempFilePaths[0];
+                wx.compressImage({
+                    src: tempFilePaths, // 图片路径
+                    quality: 30, // 压缩质量
+                    success: function(res2) {
+                        uploadFile = res2.tempFilePath
+                        wx.showLoading({
+                            title: '正在上传',
+                        })
+                        wx.uploadFile({
+                            url: that.data.server_jg + 'InsMer/uploadMerchantImg',
+                            filePath: uploadFile,
+                            name: 'file',
+                            formData: {
+                                type: 6,
+                                institutionNumber: that.data.insNumber,
+                                longTime: longTime
                             },
-                            method: 'post',
-                            header: {
-                                "Content-type": "application/x-www-form-urlencoded"
-                            },
-                            success: res => {
-                                console.log(res)
-                                var shopData = that.data.shopData
-                                if (res.data.error_code) {
+                            success: function(res3) {
+                                var res33 = JSON.parse(res3.data)
+                                if (res33.code != 1000) {
                                     wx.showToast({
-                                        title: '识别失败',
-                                        icon: 'none',
+                                        title: res33.msg,
+                                        image: '../../img/guanbi.png',
                                         duration: 1000
                                     })
                                     return
                                 }
-                                shopData['bankCardNo'] = res.data.result.bank_card_number.replace(/\s/g, "").replace(/(.{4})/g, "$1 ");
 
-
-                                var hang = that.data.hangbie
-                                for (let i = 0; i < hang.length; i++) {
-                                    if (hang[i].text.indexOf(res.data.result.bank_name) > -1) {
-                                        shopData['openingBank'] = hang[i].text
-                                        shopData['openingBankID'] = hang[i].value
-                                        shopData['openingBankBranch'] = ''
-                                        shopData['openingBankBranchID'] = ''
+                                var aData = new Object()
+                                aData.image = res33.data
+                                aData.idCardSide = 'back'
+                                aData.type = '2'
+                                aData.appId = that.data.baiduapi.baiduAppID
+                                aData.aipKey = that.data.baiduapi.baiduAPIKey
+                                aData.aipToken = that.data.baiduapi.baiduSecretKey
+                                wx.request({
+                                    url: 'http://api.51shanhe.com/p-server/appServer/getIdCard',
+                                    data: JSON.stringify(aData),
+                                    method: 'post',
+                                    header: {
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(res) {
+                                        console.log(res)
+                                        shopData['bankCardPositive'] = res33.data
+                                        shopData['bankCardNo'] = JSON.parse(res.data.data).result.bank_card_number.replace(/\s/g, "").replace(/(.{4})/g, "$1 ");
+                                        var hang = that.data.yhOnly
+                                        var hangc = that.data.yhCode
+                                        var hangi
+                                        for (let i = 0; i < hang.length; i++) {
+                                            if (hang[i].indexOf(JSON.parse(res.data.data).result.bank_name) > -1) {
+                                                shopData['openingBank'] = hang[i]
+                                                shopData['openingBankID'] = hangc[i]
+                                                hangi = i
+                                            }
+                                        }
+                                        that.setData({
+                                            yhIndex: hangi,
+                                            shopData: shopData,
+                                        })
+                                        console.log(that.data.shopData)
+                                        wx.showToast({
+                                            title: '请核对信息',
+                                            icon: 'success',
+                                            duration: 1000
+                                        })
                                     }
-                                }
-
-                                that.setData({
-                                    shopData: shopData,
-                                    bankInfo: '请核对'
-                                })
-                                wx.showToast({
-                                    title: '请核对信息',
-                                    icon: 'success',
-                                    duration: 1000
                                 })
                             },
-                            fail: res => {
+                            fail(e) {
+                                // wx.showModal({
+                                // 	title: '',
+                                // 	content: e,
+                                // })
                                 wx.showToast({
-                                    title: res.data.error_msg,
+                                    title: '上传失败',
                                     icon: 'success',
                                     duration: 1000
                                 })
                             }
                         })
+                    },
+                    fail: function(res) {
+                        console.log(res)
                     }
                 })
-                // wx.uploadFile({
-                //     url: that.data.server1 + 'Sell/addPic',
-                //     filePath: imageSrc,
-                //     name: 'file',
-                //     formData: {
-                //         type: 6,
-                //         institutionNumber: that.data.institutionNumber,
-                //         orderNumber: that.data.orderNumber
-                //     },
-                //     success(res) {
-                //         wx.showToast({
-                //             title: '上传成功',
-                //             icon: 'success',
-                //             duration: 1000
-                //         })
-                //         var imgSrc = JSON.parse(res.data)
-                //         var imagelist = that.data.imagelist
-                //         for (let i = 0; i < imagelist.length; i++) {
-                //             if (imagelist[i].type == 6) {
-                //                 imagelist[i].imgSrc = imgSrc.data + '?' + Math.random()
-                //                 imagelist[i].isS = true
-                //             }
-                //         }
-
-                //         that.setData({
-                //             imagelist: imagelist
-                //         })
-                //     },
-                //     fail() {
-                //         wx.showToast({
-                //             title: '上传失败',
-                //             icon: 'success',
-                //             duration: 1000
-                //         })
-                //     }
-                // })
-            },
-
-            fail({
-                errMsg
-            }) {
-                console.log('chooseImage fail, err is', errMsg)
             }
         })
     },
-
-
 
     // 输入框事件
     doInput: function(e) {
@@ -1148,6 +1260,8 @@ Page({
         var shopData = this.data.shopData
         if (e.target.id == 'mailbox') {
             shopData[e.target.id] = e.detail.value
+        } else if (e.target.id == 'rate' || e.target.id == 'unionPayRate' || e.target.id == 'unionPayRate2') {
+            shopData[e.target.id] = e.detail.value.replace(/[^\d^\.]+/g, '')
         } else {
             shopData[e.target.id] = e.detail.value.replace(/[^\w\u4E00-\u9FA5]/ig, '')
         }
@@ -1196,20 +1310,19 @@ Page({
     inpfunBtn_idtime: function(e) {
         var shopData = this.data.shopData
         if (!this.data.id_time) {
-            shopData['juridicalPersonIDType'] = '1'
+            shopData['juridicalPersonIDType'] = 0
             this.setData({
                 id_time: true,
-                sfz_cq: false,
                 shopData: shopData,
             })
         } else {
-            shopData['juridicalPersonIDType'] = '0'
+            shopData['juridicalPersonIDType'] = 1
             this.setData({
                 id_time: false,
-                sfz_cq: true,
                 shopData: shopData,
             })
         }
+        console.log(this.data.shopData['juridicalPersonIDType'])
     },
     // 邮箱补全
     mailtap: function(e) {
@@ -1231,9 +1344,13 @@ Page({
     },
     // 云闪付开关
     ysfswitch: function(e) {
-        console.log(e.detail.value)
+        var shopData = this.data.shopData
+        shopData.isOpenYunPay = e.detail.value ? 0 : 1
+        shopData.unionPayRate = ''
+        shopData.unionPayRate2 = ''
         this.setData({
-            ysfswitch: e.detail.value
+            ysfswitch: e.detail.value,
+            shopData: shopData
         })
     },
     // 禁止屏幕滚动
@@ -1253,7 +1370,7 @@ Page({
             url: this.data.server_p + 'cache/getOperationIds',
             method: 'get',
             data: {
-                "institutionNumber": 1004,
+                "institutionNumber": that.data.insNumber,
                 "paymentType": 4,
             },
             dataType: 'json',
@@ -1266,32 +1383,7 @@ Page({
                     that.setData({
                         jyfwArray: res.data.data
                     })
-
-                    var jyfwArray = that.data.jyfwArray,
-                        jyfwIndex = that.data.jyfwIndex,
-                        jyfwOnly = that.data.jyfwOnly,
-                        jyfwCode = that.data.jyfwCode;
-
-                    for (var i = 0; i < jyfwArray.length; i++) {
-                        jyfwOnly[0].push(jyfwArray[i].supMccNm);
-                        jyfwCode[0].push(jyfwArray[i].supMccCd);
-                    }
-                    for (var j = 0; j < jyfwArray[jyfwIndex[0]].list.length; j++) {
-                        jyfwOnly[1].push(jyfwArray[jyfwIndex[0]].list[j].MccTypeNm);
-                        jyfwCode[1].push(jyfwArray[jyfwIndex[0]].list[j].MccType);
-                    }
-                    for (var k = 0; k < jyfwArray[jyfwIndex[0]].list[jyfwIndex[1]].ids.length; k++) {
-                        jyfwOnly[2].push(jyfwArray[jyfwIndex[0]].list[jyfwIndex[1]].ids[k].MccNm);
-                        jyfwCode[2].push(jyfwArray[jyfwIndex[0]].list[jyfwIndex[1]].ids[k].MccCd);
-                    }
-
-                    that.setData({
-                        jyfwArray: jyfwArray,
-                        jyfwIndex: jyfwIndex,
-                        jyfwOnly: jyfwOnly,
-                        jyfwCode: jyfwCode,
-                    })
-
+                    that.setjyfw()
                 } else {
                     wx.showToast({
                         title: res.data.msg,
@@ -1305,6 +1397,33 @@ Page({
                     icon: 'none'
                 })
             }
+        })
+    },
+    // 设置经营范围默认
+    setjyfw: function() {
+        var that = this
+        var jyfwArray = that.data.jyfwArray,
+            jyfwIndex = that.data.jyfwIndex,
+            jyfwOnly = that.data.jyfwOnly,
+            jyfwCode = that.data.jyfwCode;
+
+        for (var i = 0; i < jyfwArray.length; i++) {
+            jyfwOnly[0].push(jyfwArray[i].supMccNm);
+            jyfwCode[0].push(jyfwArray[i].supMccCd);
+        }
+        for (var j = 0; j < jyfwArray[jyfwIndex[0]].list.length; j++) {
+            jyfwOnly[1].push(jyfwArray[jyfwIndex[0]].list[j].MccTypeNm);
+            jyfwCode[1].push(jyfwArray[jyfwIndex[0]].list[j].MccType);
+        }
+        for (var k = 0; k < jyfwArray[jyfwIndex[0]].list[jyfwIndex[1]].ids.length; k++) {
+            jyfwOnly[2].push(jyfwArray[jyfwIndex[0]].list[jyfwIndex[1]].ids[k].MccNm);
+            jyfwCode[2].push(jyfwArray[jyfwIndex[0]].list[jyfwIndex[1]].ids[k].MccCd);
+        }
+
+        that.setData({
+            jyfwIndex: jyfwIndex,
+            jyfwOnly: jyfwOnly,
+            jyfwCode: jyfwCode,
         })
     },
     // 请求数据-省市区
@@ -1327,38 +1446,7 @@ Page({
                     that.setData({
                         shqArray: res.data.data,
                     })
-
-                    var shqArray = that.data.shqArray,
-                        shqIndex = that.data.shqIndex,
-                        shqOnly = that.data.shqOnly,
-                        shqCode = that.data.shqCode,
-                        khIndex = that.data.khIndex,
-                        khOnly = that.data.khOnly;
-
-                    for (var i = 0; i < shqArray.length; i++) {
-                        shqOnly[0].push(shqArray[i].provName);
-                        shqCode[0].push(shqArray[i].provCode);
-                        khOnly[0].push(shqArray[i].provName);
-                    }
-                    for (var j = 0; j < shqArray[shqIndex[0]].cityList.length; j++) {
-                        shqOnly[1].push(shqArray[shqIndex[0]].cityList[j].cityName);
-                        shqCode[1].push(shqArray[shqIndex[0]].cityList[j].cityCode);
-                        khOnly[1].push(shqArray[khIndex[0]].cityList[j].cityName);
-                    }
-                    for (var k = 0; k < shqArray[shqIndex[0]].cityList[shqIndex[1]].areaList.length; k++) {
-                        shqOnly[2].push(shqArray[shqIndex[0]].cityList[shqIndex[1]].areaList[k].areaName);
-                        shqCode[2].push(shqArray[shqIndex[0]].cityList[shqIndex[1]].areaList[k].areaCode);
-                    }
-
-                    that.setData({
-                        shqArray: shqArray,
-                        shqIndex: shqIndex,
-                        shqOnly: shqOnly,
-                        shqCode: shqCode,
-                        khIndex: khIndex,
-                        khOnly: khOnly,
-                    })
-
+                    that.setshq()
                 } else {
                     wx.showToast({
                         title: res.data.msg,
@@ -1374,74 +1462,252 @@ Page({
             }
         })
     },
+    setshq: function() {
+        var that = this
+        var shqArray = that.data.shqArray,
+            shqIndex = that.data.shqIndex,
+            shqOnly = that.data.shqOnly,
+            shqCode = that.data.shqCode,
+            khIndex = that.data.khIndex,
+            khOnly = that.data.khOnly;
+
+        for (var i = 0; i < shqArray.length; i++) {
+            shqOnly[0].push(shqArray[i].provName);
+            shqCode[0].push(shqArray[i].provCode);
+            khOnly[0].push(shqArray[i].provName);
+        }
+        for (var j = 0; j < shqArray[shqIndex[0]].cityList.length; j++) {
+            shqOnly[1].push(shqArray[shqIndex[0]].cityList[j].cityName);
+            shqCode[1].push(shqArray[shqIndex[0]].cityList[j].cityCode);
+            khOnly[1].push(shqArray[khIndex[0]].cityList[j].cityName);
+        }
+        for (var k = 0; k < shqArray[shqIndex[0]].cityList[shqIndex[1]].areaList.length; k++) {
+            shqOnly[2].push(shqArray[shqIndex[0]].cityList[shqIndex[1]].areaList[k].areaName);
+            shqCode[2].push(shqArray[shqIndex[0]].cityList[shqIndex[1]].areaList[k].areaCode);
+        }
+
+        that.setData({
+            shqIndex: shqIndex,
+            shqOnly: shqOnly,
+            shqCode: shqCode,
+            khIndex: khIndex,
+            khOnly: khOnly,
+        })
+    },
     // 页面加载
     onLoad: function(options) {
+        console.log(options)
         var that = this,
             shopData = this.data.shopData,
             jstype = this.data.jstype,
+            shtype = this.data.shtype,
             hangbie = that.data.hangbie,
             yhOnly = that.data.yhOnly,
             yhCode = that.data.yhCode;
+
 
         for (var i = 0; i < hangbie.length; i++) {
             yhOnly.push(hangbie[i].text);
             yhCode.push(hangbie[i].value);
         }
-
         that.setData({
             yhOnly: yhOnly,
             yhCode: yhCode,
-            ysfswitch: shopData.isOpenYunPay == 0 ? true : false,
-            waRate: (shopData.rate * 100).toFixed(2),
-            yunRate1: (shopData.unionPayRate * 100).toFixed(2),
-            yunRate2: (shopData.unionPayRate2 * 100).toFixed(2),
+            insNumber: wx.getStorageSync('saleInfo').institutionNumber,
         })
-
-        // switch (parseInt(options.rjlx)) {
-        switch (parseInt(2)) {
-            case 1:
-                wx.setNavigationBarTitle({
-                    title: '企业入件'
-                })
-                shopData['acntType'] = '对公'
-                jstype = 1
-                break;
-            case 2:
-                wx.setNavigationBarTitle({
-                    title: '个体工商户'
-                })
-                shopData['acntType'] = '对私'
-                jstype = 0
-                break;
-            case 3:
-                wx.setNavigationBarTitle({
-                    title: '个人入件'
-                })
-                shopData['acntType'] = '对私'
-                jstype = 0
-                break;
-        }
-        that.setData({
-            // tdlx: options.tdlx,
-            jstype: jstype,
-            shopData: shopData,
-            // merNumber: options.merNumber,
-            insNumber: '1004',
-            // insNumber: wx.getStorageSync('saleInfo').institutionNumber,
-        })
-
         // 请求数据
         that.getjyfw()
         that.getshq()
-        wx.request({
-            url: 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=BIuEzeLr4mZaCGuDjEeLvSCp&client_secret=q5XFY7XBaZ48ccbMpdebqsU1hurMLxsB&',
-            method: 'post',
-            success: function(data) {
-                that.setData({
-                    accesstoken: data.data.access_token
-                })
+
+        // 未通过状态编辑
+        if (options.type == 'true') {
+            wx.request({
+                url: that.data.server_jg + 'InsMer/getMerchantOrderInfo',
+                method: 'post',
+                data: {
+                    orderNumber: options.id,
+                    institutionNumber: wx.getStorageSync('saleInfo').institutionNumber,
+                },
+                header: {
+                    'content-type': 'application/x-www-form-urlencoded' // 默认值
+                    // 'content-type': 'application/json' // json
+                },
+                success: function(data) {
+                    var shopEdit = data.data.data
+                    if (data.data.code != 1000) {
+                        wx.showToast({
+                            title: data.data.msg,
+                            icon: 'none',
+                        })
+                    } else {
+                        // 银行匹配
+                        var yhIndex = that.data.yhIndex
+                        for (let i = 0; i < yhOnly.length; i++) {
+                            if (yhOnly[i] == (shopEdit.openingBank)) {
+                                yhIndex = i
+                            }
+                        }
+                        // 设置图片为默认
+                        if (!shopEdit.businessLicense) {
+                            shopEdit.businessLicense = '../../img/pic1.png'
+                        }
+                        if (!shopEdit.openingPermit) {
+                            shopEdit.openingPermit = '../../img/pic2.png'
+                        }
+                        if (!shopEdit.juridicalpersonIdPositive) {
+                            shopEdit.juridicalpersonIdPositive = '../../img/pic3.png'
+                        }
+                        if (!shopEdit.juridicalpersonIdReverseside) {
+                            shopEdit.juridicalpersonIdReverseside = '../../img/pic4.png'
+                        }
+                        if (!shopEdit.holdId) {
+                            shopEdit.holdId = '../../img/pic5.png'
+                        }
+                        if (!shopEdit.bankCardPositive) {
+                            shopEdit.bankCardPositive = '../../img/pic6.png'
+                        }
+                        if (!shopEdit.doorheadPhoto) {
+                            shopEdit.doorheadPhoto = '../../img/pic7.png'
+                        }
+                        if (!shopEdit.cashier) {
+                            shopEdit.cashier = '../../img/pic8.png'
+                        }
+                        if (!shopEdit.placeBusiness) {
+                            shopEdit.placeBusiness = '../../img/pic9.png'
+                        }
+                        // 身份证是否为长期设置
+                        var id_time = that.data.id_time
+                        if (shopEdit.juridicalPersonIDType == 1) {
+                            id_time = false
+                        } else {
+                            id_time = true
+                        }
+                        // 经营范围回显
+                        var jyfwArray = that.data.jyfwArray,
+                            jyfwIndex = that.data.jyfwIndex;
+                        for (let i = 0; i < jyfwArray.length; i++) {
+                            if (jyfwArray[i].supMccCd == shopEdit.oneOperate) {
+                                jyfwIndex[0] = i
+                                for (let j = 0; j < jyfwArray[i].list.length; j++) {
+                                    if (jyfwArray[i].list[j].MccType == shopEdit.twoOperate) {
+                                        jyfwIndex[1] = j
+                                        for (let k = 0; k < jyfwArray[i].list[j].ids.length; k++) {
+                                            if (jyfwArray[i].list[j].ids[k].MccCd == shopEdit.twoOperate) {
+                                                jyfwIndex[2] = k
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        that.setData({
+                            jyfwIndex: jyfwIndex,
+                        })
+                        that.setjyfw()
+
+                        // 省市区回显
+                        var shqArray = that.data.shqArray,
+                            shqIndex = that.data.shqIndex;
+                        for (let i = 0; i < shqArray.length; i++) {
+                            if (shqArray[i].provCode == shopEdit.provinceID) {
+                                shqIndex[0] = i
+                                for (let j = 0; j < shqArray[i].cityList.length; j++) {
+                                    if (shqArray[i].cityList[j].cityCode == shopEdit.cityID) {
+                                        shqIndex[1] = j
+                                        for (let k = 0; k < shqArray[i].cityList[j].areaList.length; k++) {
+                                            if (shqArray[i].cityList[j].areaList[k].areaCode == shopEdit.areaID) {
+                                                shqIndex[2] = k
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        that.setData({
+                            shqIndex: shqIndex,
+                        })
+                        that.setshq()
+
+                        that.setData({
+                            isUpdata: options.type,
+                            id_time: id_time,
+                            yhIndex: yhIndex,
+                            shopData: shopEdit
+                        })
+                    }
+                }
+            })
+            console.log(that.data.shopData)
+
+        } else {
+            switch (parseInt(options.rjlx)) {
+                // switch (parseInt(2)) {
+                case 1:
+                    wx.setNavigationBarTitle({
+                        title: '企业入件'
+                    })
+                    shopData['acntType'] = '对公'
+                    shopData['merchantType'] = '企业'
+                    jstype = 1
+                    shtype = 2
+                    break;
+                case 2:
+                    wx.setNavigationBarTitle({
+                        title: '个体工商户'
+                    })
+                    shopData['acntType'] = '对私'
+                    shopData['merchantType'] = '个体'
+                    jstype = 0
+                    shtype = 1
+                    break;
+                case 3:
+                    wx.setNavigationBarTitle({
+                        title: '个人入件'
+                    })
+                    shopData['acntType'] = '对私'
+                    shopData['merchantType'] = '个人'
+                    jstype = 0
+                    shtype = 0
+                    break;
             }
-        })
+            that.setData({
+                tdlx: options.tdlx,
+                jstype: jstype,
+                shtype: shtype,
+            })
+            wx.request({
+                url: that.data.server_jg + 'insTpa/getThirdParty',
+                method: 'post',
+                data: {
+                    institutionNumber: that.data.insNumber
+                },
+                header: {
+                    'content-type': 'application/x-www-form-urlencoded' // 默认值
+                    // 'content-type': 'application/json' // json
+                },
+                success: function(data) {
+                    if (data.data.code != 1000) {
+                        wx.showToast({
+                            title: data.data.msg,
+                            icon: 'none',
+                        })
+                    } else {
+                        wx.setStorageSync('baidu', data.data.data);
+                    }
+                }
+            })
+            that.setData({
+                baiduapi: wx.getStorageSync('baidu')
+            })
+
+            shopData['isOpenYunPay'] = 1
+            shopData['rate'] = shopData['rate'] ? (shopData['rate'] * 100).toFixed(2) : ''
+            shopData['unionPayRate'] = shopData['unionPayRate'] ? (shopData['unionPayRate'] * 100).toFixed(2) : ''
+            shopData['unionPayRate2'] = shopData['unionPayRate2'] ? (shopData['unionPayRate2'] * 100).toFixed(2) : ''
+            that.setData({
+                shopData: shopData
+            })
+        }
     },
     util: function(currentStatu) {
         /* 动画部分 */
@@ -1477,6 +1743,7 @@ Page({
                 this.setData({
                     maskTips: false,
                     maskPic: false,
+                    confirmMSG: false,
                 });
             }
         }.bind(this), 200)
@@ -1486,6 +1753,7 @@ Page({
             this.setData({
                 maskTips: true,
                 maskPic: true,
+                confirmMSG: true,
             });
         }
     }

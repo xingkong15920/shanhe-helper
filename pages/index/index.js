@@ -317,7 +317,8 @@ Page({
                                                 return
                                             }
                                             wx.navigateTo({
-                                                url: '../merchants/register/index',
+												// url: '../merchants/register/index',
+                                                url: '../merchants/register-choose/index',
                                             })
                                         } else {
                                             wx.showToast({
@@ -341,7 +342,8 @@ Page({
                     // 	return
                     // }
                     wx.navigateTo({
-                        url: '../merchants/register/index',
+						// url: '../merchants/register/index',
+                        url: '../merchants/register-choose/index',
                     })
                 }
             },
