@@ -16,7 +16,7 @@
         <view class="tab-body">
             <scroll-view class="listBody" scroll-y="true" wx:if="{{empty}}" bindscrolltolower="loadMore" bindscrolltoupper="reFresh">
                 <view class="listBody_li {{item.orderNumber==active?'active':''}}" wx:for="{{shopList}}" data-id="{{item.orderNumber}}" bindtap="shopOperation">
-                    <view class="shopName">{{item.merchantName}}</view>
+                    <view class="shopName">{{item.merchantName}}({{item.paymentChannelName}})</view>
                     <view class="listIcon iconfont icon-xiajiantou"></view>
                     <view class="operation">
                         <!-- <view class="operationBtn editData" catchtap="editData" data-subnumber="{{item.subaccountNumber}}" data-id="{{item.orderNumber}}" data-mernumber="{{item.merchantNumber}}" wx:if="{{currentTab != 1 && item.paymentType!=3 && currentTab != 0 && currentTab != 2}}">修改资料</view> -->

@@ -103,9 +103,9 @@
                     </view>
                     <input class="inpinput {{input_active == 'businessLicenseName'?'inpinput_a':''}}" id="businessLicenseName" value="{{shopData.businessLicenseName}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写营业执照名称" placeholder-class="input-placeholder"></input>
                     <view class="inpfun">
-                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
-                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
-                        <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
+                        <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image> -->
+                        <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix" catchtap="getJurInfo1"></image>
+                        <!-- <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image> -->
                     </view>
                 </view>
                 <view class="inputblock">
@@ -376,7 +376,7 @@
                     <view class="inplable">
                         <view>*</view>微信/支付宝费率(%)
                     </view>
-                    <input class="inpinput {{input_active == 'rate'?'inpinput_a':''}}" type="digit" id="rate" value="{{shopData.rate}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写支/微费率(示例0.38)" placeholder-class="input-placeholder"></input>
+                    <input class="inpinput {{input_active == 'rate'?'inpinput_a':''}}" type="digit" id="rate" value="{{waRate}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请填写支/微费率(示例0.38)" placeholder-class="input-placeholder"></input>
                     <view class="inpfun">
                         <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="支付宝及微信费率,建议费率0.23-0.60之间"></image>
                         <!-- <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
@@ -391,7 +391,7 @@
                     <view class="inplable">
                         <view>*</view>云闪付1000以下费率(%)
                     </view>
-                    <input class="inpinput {{input_active == 'unionPayRate'?'inpinput_a':''}}" type="digit" id="unionPayRate" value="{{shopData.unionPayRate}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择云闪付1000以下费率" placeholder-class="input-placeholder"></input>
+                    <input class="inpinput {{input_active == 'unionPayRate'?'inpinput_a':''}}" type="digit" id="unionPayRate" value="{{yunRate1}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择云闪付1000以下费率" placeholder-class="input-placeholder"></input>
                     <view class="inpfun">
                         <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="云闪付1000以下费率,建议费率0.23-0.6之间"></image>
                         <!-- <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>
@@ -402,7 +402,7 @@
                     <view class="inplable">
                         <view>*</view>云闪付1000以上费率(%)
                     </view>
-                    <input class="inpinput {{input_active == 'unionPayRate2'?'inpinput_a':''}}" type="digit" id="unionPayRate2" value="{{shopData.unionPayRate2}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择云闪付1000以上费率" placeholder-class="input-placeholder"></input>
+                    <input class="inpinput {{input_active == 'unionPayRate2'?'inpinput_a':''}}" type="digit" id="unionPayRate2" value="{{yunRate2}}" bindinput="doInput" bindfocus="inputFocus" bindblur="inputBlur" placeholder="请选择云闪付1000以上费率" placeholder-class="input-placeholder"></input>
                     <view class="inpfun">
                         <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips="云闪付1000以上费率,建议费率0.53-1之间"></image>
                         <!-- <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image>

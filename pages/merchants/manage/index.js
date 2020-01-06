@@ -46,7 +46,7 @@ Page({
     getData: function() {
         var that = this
         wx.request({
-			url: this.data.server + common.getMerchantList, //仅为示例，并非真实的接口地址
+            url: this.data.server + common.getMerchantList, //仅为示例，并非真实的接口地址
             data: {
                 saleNumber: this.data.saleNumber,
                 merchantName: this.data.searchText,
@@ -75,12 +75,35 @@ Page({
                             requestBreak: false,
                         })
                     } else {
-						var shoplist = res.data.data.merchantList
-						for (let i = 0; i < shoplist.length; i++) {
-							if (shoplist[i].orderNumber == '') {
-								shoplist[i].orderNumber = Math.floor(Math.random() * 1000 + 1)
-							}
-						}
+                        var shoplist = res.data.data.merchantList
+                        for (let i = 0; i < shoplist.length; i++) {
+                            if (shoplist[i].orderNumber == '') {
+                                shoplist[i].orderNumber = Math.floor(Math.random() * 1000 + 1)
+                            }
+                            switch (shoplist[i].paymentType) {
+                                case 0:
+                                    shoplist[i].paymentChannelName = '支付宝'
+                                    break;
+                                case 1:
+                                    shoplist[i].paymentChannelName = '微信'
+                                    break;
+                                case 2:
+                                    shoplist[i].paymentChannelName = '富友'
+                                    break;
+                                case 3:
+                                    shoplist[i].paymentChannelName = '易融码'
+                                    break;
+                                case 4:
+                                    shoplist[i].paymentChannelName = '新大陆'
+                                    break;
+                                case 5:
+                                    shoplist[i].paymentChannelName = '随行付'
+                                    break;
+                                case 6:
+                                    shoplist[i].paymentChannelName = '乐刷'
+                                    break;
+                            }
+                        }
                         that.setData({
                             shopList: shoplist,
                             pageNum: 2,
@@ -131,11 +154,15 @@ Page({
         var id = e.currentTarget.dataset.id
         var subNumber = e.currentTarget.dataset.subnumber
         var merchantNumber = e.currentTarget.dataset.mernumber
-
-        wx.navigateTo({
-			// url: '../../merchants/register/index?id=' + id + '&type=true' + '&subNumber=' + subNumber + '&merchantNumber=' + merchantNumber,
-            url: '../../merchants/register-new/index?id=' + id + '&type=true' + '&subNumber=' + subNumber + '&merchantNumber=' + merchantNumber,
-        })
+        if (this.data.currentTab == 3) {
+            wx.navigateTo({
+                url: '../../merchants/register/index?id=' + id + '&type=true' + '&subNumber=' + subNumber + '&merchantNumber=' + merchantNumber,
+            })
+        } else {
+            wx.navigateTo({
+                url: '../../merchants/register-new/index?id=' + id + '&type=true' + '&subNumber=' + subNumber + '&merchantNumber=' + merchantNumber,
+            })
+        }
     },
     editShop: function(e) {
         console.log(e)
@@ -169,72 +196,72 @@ Page({
     },
     //弹窗
     editRate: function(e) {
-		console.log(e)
-		var that = this
+        console.log(e)
+        var that = this
         wx.request({
-			url: this.data.server + 'login/getRatelist', //仅为示例，并非真实的接口地址
+            url: this.data.server + 'login/getRatelist', //仅为示例，并非真实的接口地址
             method: "post",
             data: {
                 merchantNumber: e.currentTarget.dataset.aid,
             },
 
-			header: {
-				'content-type': 'application/x-www-form-urlencoded' // 默认值
-			},
+            header: {
+                'content-type': 'application/x-www-form-urlencoded' // 默认值
+            },
             success: function(res) {
-				console.log(res)
-				var D0 = res.data.data[0].rate.split('&')
-				var d0list = []
-				var d0list1 = []
-				var rateCoding;
-				var choRate;
-				var id = e.currentTarget.dataset.id
-				var aid = e.currentTarget.dataset.aid
-				var cod
-				if (id == that.data.lastRate) {
-					cod = that.data.lastcod
-				} else {
-					cod = e.currentTarget.dataset.ratecoding
-				}
-				for (let i = 0; i < D0.length; i++) {
-					console.log(D0[i])
-					var ob = new Object()
-					if (D0[i].indexOf('|') >= 0) {
-						ob.name = D0[i].split('|')[0]
-						ob.key = D0[i].split('|')[1]
-						d0list1.push(ob)
-						d0list.push(D0[i].split('|')[1])
-					} else {
-						ob.name = D0[i]
-						ob.key = D0[i]
-						d0list1.push(ob)
-						d0list.push(D0[i])
-					}
-					for (let i = 0; i < d0list1.length; i++) {
-						if (d0list1[i].name == cod) {
-							rateCoding = d0list1[i].key
-							choRate = d0list1[i].key
-						}
-					}
-					console.log(d0list1, d0list,D0)
-					console.log(rateCoding)
-					that.setData({
-						array: d0list,
-						array1: d0list1,
-						rateType: e.currentTarget.dataset.type,
-						shopN: aid,
-						shopO: id,
-						rateCoding: rateCoding,
-						choRate: choRate
-					})
-					that.setData({
-						showModal: true
-					});
+                console.log(res)
+                var D0 = res.data.data[0].rate.split('&')
+                var d0list = []
+                var d0list1 = []
+                var rateCoding;
+                var choRate;
+                var id = e.currentTarget.dataset.id
+                var aid = e.currentTarget.dataset.aid
+                var cod
+                if (id == that.data.lastRate) {
+                    cod = that.data.lastcod
+                } else {
+                    cod = e.currentTarget.dataset.ratecoding
+                }
+                for (let i = 0; i < D0.length; i++) {
+                    console.log(D0[i])
+                    var ob = new Object()
+                    if (D0[i].indexOf('|') >= 0) {
+                        ob.name = D0[i].split('|')[0]
+                        ob.key = D0[i].split('|')[1]
+                        d0list1.push(ob)
+                        d0list.push(D0[i].split('|')[1])
+                    } else {
+                        ob.name = D0[i]
+                        ob.key = D0[i]
+                        d0list1.push(ob)
+                        d0list.push(D0[i])
+                    }
+                    for (let i = 0; i < d0list1.length; i++) {
+                        if (d0list1[i].name == cod) {
+                            rateCoding = d0list1[i].key
+                            choRate = d0list1[i].key
+                        }
+                    }
+                    console.log(d0list1, d0list, D0)
+                    console.log(rateCoding)
+                    that.setData({
+                        array: d0list,
+                        array1: d0list1,
+                        rateType: e.currentTarget.dataset.type,
+                        shopN: aid,
+                        shopO: id,
+                        rateCoding: rateCoding,
+                        choRate: choRate
+                    })
+                    that.setData({
+                        showModal: true
+                    });
 
-				}
+                }
             }
         })
-		return
+        return
         var D0 = wx.getStorageSync('saleInfo').productSwitch.split('&')
         var D1 = wx.getStorageSync('saleInfo').productSwitchD1.split('&')
         console.log(D0, D1)
@@ -342,21 +369,21 @@ Page({
         let i = this.data.index
         console.log(this.data.array1[i])
         var rate = this.data.array1[i]
-		if (rate.key.indexOf('%') > -1) {
-			var ratea = rate.key.replace('%', '') / 100
-			ratea = ratea * 10000
-			ratea = Math.round(ratea)
-			console.log(ratea.toString().length)
-			if (ratea.toString().length == 2) {
-				rate.key = '0.00' + ratea
-			}
-			if (ratea.toString().length == 1) {
-				rate.key = '0.000' + ratea
-			}
-			if (ratea.toString().length == 3) {
-				rate.key = '0.0' + ratea
-			}
-		} 
+        if (rate.key.indexOf('%') > -1) {
+            var ratea = rate.key.replace('%', '') / 100
+            ratea = ratea * 10000
+            ratea = Math.round(ratea)
+            console.log(ratea.toString().length)
+            if (ratea.toString().length == 2) {
+                rate.key = '0.00' + ratea
+            }
+            if (ratea.toString().length == 1) {
+                rate.key = '0.000' + ratea
+            }
+            if (ratea.toString().length == 3) {
+                rate.key = '0.0' + ratea
+            }
+        }
         var saleInfo = wx.getStorageSync('saleInfo')
         wx.request({
             url: this.data.server + 'merchantRegister/insertMerchantRegisterInfo', //仅为示例，并非真实的接口地址
@@ -367,7 +394,7 @@ Page({
                 rateType: this.data.rateType,
                 rateCoding: rate.name,
                 rate: rate.key,
-				orderNumber: this.data.shopO,
+                orderNumber: this.data.shopO,
             },
 
             header: {
@@ -385,7 +412,7 @@ Page({
                         lastRate: that.data.shopN,
                         lastcod: rate.name
                     })
-					that.getData()
+                    that.getData()
                 } else {
                     // wx.showToast({
                     // 	title: res.data.msg,
@@ -439,11 +466,34 @@ Page({
                         })
                     } else {
                         var shoplist = res.data.data.merchantList
-						for(let i = 0 ; i < shoplist.length;i++){
-							if (shoplist[i].orderNumber == ''){
-								shoplist[i].orderNumber = Math.floor(Math.random() * 1000 + 1)
-							}
-						}
+                        for (let i = 0; i < shoplist.length; i++) {
+                            if (shoplist[i].orderNumber == '') {
+                                shoplist[i].orderNumber = Math.floor(Math.random() * 1000 + 1)
+                            }
+                            switch (shoplist[i].paymentType) {
+                                case 0:
+                                    shoplist[i].paymentChannelName = '支付宝'
+                                    break;
+                                case 1:
+                                    shoplist[i].paymentChannelName = '微信'
+                                    break;
+                                case 2:
+                                    shoplist[i].paymentChannelName = '富友'
+                                    break;
+                                case 3:
+                                    shoplist[i].paymentChannelName = '易融码'
+                                    break;
+                                case 4:
+                                    shoplist[i].paymentChannelName = '新大陆'
+                                    break;
+                                case 5:
+                                    shoplist[i].paymentChannelName = '随行付'
+                                    break;
+                                case 6:
+                                    shoplist[i].paymentChannelName = '乐刷'
+                                    break;
+                            }
+                        }
                         that.setData({
                             shopList: shoplist,
                         })
@@ -585,9 +635,9 @@ Page({
             }
         })
     },
-	onShow:function(){
-		this.getData()
-	},
+    onShow: function() {
+        this.getData()
+    },
     /**
      * 页面上拉触底事件的处理函数
      */
