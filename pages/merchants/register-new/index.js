@@ -67,6 +67,7 @@ Page({
         mail_active: false,
         input_active: '',
         id_time: false,
+        jur_time: false,
         // 经营范围信息
         jyfw_kj: [{ // 经营范围快捷信息
                 mccnum: [5, 2, 23],
@@ -216,11 +217,11 @@ Page({
                     that.showError('请填写身营业执照地址')
                     return
                 }
-                if (that.data.shtype != 0 && !shopData.businessLicenseEndTime || shopData.businessLicenseEndTime == '') {
+                if (that.data.shtype != 0 && !shopData.businessLicenseTime || shopData.businessLicenseTime == '') {
                     that.showError('请选择营业执照开始时间')
                     return
                 }
-                if (that.data.shtype != 0 && !shopData.businessLicenseTime || shopData.businessLicenseTime == '') {
+                if (that.data.shtype != 0 && !that.data.id_time && !shopData.businessLicenseEndTime || shopData.businessLicenseEndTime == '') {
                     that.showError('请选择营业执照结束时间')
                     return
                 }
@@ -1153,13 +1154,30 @@ Page({
                                         shopData['businessLicenseName'] = JSON.parse(res.data.data).words_result.单位名称.words
                                         if (JSON.parse(res.data.data).words_result.社会信用代码.words != '无') {
                                             shopData['businessLicenseNo'] = JSON.parse(res.data.data).words_result.社会信用代码.words
-                                        }
-                                        if (JSON.parse(res.data.data).words_result.证件编号.words != '无') {
+                                        } else if (JSON.parse(res.data.data).words_result.证件编号.words != '无') {
                                             shopData['businessLicenseNo'] = JSON.parse(res.data.data).words_result.证件编号.words
+                                        } else {
+                                            shopData['businessLicenseNo'] = ''
                                         }
-                                        shopData['businessLicenseAddress'] = JSON.parse(res.data.data).words_result.地址.words
+                                        if (JSON.parse(res.data.data).words_result.地址.words != '无') {
+                                            shopData['businessLicenseAddress'] = JSON.parse(res.data.data).words_result.地址.words
+                                        } else {
+                                            shopData['businessLicenseAddress'] = ''
+                                        }
                                         shopData['businessLicenseTime'] = JSON.parse(res.data.data).words_result.成立日期.words.replace('年', '-').replace('月', '-').replace('日', '')
-                                        shopData['businessLicenseEndTime'] = JSON.parse(res.data.data).words_result.成立日期.words.replace('年', '-').replace('月', '-').replace('日', '')
+                                        if (JSON.parse(res.data.data).words_result.有效期.words != '无') {
+                                            shopData['businessLicenseType'] = 1
+                                            shopData['businessLicenseEndTime'] = JSON.parse(res.data.data).words_result.有效期.words.replace('年', '-').replace('月', '-').replace('日', '')
+                                            that.setData({
+                                                jur_time: false,
+                                            })
+                                        } else {
+                                            shopData['businessLicenseType'] = 0
+                                            shopData['businessLicenseEndTime'] = ''
+                                            that.setData({
+                                                jur_time: true,
+                                            })
+                                        }
                                         that.setData({
                                             shopData: shopData,
                                         })
@@ -1374,6 +1392,23 @@ Page({
             shopData['juridicalPersonIDType'] = 1
             this.setData({
                 id_time: false,
+                shopData: shopData,
+            })
+        }
+    },
+    // 营业执照长期事件
+    inpfunBtn_jurtime: function(e) {
+        var shopData = this.data.shopData
+        if (!this.data.jur_time) {
+            shopData['businessLicenseType'] = 0
+            this.setData({
+                jur_time: true,
+                shopData: shopData,
+            })
+        } else {
+            shopData['businessLicenseType'] = 1
+            this.setData({
+                jur_time: false,
                 shopData: shopData,
             })
         }

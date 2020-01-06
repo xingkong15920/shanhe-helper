@@ -142,9 +142,10 @@
                         <!-- <image src="../../img/zhushi.png" class="tipsimg" mode="widthFix" catchtap="tipsmodel" data-tips=""></image>
                         <image src="../../img/saoyisao.png" class="tipsimg" mode="widthFix"></image> -->
                         <image src="../../img/sanjiao.png" class="tipsimg" mode="widthFix"></image>
+                        <view class="inpfunBtn1 {{jur_time?'active_btn':''}}" data-type="false" catchtap="inpfunBtn_jurtime">长期</view>
                     </view>
                 </view>
-                <view class="inputblock">
+                <view class="inputblock" wx:if="{{!jur_time}}">
                     <view class="inplable">
                         <view>*</view>营业执照结束时间
                     </view>
