@@ -82,14 +82,15 @@ Page({
                             }
                             switch (shoplist[i].paymentType) {
                                 case 0:
-                                    shoplist[i].paymentChannelName = '支付宝'
+                                    shoplist[i].paymentChannelName = '官方'
+                                    // shoplist[i].paymentChannelName = '支付宝'
                                     break;
-                                case 1:
-                                    shoplist[i].paymentChannelName = '微信'
-                                    break;
-                                case 2:
-                                    shoplist[i].paymentChannelName = '富友'
-                                    break;
+                                // case 1:
+                                //     shoplist[i].paymentChannelName = '微信'
+                                //     break;
+                                // case 2:
+                                //     shoplist[i].paymentChannelName = '富友'
+                                //     break;
                                 case 3:
                                     shoplist[i].paymentChannelName = '易融码'
                                     break;

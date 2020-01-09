@@ -28,6 +28,6 @@
                 <view class="choose_li_p">{{item.name}}</view>
             </view>
         </view>
-        <view class="nextBtn" bindtap="toRegisterNew">下一步</view>
+        <view class="nextBtn {{active_rj<1000 && active_td<1000?'nextBtn_a':''}}" bindtap="toRegisterNew">下一步</view>
     </view>
 </view>

@@ -20,11 +20,11 @@ Page({
         tdlx: [{
             name: '直连通道',
             imgUrl: '../../img/registr_choose_bg04.png',
-            tdlxType: 0,
+            tdlxType: 1,
         }, {
             name: '间联通道',
             imgUrl: '../../img/registr_choose_bg05.png',
-            tdlxType: 1,
+            tdlxType: 2,
         }],
         active_rj: 10000,
         active_td: 10000,
@@ -34,19 +34,19 @@ Page({
     chooseRJ: function(e) {
         var that = this,
             i = e.currentTarget.dataset.idx,
-            lxtype = e.currentTarget.dataset.type;
+            rjtype = e.currentTarget.dataset.type;
         that.setData({
             active_rj: i,
-            type_rj: lxtype,
+            type_rj: rjtype,
         })
     },
     chooseTD: function(e) {
         var that = this,
             i = e.currentTarget.dataset.idx,
-            lxtype = e.currentTarget.dataset.type;
+            tdtype = e.currentTarget.dataset.type;
         that.setData({
             active_td: i,
-            type_td: lxtype,
+            type_td: tdtype,
         })
     },
     toRegisterNew: function toRegisterNew() {

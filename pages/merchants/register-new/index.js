@@ -1,3 +1,4 @@
+const app = getApp()
 // 接口配置
 const config = require('../../../utils/config.js')
 const config_p = require('../../../utils/config-public.js')
@@ -8,11 +9,25 @@ const hangbie = require('../../../utils/hangbie.js')
 
 Page({
     data: {
+        // 自定导航看高度
+        statusBarHeight: app.globalData.statusBarHeight,
+        // 滚动高度
+        scrollTop: '',
+        scrollHeight: '',
         //是否更新
         isUpdata: false,
         // 公共信息
         tdlx: '',
         baiduapi: [],
+        // 正则
+        reg_hanzi: "^([a-z]|[A-Z]|[0-9]|[\\u4e00-\\u9fa5]){0,20}$",
+        reg_id: "^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$",
+        reg_cell: "^1[3|4|5|6|7|8|9][0-9]{9}$",
+        reg_mail: "^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$",
+        reg_busno: "^([0-9]|[A-Z]){0,20}$",
+        // 错误信息
+        errtips: '',
+        errmsg: '',
         // 必要信息
         merNumber: '',
         insNumber: '',
@@ -56,7 +71,7 @@ Page({
             icon2: '../../img/step02.png',
             icon3: '../../img/step03.png',
         }],
-        progress: 80, //步骤横条宽度
+        progress: 90, //步骤横条宽度
         percent: 33, //步骤条进度
         upstepBtn: false, //上一步按钮
         downstepBtn: true, //下一步按钮
@@ -68,6 +83,9 @@ Page({
         input_active: '',
         id_time: false,
         jur_time: false,
+        zh_focus: false,
+        input_focus: '',
+        mailAll: '',
         // 经营范围信息
         jyfw_kj: [{ // 经营范围快捷信息
                 mccnum: [5, 2, 23],
@@ -168,6 +186,7 @@ Page({
     },
     downStep: function() {
         var that = this,
+            input_focus = that.data.input_focus,
             shopData = that.data.shopData,
             shqOnly = that.data.shqOnly,
             shqCode = that.data.shqCode,
@@ -175,55 +194,63 @@ Page({
 
         console.log(shopData)
 
-        var reg_hanzi = new RegExp("^([a-z]|[A-Z]|[0-9]|[\\u4e00-\\u9fa5]){0,20}$")
-        var reg_id = new RegExp("^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$")
-        var reg_call = /^1[3|4|5|6|7|8|9][0-9]{9}$/
-        var reg_mail = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+        var reg_hanzi = new RegExp(that.data.reg_hanzi)
+        var reg_id = new RegExp(that.data.reg_id)
+        var reg_cell = new RegExp(that.data.reg_cell)
+        var reg_mail = new RegExp(that.data.reg_mail)
+        var reg_busno = new RegExp(that.data.reg_busno)
         switch (that.data.Steps) {
             case 0:
                 if (!shopData.merchantName || shopData.merchantName == '') {
-                    that.showError('请填写商户名称')
+                    that.showError('请填写商户名称', 'merchantName')
                     return
                 }
-                if (!reg_call.test(shopData.registerCell) || shopData.registerCell == '') {
-                    that.showError('请填写正确的注册手机号')
+                if (!reg_cell.test(shopData.registerCell) || shopData.registerCell == '') {
+                    that.showError('请填写正确的注册手机号', 'registerCell')
                     return
                 }
                 if (!shopData.juridicalpersonName || shopData.juridicalpersonName == '') {
-                    that.showError('请填写姓名')
+                    that.showError('请填写姓名', 'juridicalpersonName')
                     return
                 }
                 if (!reg_id.test(shopData.juridicalpersonId) || shopData.juridicalpersonId == '') {
-                    that.showError('请填写身份证号')
+                    that.showError('请填写身份证号', 'juridicalpersonId')
                     return
                 }
                 if (!shopData.juridicalpersonIdTime || shopData.juridicalpersonIdTime == '') {
                     that.showError('请选择身份证开始时间')
                     return
                 }
-                if (!that.data.id_time && !shopData.juridicalPersonIDEndTime || shopData.juridicalPersonIDEndTime == '') {
-                    that.showError('请选择身份证结束时间')
-                    return
+                if (!that.data.id_time) {
+                    if (!shopData.juridicalPersonIDEndTime || shopData.juridicalPersonIDEndTime == '') {
+                        that.showError('请选择身份证结束时间')
+                        return
+                    }
                 }
-                if (that.data.shtype != 0 && !shopData.businessLicenseName || shopData.businessLicenseName == '') {
-                    that.showError('请填写营业执照名称')
-                    return
-                }
-                if (that.data.shtype != 0 && !shopData.businessLicenseNo || shopData.businessLicenseNo == '') {
-                    that.showError('请填写身营业执照号')
-                    return
-                }
-                if (that.data.shtype != 0 && !shopData.businessLicenseAddress || shopData.businessLicenseAddress == '') {
-                    that.showError('请填写身营业执照地址')
-                    return
-                }
-                if (that.data.shtype != 0 && !shopData.businessLicenseTime || shopData.businessLicenseTime == '') {
-                    that.showError('请选择营业执照开始时间')
-                    return
-                }
-                if (that.data.shtype != 0 && !that.data.id_time && !shopData.businessLicenseEndTime || shopData.businessLicenseEndTime == '') {
-                    that.showError('请选择营业执照结束时间')
-                    return
+                if (that.data.shtype != 0) {
+                    shopData['businessLicenseType'] = 1
+                    if (!shopData.businessLicenseName || shopData.businessLicenseName == '') {
+                        that.showError('请填写营业执照名称', 'businessLicenseName')
+                        return
+                    }
+                    if (!reg_busno.test(shopData.businessLicenseNo) || shopData.businessLicenseNo == '') {
+                        that.showError('请填写身营业执照号', 'businessLicenseNo')
+                        return
+                    }
+                    if (!shopData.businessLicenseAddress || shopData.businessLicenseAddress == '') {
+                        that.showError('请填写身营业执照地址', 'businessLicenseAddress')
+                        return
+                    }
+                    if (!shopData.businessLicenseTime || shopData.businessLicenseTime == '') {
+                        that.showError('请选择营业执照开始时间')
+                        return
+                    }
+                    if (!that.data.jur_time) {
+                        if (!shopData.businessLicenseEndTime || shopData.businessLicenseEndTime == '') {
+                            that.showError('请选择营业执照结束时间')
+                            return
+                        }
+                    }
                 }
                 if (!that.data.jyfwCode) {
                     that.showError('请选择经营范围')
@@ -234,10 +261,11 @@ Page({
                     return
                 }
                 if (!shopData.address || shopData.address == '') {
-                    that.showError('请填写详细地址')
+                    that.showError('请填写详细地址', 'address')
                     return
                 }
 
+                shopData['juridicalPersonIDType'] = 1
                 shopData['province'] = shqOnly[0][shqIndex[0]]
                 shopData['provinceID'] = shqCode[0][shqIndex[0]]
                 shopData['city'] = shqOnly[1][shqIndex[1]]
@@ -251,15 +279,15 @@ Page({
                 break
             case 1:
                 if (!shopData.bankCardNo || shopData.bankCardNo == '') {
-                    that.showError('请填写/扫描银行卡号')
+                    that.showError('请填写/扫描银行卡号', 'bankCardNo')
                     return
                 }
                 if (!shopData.openingBank || shopData.openingBank == '') {
-                    that.showError('请填写/选择开户银行')
+                    that.showError('请填写/选择开户银行', 'openingBank')
                     return
                 }
                 if (!shopData.openingBankBranch || shopData.openingBankBranch == '') {
-                    that.showError('请选择开户支行')
+                    that.showError('请选择开户支行', 'openingBankBranch')
                     return
                 }
                 break
@@ -316,7 +344,7 @@ Page({
             shqOnly = this.data.shqOnly,
             shqCode = this.data.shqCode,
             shqIndex = this.data.shqIndex;
-        var reg_mail = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+        var reg_mail = new RegExp(this.data.reg_mail);
 
         // 默认经营类别
         shopData['oneOperate'] = jyfwCode[0][jyfwIndex[0]]
@@ -378,46 +406,55 @@ Page({
 
         // 费率信息页校验
         if (!that.data.waRate || that.data.waRate == '' || isNaN(that.data.waRate)) {
-            that.showError('请正确填写支/微费率')
+            that.showError('请正确填写支/微费率', 'waRate')
+            return
+        } else if (parseFloat(that.data.waRate) < (parseFloat(wx.getStorageSync('saleInfo').aliRate) * 100).toFixed(2)) {
+            that.showError('支/微费率不得低于销售费率', 'waRate')
             return
         } else if (parseFloat(that.data.waRate) < 0.20 || parseFloat(that.data.waRate) > 1) {
-            that.showError('支/微费率需在0.20 - 1之间')
+            that.showError('支/微费率需在0.20 - 1之间', 'waRate')
             return
         }
         if (that.data.ysfswitch) {
             if (!that.data.yunRate1 || that.data.yunRate1 == '' || isNaN(that.data.yunRate1)) {
-                that.showError('请选择云闪付1000以下费率')
+                that.showError('请选择云闪付1000以下费率', 'yunRate1')
+                return
+            } else if (parseFloat(that.data.yunRate1) < (parseFloat(wx.getStorageSync('saleInfo').cloudRate2) * 100).toFixed(2)) {
+                that.showError('云闪付1000以下费率不得低于销售的云闪付费率', 'yunRate1')
                 return
             } else if (parseFloat(that.data.yunRate1) < 0.23 || parseFloat(that.data.yunRate1) > 1) {
-                that.showError('云闪付1000以下费率需在0.23 - 1之间')
+                that.showError('云闪付1000以下费率需在0.23 - 1之间', 'yunRate1')
                 return
             }
             if (!that.data.yunRate2 || that.data.yunRate2 == '' || isNaN(that.data.yunRate2)) {
-                that.showError('请选择云闪付1000以上费率')
+                that.showError('请选择云闪付1000以上费率', 'yunRate2')
+                return
+            } else if (parseFloat(that.data.yunRate2) < (parseFloat(wx.getStorageSync('saleInfo').cloudRate2) * 100).toFixed(2)) {
+                that.showError('云闪付1000以上费率不得低于销售的云闪付费率', 'yunRate2')
                 return
             } else if (parseFloat(that.data.yunRate2) < 0.52 || parseFloat(that.data.yunRate2) > 1) {
-                that.showError('云闪付1000以上费率需在0.52 - 1之间')
+                that.showError('云闪付1000以上费率需在0.52 - 1之间', 'yunRate2')
                 return
             }
         }
 
         if (!reg_mail.test(shopData.mailbox)) {
-            that.showError('请填写邮箱')
+            that.showError('请填写邮箱', 'mailbox')
             return
         }
         if (!shopData.weChatNo || shopData.weChatNo == '') {
-            that.showError('请填写微信号')
+            that.showError('请填写微信号', 'weChatNo')
             return
         }
         if (!shopData.aliPayNo || shopData.aliPayNo == '') {
-            that.showError('请填写支付宝号')
+            that.showError('请填写支付宝号', 'aliPayNo')
             return
         }
-        // 这是进件通道
-        if (that.data.isUpdata == 'false') {
-            if (that.data.tdlx == 0) {
+        // 设置进件通道
+        if (that.data.isUpdata != 'true') {
+            if (that.data.tdlx == 1) {
                 shopData['paymentChannels'] = JSON.stringify(wx.getStorageSync('payment_zl'))
-            } else {
+            } else if (that.data.tdlx == 2) {
                 shopData['paymentChannels'] = JSON.stringify(wx.getStorageSync('payment_jl'))
             }
         }
@@ -845,19 +882,20 @@ Page({
     searchInput: function() {
         var that = this;
         that.setData({
-            maskKh: true
+            maskKh: true,
+            zh_focus: true,
         })
     },
     // 开户支行搜索选择
     searczh: function(e) {
         var that = this;
         wx.request({
-            url: that.data.server + 'cache/getBank',
+            url: that.data.server_p + 'cache/getBank',
             method: 'get',
             data: {
                 bankCode: that.data.yhCode[that.data.yhIndex].toString(),
                 paymentType: 4,
-                bankName: e.detail.value,
+                bankName: e.detail.value || '',
                 page: '1',
                 limit: '999',
                 provNm: that.data.khOnly[0][that.data.khIndex[0]],
@@ -901,6 +939,7 @@ Page({
         this.setData({
             zhlist: [],
             maskKh: false,
+            zh_focus: false,
             shopData: shopData
         })
     },
@@ -1056,7 +1095,7 @@ Page({
                                         console.log(res)
                                         shopData['juridicalpersonIdPositive'] = res33.data
                                         shopData['juridicalpersonId'] = JSON.parse(res.data.data).words_result.公民身份号码.words
-                                        shopData['juridicalpersonName'] = JSON.parse(res.data.data).words_result.姓名.words
+                                        // shopData['juridicalpersonName'] = JSON.parse(res.data.data).words_result.姓名.words
                                         that.setData({
                                             shopData: shopData,
                                         })
@@ -1151,7 +1190,7 @@ Page({
                                     success: function(res) {
                                         console.log(res)
                                         shopData['businessLicense'] = res33.data
-                                        shopData['businessLicenseName'] = JSON.parse(res.data.data).words_result.单位名称.words
+                                        // shopData['businessLicenseName'] = JSON.parse(res.data.data).words_result.单位名称.words
                                         if (JSON.parse(res.data.data).words_result.社会信用代码.words != '无') {
                                             shopData['businessLicenseNo'] = JSON.parse(res.data.data).words_result.社会信用代码.words
                                         } else if (JSON.parse(res.data.data).words_result.证件编号.words != '无') {
@@ -1164,7 +1203,11 @@ Page({
                                         } else {
                                             shopData['businessLicenseAddress'] = ''
                                         }
-                                        shopData['businessLicenseTime'] = JSON.parse(res.data.data).words_result.成立日期.words.replace('年', '-').replace('月', '-').replace('日', '')
+                                        if (JSON.parse(res.data.data).words_result.成立日期.words != '无') {
+                                            shopData['businessLicenseTime'] = JSON.parse(res.data.data).words_result.成立日期.words.replace('年', '-').replace('月', '-').replace('日', '')
+                                        } else {
+                                            shopData['businessLicenseTime'] = ''
+                                        }
                                         if (JSON.parse(res.data.data).words_result.有效期.words != '无') {
                                             shopData['businessLicenseType'] = 1
                                             shopData['businessLicenseEndTime'] = JSON.parse(res.data.data).words_result.有效期.words.replace('年', '-').replace('月', '-').replace('日', '')
@@ -1323,9 +1366,11 @@ Page({
         var shopData = this.data.shopData,
             waRate = this.data.waRate,
             yunRate1 = this.data.yunRate1,
-            yunRate2 = this.data.yunRate2;
+            yunRate2 = this.data.yunRate2,
+            mailAll = this.data.mailAll;
         if (e.target.id == 'mailbox') {
             shopData[e.target.id] = e.detail.value
+            mailAll = e.detail.value
         } else if (e.target.id == 'rate') {
             waRate = e.detail.value.replace(/[^\d^\.]+/g, '')
         } else if (e.target.id == 'unionPayRate') {
@@ -1336,14 +1381,23 @@ Page({
             shopData[e.target.id] = e.detail.value.replace(/[^\w\u4E00-\u9FA5]/ig, '')
         }
         this.setData({
+            mailAll: mailAll,
             waRate: waRate,
             yunRate1: yunRate1,
             yunRate2: yunRate2,
             shopData: shopData,
         })
     },
+    // 输入框清空事件
+    clearInput: function(e) {
+        var shopData = this.data.shopData;
+        shopData[e.target.id] = ''
+        this.setData({
+            shopData: shopData,
+        })
+    },
+    // 输入框获取焦点事件
     inputFocus: function(e) {
-        // console.log(e)
         this.setData({
             input_active: e.target.id,
         })
@@ -1352,15 +1406,130 @@ Page({
                 mail_active: true,
             })
         }
+        // this.getTop()
     },
+    // 输入框失去焦点事件
     inputBlur: function(e) {
         // console.log(e)
-        var shopData = this.data.shopData
+        var that = this,
+            reg_hanzi = new RegExp(this.data.reg_hanzi),
+            reg_id = new RegExp(this.data.reg_id),
+            reg_cell = new RegExp(this.data.reg_cell),
+            reg_mail = new RegExp(this.data.reg_mail),
+            reg_busno = new RegExp(this.data.reg_busno),
+            shopData = this.data.shopData;
+        var errtips = this.data.errtips,
+            errmsg = this.data.errmsg;
+        // 失去焦点验证
+        switch (e.target.id) {
+            case 'merchantName':
+                break;
+            case 'registerCell':
+                if (!reg_cell.test(e.detail.value)) {
+                    errtips = e.target.id
+                    errmsg = '请填写正确的11位手机号'
+                } else {
+                    errtips = ''
+                }
+                break;
+            case 'juridicalpersonName':
+                break;
+            case 'juridicalpersonId':
+                if (!reg_id.test(e.detail.value)) {
+                    errtips = e.target.id
+                    errmsg = '请填写正确的18位身份证号'
+                } else {
+                    errtips = ''
+                }
+                break;
+            case 'businessLicenseName':
+                break;
+            case 'businessLicenseNo':
+                console.log(reg_busno)
+                console.log(reg_busno.test(e.detail.value))
+                if (!reg_busno.test(e.detail.value)) {
+                    errtips = e.target.id
+                    errmsg = '证件号码长度有误或者含有特殊符号'
+                } else {
+                    errtips = ''
+                }
+                break;
+            case 'businessLicenseAddress':
+                break;
+            case 'address':
+                break;
+            case 'bankCardNo':
+                if (!e.detail.value || isNaN(e.detail.value.replace(/\s/g, ""))) {
+                    errtips = e.target.id
+                    errmsg = '请填写正确的12-18位银行卡号'
+                } else {
+                    errtips = ''
+                }
+                break;
+            case 'openingBankBranch':
+                break;
+            case 'rate':
+                if (!e.detail.value || isNaN(e.detail.value.replace(/\s/g, ""))) {
+                    errtips = e.target.id
+                    errmsg = '请输入费率'
+                } else if (parseFloat(e.detail.value) < (parseFloat(wx.getStorageSync('saleInfo').aliRate) * 100).toFixed(2)) {
+                    errtips = e.target.id
+                    errmsg = '该费率不得低于销售费率'
+                } else if (parseFloat(e.detail.value) < 0.20 || parseFloat(e.detail.value) > 1) {
+                    errtips = e.target.id
+                    errmsg = '该费率需在0.20 - 1之间'
+                } else {
+                    errtips = ''
+                }
+                break;
+            case 'unionPayRate':
+                if (!e.detail.value || isNaN(e.detail.value.replace(/\s/g, ""))) {
+                    errtips = e.target.id
+                    errmsg = '请输入费率'
+                } else if (parseFloat(e.detail.value) < (parseFloat(wx.getStorageSync('saleInfo').cloudRate) * 100).toFixed(2)) {
+                    errtips = e.target.id
+                    errmsg = '该费率不得低于销售费率'
+                } else if (parseFloat(e.detail.value) < 0.23 || parseFloat(e.detail.value) > 1) {
+                    errtips = e.target.id
+                    errmsg = '该费率需在0.23 - 1之间'
+                } else {
+                    errtips = ''
+                }
+                break;
+            case 'unionPayRate2':
+                if (!e.detail.value || isNaN(e.detail.value.replace(/\s/g, ""))) {
+                    errtips = e.target.id
+                    errmsg = '请输入费率'
+                } else if (parseFloat(e.detail.value) < (parseFloat(wx.getStorageSync('saleInfo').cloudRate2) * 100).toFixed(2)) {
+                    errtips = e.target.id
+                    errmsg = '该费率不得低于销售费率'
+                } else if (parseFloat(e.detail.value) < 0.52 || parseFloat(e.detail.value) > 1) {
+                    errtips = e.target.id
+                    errmsg = '该费率需在0.52 - 1之间'
+                } else {
+                    errtips = ''
+                }
+                break;
+            case 'mailbox':
+                // if (!reg_mail.test(shopData.mailbox)) {
+                //     errtips = e.target.id
+                //     errmsg = '请填写正确的邮箱地址'
+                // } else {
+                //     errtips = ''
+                // }
+                break;
+            case 'weChatNo':
+                break;
+            case 'aliPayNo':
+                break;
+        }
+
         shopData[e.target.id] = e.detail.value;
-        this.setData({
+        that.setData({
             input_active: '',
+            errtips: errtips,
+            errmsg: errmsg,
             shopData: shopData,
-            mail_active: false,
         })
     },
     // 营业执照开始时间
@@ -1415,21 +1584,27 @@ Page({
     },
     // 邮箱补全
     mailtap: function(e) {
-        var i = e.currentTarget.dataset.key,
-            shopData = this.data.shopData;
-        var mail1 = this.data.shopData.mailbox,
-            mail2 = mail1.concat(this.data.mailTips[i]);
-
-        if (mail1.indexOf('@') > 0) {
-            console.log(this.data.shopData.mailbox.split('@')[0])
-            mail1 = this.data.shopData.mailbox.split('@')[0]
-            mail2 = mail1.concat(this.data.mailTips[i])
+        console.log(e)
+        var shopData = this.data.shopData,
+            reg_mail = new RegExp(this.data.reg_mail),
+            errtips = this.data.errtips,
+            errmsg = this.data.errmsg;
+        // shopData.mailbox = '123132131321'
+        shopData.mailbox = this.data.mailAll + this.data.mailTips[e.currentTarget.dataset.key]
+        if (!reg_mail.test(this.data.mailAll + this.data.mailTips[e.currentTarget.dataset.key])) {
+            errtips = 'mailbox'
+            errmsg = '请填写正确的邮箱地址'
+        } else {
+            errtips = ''
+            errmsg = ''
         }
-        shopData['mailbox'] = mail2
+        // console.log(this.data.mailAll + this.data.mailTips[e.currentTarget.dataset.key])
         this.setData({
+            errtips: errtips,
+            errmsg: errmsg,
             shopData: shopData,
+            mail_active: false,
         })
-        console.log(this.data.shopData.mailbox)
     },
     // 云闪付开关
     ysfswitch: function(e) {
@@ -1446,10 +1621,16 @@ Page({
     preventTouchMove: function() {},
 
     //报错 
-    showError: function(error) {
+    showError: function(error, id) {
         wx.showToast({
             title: error,
             icon: 'none',
+            duration: 1500,
+        })
+
+        this.setData({
+            input_focus: id,
+            scrollTop: id
         })
     },
     // 请求数据-经营范围
@@ -1601,8 +1782,8 @@ Page({
             shtype = this.data.shtype,
             hangbie = that.data.hangbie,
             yhOnly = that.data.yhOnly,
-            yhCode = that.data.yhCode;
-
+            yhCode = that.data.yhCode,
+            mailAll = this.data.mailAll;
 
         for (var i = 0; i < hangbie.length; i++) {
             yhOnly.push(hangbie[i].text);
@@ -1641,6 +1822,7 @@ Page({
                         })
                     } else {
                         // 设置回显值
+                        mailAll = shopEdit.mailbox.split('@')[0]
                         shopData.acntType = shopEdit.acntType
                         shopData.merchantType = shopEdit.merchantType
                         shopData.merchantName = shopEdit.merchantName
@@ -1662,6 +1844,43 @@ Page({
                         shopData.mailbox = shopEdit.mailbox
                         shopData.weChatNo = shopEdit.weChatNo
                         shopData.aliPayNo = shopEdit.aliPayNo
+                        // 设置通道回显
+                        shopData.isOpenYunPay = shopEdit.isOpenYunPay
+                        shopData.paymentChannel = shopEdit.paymentChannel
+                        shopData.paymentType = shopEdit.paymentType
+                        shopData.orderNumber = options.id
+
+                        // 设置商户类型
+                        switch (shopEdit.merchantType) {
+                            // switch (parseInt(2)) {
+                            case '企业':
+                                wx.setNavigationBarTitle({
+                                    title: '企业入件-编辑'
+                                })
+                                shopData['acntType'] = '对公'
+                                shopData['merchantType'] = '企业'
+                                jstype = 1
+                                shtype = 2
+                                break;
+                            case '个体':
+                                wx.setNavigationBarTitle({
+                                    title: '个体工商户-编辑'
+                                })
+                                shopData['acntType'] = '对私'
+                                shopData['merchantType'] = '个体'
+                                jstype = 0
+                                shtype = 1
+                                break;
+                            case '个人':
+                                wx.setNavigationBarTitle({
+                                    title: '个人入件-编辑'
+                                })
+                                shopData['acntType'] = '对私'
+                                shopData['merchantType'] = '个人'
+                                jstype = 0
+                                shtype = 0
+                                break;
+                        }
 
                         // 银行匹配
                         var yhIndex = that.data.yhIndex
@@ -1673,30 +1892,48 @@ Page({
                         // 设置图片为默认
                         if (!shopEdit.businessLicense) {
                             shopData.businessLicense = '../../img/pic1.png'
+                        } else {
+                            shopData.businessLicense = shopEdit.businessLicense
                         }
                         if (!shopEdit.openingPermit) {
                             shopData.openingPermit = '../../img/pic2.png'
+                        } else {
+                            shopData.openingPermit = shopEdit.openingPermit
                         }
                         if (!shopEdit.juridicalpersonIdPositive) {
                             shopData.juridicalpersonIdPositive = '../../img/pic3.png'
+                        } else {
+                            shopData.juridicalpersonIdPositive = shopEdit.juridicalpersonIdPositive
                         }
                         if (!shopEdit.juridicalpersonIdReverseside) {
                             shopData.juridicalpersonIdReverseside = '../../img/pic4.png'
+                        } else {
+                            shopData.juridicalpersonIdReverseside = shopEdit.juridicalpersonIdReverseside
                         }
                         if (!shopEdit.holdId) {
                             shopData.holdId = '../../img/pic5.png'
+                        } else {
+                            shopData.holdId = shopEdit.holdId
                         }
                         if (!shopEdit.bankCardPositive) {
                             shopData.bankCardPositive = '../../img/pic6.png'
+                        } else {
+                            shopData.bankCardPositive = shopEdit.bankCardPositive
                         }
                         if (!shopEdit.doorheadPhoto) {
                             shopData.doorheadPhoto = '../../img/pic7.png'
+                        } else {
+                            shopData.doorheadPhoto = shopEdit.doorheadPhoto
                         }
                         if (!shopEdit.cashier) {
                             shopData.cashier = '../../img/pic8.png'
+                        } else {
+                            shopData.cashier = shopEdit.cashier
                         }
                         if (!shopEdit.placeBusiness) {
                             shopData.placeBusiness = '../../img/pic9.png'
+                        } else {
+                            shopData.placeBusiness = shopEdit.placeBusiness
                         }
                         // 身份证是否为长期设置
                         var id_time = that.data.id_time
@@ -1757,23 +1994,17 @@ Page({
                             that.setshq()
                         }, 500)
 
-                        // 费率回显
-                        that.setData({
-                            waRate: (shopEdit.rate * 100).toFixed(2),
-                            ysfswitch: shopEdit.isOpenYunPay == 0 ? true : false,
-                            yunRate1: (shopEdit.unionPayRate * 100).toFixed(2),
-                            yunRate2: (shopEdit.unionPayRate2 * 100).toFixed(2),
-                        })
-
-                        // 设置通道回显
-                        shopData.paymentChannel = shopEdit.paymentChannel
-                        shopData.paymentType = shopEdit.paymentType
-                        shopData.orderNumber = options.id
-
                         that.setData({
                             isUpdata: options.type,
                             id_time: id_time,
                             yhIndex: yhIndex,
+                            mailAll: mailAll,
+                            jstype: jstype,
+                            shtype: shtype,
+                            waRate: (shopEdit.rate * 100).toFixed(2),
+                            ysfswitch: shopEdit.isOpenYunPay == 0 ? true : false,
+                            yunRate1: (shopEdit.unionPayRate * 100).toFixed(2),
+                            yunRate2: (shopEdit.unionPayRate2 * 100).toFixed(2),
                             shopData: shopData
                         })
                     }
@@ -1835,11 +2066,11 @@ Page({
                         })
                     } else {
                         wx.setStorageSync('baidu', data.data.data);
+                        that.setData({
+                            baiduapi: data.data.data
+                        })
                     }
                 }
-            })
-            that.setData({
-                baiduapi: wx.getStorageSync('baidu')
             })
 
             shopData['isOpenYunPay'] = 1
