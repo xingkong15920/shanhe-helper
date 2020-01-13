@@ -96,15 +96,20 @@ Page({
 						shopPoundage: res.data.data.agentOrderList.shopPoundage,
 						refundAmount: res.data.data.agentOrderList.refundAmount,
 					})
+					var orderList = res.data.data.transactionReceiptShareProfitList
+
+					for (let i = 0; i < orderList.length; i++) {
+						orderList[i].merchantName1 = that.stringC(orderList[i].merchantName)
+					}
 					if (that.data.page == 1) {
 						
 						that.setData({
-							orderData: res.data.data.transactionReceiptShareProfitList,
+							orderData: orderList,
 							count: res.data.data.count
 						})
 					} else {
 						that.setData({
-							orderData: that.data.orderData.concat(res.data.data.transactionReceiptShareProfitList),
+							orderData: that.data.orderData.concat(orderList),
 							count: res.data.data.count
 						})
 					}
@@ -139,6 +144,13 @@ Page({
 		wx.navigateTo({
 			url: '../order-search/index?order=' + '',
 		})
+	},
+	stringC: function (data) {
+		if (data.length > 6) {
+			return data.substring(0, 6) + '..'
+		} else {
+			return data
+		}
 	},
 	/**
 	 * 生命周期函数--监听页面加载

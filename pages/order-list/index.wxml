@@ -9,9 +9,10 @@
 			<view class='dataList-item'  wx:for="{{orderData}}"   wx:key="{{index}}" bindtap="check" data-id="{{index}}">
 				<image src="../img/wechat.png" class='wechat' wx:if="{{item.onePaymentTypeName==1}}"></image>
 				<image src="../img/zhifubao.png" class='wechat' wx:if="{{item.onePaymentTypeName==0}}"></image>
+				<image src="../img/yunshanfu.png" class='wechat' wx:if="{{item.onePaymentTypeName==3}}"></image>
 				<view class='dataList-item-box'>
 						<view class='dataList-item-box-top'>
-							<view class='dataList-item-box-top-name'>{{item.merchantName}}</view>
+							<view class='dataList-item-box-top-name'>{{item.merchantName1}}</view>
 							<view class='dataList-item-box-top-tag' wx:if="{{item.orderState==1}}">交易成功</view>
 							<view class='dataList-item-box-top-tag1' wx:if="{{item.orderState==5}}">部分退款</view>
 							<view class='dataList-item-box-top-tag2' wx:if="{{item.orderState==4}}">全部退款</view>
