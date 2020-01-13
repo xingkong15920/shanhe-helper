@@ -408,7 +408,7 @@ Page({
         if (!that.data.waRate || that.data.waRate == '' || isNaN(that.data.waRate)) {
             that.showError('请正确填写支/微费率', 'waRate')
             return
-        } else if (parseFloat(that.data.waRate) < (parseFloat(wx.getStorageSync('saleInfo').aliRate) * 100).toFixed(2)) {
+        } else if (parseFloat(that.data.waRate) < parseFloat((wx.getStorageSync('saleInfo').aliRate * 100).toFixed(2))) {
             that.showError('支/微费率不得低于销售费率', 'waRate')
             return
         } else if (parseFloat(that.data.waRate) < 0.20 || parseFloat(that.data.waRate) > 1) {
@@ -419,7 +419,7 @@ Page({
             if (!that.data.yunRate1 || that.data.yunRate1 == '' || isNaN(that.data.yunRate1)) {
                 that.showError('请选择云闪付1000以下费率', 'yunRate1')
                 return
-            } else if (parseFloat(that.data.yunRate1) < (parseFloat(wx.getStorageSync('saleInfo').cloudRate2) * 100).toFixed(2)) {
+            } else if (parseFloat(that.data.yunRate1) < parseFloat((wx.getStorageSync('saleInfo').cloudRate * 100).toFixed(2))) {
                 that.showError('云闪付1000以下费率不得低于销售的云闪付费率', 'yunRate1')
                 return
             } else if (parseFloat(that.data.yunRate1) < 0.23 || parseFloat(that.data.yunRate1) > 1) {
@@ -429,7 +429,7 @@ Page({
             if (!that.data.yunRate2 || that.data.yunRate2 == '' || isNaN(that.data.yunRate2)) {
                 that.showError('请选择云闪付1000以上费率', 'yunRate2')
                 return
-            } else if (parseFloat(that.data.yunRate2) < (parseFloat(wx.getStorageSync('saleInfo').cloudRate2) * 100).toFixed(2)) {
+            } else if (parseFloat(that.data.yunRate2) < parseFloat((wx.getStorageSync('saleInfo').cloudRate2 * 100).toFixed(2))) {
                 that.showError('云闪付1000以上费率不得低于销售的云闪付费率', 'yunRate2')
                 return
             } else if (parseFloat(that.data.yunRate2) < 0.52 || parseFloat(that.data.yunRate2) > 1) {
@@ -458,6 +458,8 @@ Page({
                 shopData['paymentChannels'] = JSON.stringify(wx.getStorageSync('payment_jl'))
             }
         }
+        // 清除银行卡号空格
+        shopData.bankCardNo = shopData.bankCardNo.replace(/\s/g, "");
         // 设置费率
         shopData['rate'] = (that.data.waRate / 100).toFixed(4)
         if (this.data.ysfswitch) {
@@ -488,14 +490,17 @@ Page({
     },
     // 信息取消
     onCancel: function() {
+        var shopData = this.data.shopData;
         if (!this.data.ysfswitch) {
             this.data.yunRate1 = ''
             this.data.yunRate2 = ''
         }
+        shopData.bankCardNo = shopData.bankCardNo.replace(/\s/g, "").replace(/(.{4})/g, "$1 ");
         this.setData({
             confirmMSG: false,
             yunRate1: this.data.yunRate1,
             yunRate2: this.data.yunRate2,
+            shopData: shopData,
         })
     },
     // 信息确认
